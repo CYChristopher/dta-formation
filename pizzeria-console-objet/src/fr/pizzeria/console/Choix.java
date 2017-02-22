@@ -1,7 +1,12 @@
 /**
  * 22 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.model;
+package fr.pizzeria.console;
+
+import java.util.Scanner;
+
+import fr.pizzeria.dao.IPizzaDaoImpl;
+import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
@@ -22,7 +27,19 @@ public abstract class Choix {
 		this.nomChoix = nomChoix;
 	}
 
-	public abstract void faireUneAction(Integer numeroChoix);
+	public abstract void faireUneAction(Integer num, IPizzaDaoImpl pizzaDao, Scanner sc);
+	
+	/**
+	 * Liste les pizzas
+	 */
+	static void listPizzas(Pizza[] pizzas) {
+		for (int i = 1; i <= pizzas.length - 1; i++) {
+			// Si la ligne n'est pas vide
+			if (pizzas[i] != null ) {
+				System.out.println(pizzas[i].getCode() + " -> " + pizzas[i].getNom() + " (" + pizzas[i].getPrix() + " €)");
+			}
+		}
+	}	
 
 	/**
 	 * @return the numeroChoix
@@ -51,5 +68,4 @@ public abstract class Choix {
 	public void setNomChoix(String nomChoix) {
 		this.nomChoix = nomChoix;
 	}
-
 }
