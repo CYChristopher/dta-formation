@@ -22,8 +22,7 @@ public class PizzeriaAdminConsoleApp {
 	 */
 	private static void showMenu() {
 		System.out.println(
-				"***** Pizzeria Administration *****" + "\n 1. Lister les pizzas" + "\n 2. Ajouter une nouvelle pizza"
-						+ "\n 3. Mettre à jour une pizza" + "\n 4. Supprimer une pizza" + "\n 99. Sortir");
+				"***** Pizzeria Administration *****\n 1. Lister les pizzas\n 2. Ajouter une nouvelle pizza\n 3. Mettre à jour une pizza\n 4. Supprimer une pizza\n 99. Sortir");
 	}
 
 	/**
@@ -82,7 +81,7 @@ public class PizzeriaAdminConsoleApp {
 		pizzas[8][1] = "IND";
 		pizzas[8][2] = "L'indienne";
 		pizzas[8][3] = "14,00";
-		
+
 		nbPizzas = 7;
 	}
 
@@ -91,7 +90,7 @@ public class PizzeriaAdminConsoleApp {
 	 */
 	private static void listPizzas() {
 		for (int i = 1; i <= pizzas.length - 1; i++) {
-			//Si la ligne n'est pas vide
+			// Si la ligne n'est pas vide
 			if (pizzas[i][1] != null && !pizzas[i][1].equals("")) {
 				System.out.println(pizzas[i][1] + " -> " + pizzas[i][2] + " (" + pizzas[i][3] + " €)");
 			}
@@ -100,10 +99,15 @@ public class PizzeriaAdminConsoleApp {
 
 	/**
 	 * Modifie une pizza
-	 * @param codeSaisi Code de la pizza à modifier
-	 * @param codePizza Nouveau code
-	 * @param nomPizza Nouveau nom
-	 * @param prixPizza Nouveau prix
+	 * 
+	 * @param codeSaisi
+	 *            Code de la pizza à modifier
+	 * @param codePizza
+	 *            Nouveau code
+	 * @param nomPizza
+	 *            Nouveau nom
+	 * @param prixPizza
+	 *            Nouveau prix
 	 */
 	private static void modifyPizzas(String codeSaisi, String codePizza, String nomPizza, String prixPizza) {
 		for (int i = 1; i <= pizzas.length; i++) {
@@ -134,7 +138,7 @@ public class PizzeriaAdminConsoleApp {
 		while (choice != 99) {
 			switch (choice) {
 
-			//Lister les pizzas
+			// Lister les pizzas
 			case 1:
 				listPizzas();
 				System.out.println();
@@ -142,7 +146,7 @@ public class PizzeriaAdminConsoleApp {
 				readline = sc.nextLine();
 				choice = Integer.parseInt(readline);
 				break;
-			//Ajouter une pizza
+			// Ajouter une pizza
 			case 2:
 				System.out.print("Veuillez saisir le code : ");
 				String codePizza = sc.nextLine();
@@ -167,7 +171,7 @@ public class PizzeriaAdminConsoleApp {
 				readline = sc.nextLine();
 				choice = Integer.parseInt(readline);
 				break;
-			//Modifier une pizza
+			// Modifier une pizza
 			case 3:
 				listPizzas();
 
@@ -191,7 +195,7 @@ public class PizzeriaAdminConsoleApp {
 				choice = Integer.parseInt(readline);
 
 				break;
-			//Supprimer une pizza
+			// Supprimer une pizza
 			case 4:
 				listPizzas();
 
@@ -210,7 +214,7 @@ public class PizzeriaAdminConsoleApp {
 				readline = sc.nextLine();
 				choice = Integer.parseInt(readline);
 				break;
-				
+
 			default:
 				System.out.println("Veuillez choisir un choix parmi les numéros !");
 				System.out.println();
@@ -220,7 +224,7 @@ public class PizzeriaAdminConsoleApp {
 				break;
 			}
 		}
-		
+
 		System.out.println("Au revoir.");
 	}
 
