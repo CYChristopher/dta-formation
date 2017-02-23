@@ -74,6 +74,4 @@ public class PizzeriaAdminConsoleApp {
 	private static void appliquerChoix(Integer numero, Choix unChoix) {
 		unChoix.faireUneAction(numero, pizzaDao, sc);
 	}
-
-
 }

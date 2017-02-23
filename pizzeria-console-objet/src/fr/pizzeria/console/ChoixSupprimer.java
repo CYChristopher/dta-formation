@@ -6,6 +6,7 @@ package fr.pizzeria.console;
 import java.util.Scanner;
 
 import fr.pizzeria.dao.IPizzaDaoImpl;
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -24,18 +25,24 @@ public final class ChoixSupprimer extends Choix {
 	@Override
 	public void faireUneAction(Integer num, IPizzaDaoImpl pizzaDao, Scanner sc) {
 		if (num == this.getNumeroChoix()) {
-			listPizzas(pizzaDao.findAllPizzas());
-
-			System.out.print("Veuillez choisir la pizza à supprimer (99 pour abandonner): ");
-			String codeSaisiS = sc.nextLine();
-
-			if (!codeSaisiS.equalsIgnoreCase("99") && Pizza.getNbPizzas() < 99) {
-				pizzaDao.deletePizza(codeSaisiS);
-			} else {
-				System.out.println("Aucune pizza supprimée.");
+			Boolean saisieOk = false;
+			String codeSaisiS = "";
+			while (!saisieOk && !codeSaisiS.equalsIgnoreCase("99")) {
+				try {
+					listPizzas(pizzaDao.findAllPizzas());
+					System.out.print("Veuillez choisir la pizza à supprimer (99 pour abandonner): ");
+					codeSaisiS = sc.nextLine();
+					if (!codeSaisiS.equalsIgnoreCase("99") && Pizza.getNbPizzas() < 99) {
+						pizzaDao.deletePizza(codeSaisiS);
+					} else {
+						System.out.println("Aucune pizza supprimée.");
+					}
+					System.out.println();
+				} catch (StockageException e) {
+					System.out.println(e.getMessage());
+					System.out.println();
+				}
 			}
-
-			System.out.println();
 		}
 	}
 }
