@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -32,28 +33,28 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 */
 	public void initializeList() {
 
-		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50);
+		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50, CategoriePizza.VIANDE);
 		this.pizzas.add(peperoni);
 
-		Pizza margherita = new Pizza(1, "MAR", "Margherita", 14.00);
+		Pizza margherita = new Pizza(1, "MAR", "Margherita", 14.00, CategoriePizza.VIANDE);
 		this.pizzas.add(margherita);
 
-		Pizza laReine = new Pizza(2, "REI", "La Reine", 11.50);
+		Pizza laReine = new Pizza(2, "REI", "La Reine", 11.50, CategoriePizza.VIANDE);
 		this.pizzas.add(laReine);
 
-		Pizza la4Fromages = new Pizza(3, "FRO", "La 4 fromages", 12.00);
+		Pizza la4Fromages = new Pizza(3, "FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE);
 		this.pizzas.add(la4Fromages);
 
-		Pizza laCannibale = new Pizza(4, "CAN", "La cannibale", 12.50);
+		Pizza laCannibale = new Pizza(4, "CAN", "La cannibale", 12.50, CategoriePizza.VIANDE);
 		this.pizzas.add(laCannibale);
 
-		Pizza laSavoyarde = new Pizza(5, "SAV", "La savoyarde", 13.00);
+		Pizza laSavoyarde = new Pizza(5, "SAV", "La savoyarde", 13.00, CategoriePizza.VIANDE);
 		this.pizzas.add(laSavoyarde);
 
-		Pizza lOrientale = new Pizza(6, "ORI", "L'orientale", 13.50);
+		Pizza lOrientale = new Pizza(6, "ORI", "L'orientale", 13.50, CategoriePizza.VIANDE);
 		this.pizzas.add(lOrientale);
 
-		Pizza lIndienne = new Pizza(7, "IND", "L'indienne", 14.00);
+		Pizza lIndienne = new Pizza(7, "IND", "L'indienne", 14.00, CategoriePizza.VIANDE);
 		this.pizzas.add(lIndienne);
 	}
 

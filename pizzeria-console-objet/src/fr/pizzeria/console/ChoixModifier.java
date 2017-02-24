@@ -10,6 +10,7 @@ import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.PizzasTools;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -43,7 +44,7 @@ final class ChoixModifier extends Choix<String, Pizza> {
 					String nomPizzaM = this.getSc().nextLine();
 					System.out.print("Veuillez saisir le prix : ");
 					Double prixPizzaM = Double.parseDouble(this.getSc().nextLine());
-					this.getItemDao().updateItem(codeSaisi, new Pizza(0, codePizzaM, nomPizzaM, prixPizzaM));
+					this.getItemDao().updateItem(codeSaisi, new Pizza(0, codePizzaM, nomPizzaM, prixPizzaM, CategoriePizza.VIANDE));
 					saisieOk = true;
 				}
 				System.out.println();

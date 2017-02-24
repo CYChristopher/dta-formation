@@ -13,6 +13,7 @@ public class Pizza {
 	private String code;
 	private String nom;
 	private Double prix;
+	private CategoriePizza categorie;
 	
 	/**
 	 * @param id
@@ -20,12 +21,13 @@ public class Pizza {
 	 * @param nom
 	 * @param prix
 	 */
-	public Pizza(Integer id, String code, String nom, Double prix) {
+	public Pizza(Integer id, String code, String nom, Double prix, CategoriePizza categ) {
 		super();
 		this.id = id;
 		this.code = code;
 		this.nom = nom;
 		this.prix = prix;
+		this.setCategorie(categ);
 	}
 
 	/**
@@ -82,5 +84,28 @@ public class Pizza {
 	 */
 	public void setPrix(Double prix) {
 		this.prix = prix;
+	}
+
+	/**
+	 * @return the categorie
+	 */
+	public CategoriePizza getCategorie() {
+		return categorie;
+	}
+
+	/**
+	 * @param categorie the categorie to set
+	 */
+	public void setCategorie(CategoriePizza categorie) {
+		this.categorie = categorie;
 	}	
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.code + " -> " + this.nom + " (" + this.prix + " €) : " + this.categorie;
+	}
+	
 }

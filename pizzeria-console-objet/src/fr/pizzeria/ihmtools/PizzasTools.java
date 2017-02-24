@@ -24,7 +24,7 @@ public class PizzasTools {
 		pizzas.forEach(new Consumer<Pizza>() {
 			@Override
 			public void accept(Pizza pizza) {
-				System.out.println(pizza.getCode() + " -> " + pizza.getNom() + " (" + pizza.getPrix() + " €)");
+				System.out.println(pizza.toString());
 			}
 		});
 	}

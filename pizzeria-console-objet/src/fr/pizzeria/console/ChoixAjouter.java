@@ -8,6 +8,7 @@ import java.util.Scanner;
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
+import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -35,7 +36,7 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 				String nomPizza = this.getSc().nextLine();
 				System.out.print("Veuillez saisir le prix : ");
 				Double prixPizza = Double.parseDouble(this.getSc().nextLine());
-				this.getItemDao().saveNewItem(new Pizza(0, codePizza, nomPizza, prixPizza));
+				this.getItemDao().saveNewItem(new Pizza(0, codePizza, nomPizza, prixPizza, CategoriePizza.VIANDE));
 				System.out.println();
 				saisieOk = true;
 			} catch (NumberFormatException e) {
