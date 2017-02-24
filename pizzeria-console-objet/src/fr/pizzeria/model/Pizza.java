@@ -13,7 +13,6 @@ public class Pizza {
 	private String code;
 	private String nom;
 	private Double prix;
-	private static Integer nbPizzas;
 	
 	/**
 	 * @param id
@@ -83,20 +82,5 @@ public class Pizza {
 	 */
 	public void setPrix(Double prix) {
 		this.prix = prix;
-	}
-
-	/**
-	 * @return the nbPizzas
-	 */
-	public static Integer getNbPizzas() {
-		return nbPizzas;
-	}
-
-	/**
-	 * @param nbPizzas the nbPizzas to set
-	 */
-	public static void setNbPizzas(Integer nbPizzas) {
-		Pizza.nbPizzas = nbPizzas;
 	}	
-	
 }

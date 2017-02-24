@@ -3,141 +3,140 @@
  */
 package fr.pizzeria.dao;
 
-import fr.pizzeria.exception.DeletePizzaException;
-import fr.pizzeria.exception.SavePizzaException;
-import fr.pizzeria.exception.UpdatePizzaException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
+
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
  *
  */
-public class IPizzaDaoImpl implements IPizzaDao {
+public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 
-	private Pizza[] pizzas;
+	private List<Pizza> pizzas;
+	private Boolean pizzaInList = false;
 
-	public IPizzaDaoImpl(Integer taille) {
-		this.pizzas = new Pizza[taille];
+	/**
+	 * 
+	 * @param taille
+	 */
+	public IPizzaDaoImpl() {
+		this.pizzas = new ArrayList<Pizza>();
 	}
 
 	/**
 	 * Initialise le tableau des pizzas
 	 */
-	public void initializeArray() {
+	public void initializeList() {
 
 		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50);
-		this.pizzas[1] = peperoni;
+		this.pizzas.add(peperoni);
 
 		Pizza margherita = new Pizza(1, "MAR", "Margherita", 14.00);
-		this.pizzas[2] = margherita;
+		this.pizzas.add(margherita);
 
 		Pizza laReine = new Pizza(2, "REI", "La Reine", 11.50);
-		this.pizzas[3] = laReine;
+		this.pizzas.add(laReine);
 
 		Pizza la4Fromages = new Pizza(3, "FRO", "La 4 fromages", 12.00);
-		this.pizzas[4] = la4Fromages;
+		this.pizzas.add(la4Fromages);
 
 		Pizza laCannibale = new Pizza(4, "CAN", "La cannibale", 12.50);
-		this.pizzas[5] = laCannibale;
+		this.pizzas.add(laCannibale);
 
 		Pizza laSavoyarde = new Pizza(5, "SAV", "La savoyarde", 13.00);
-		this.pizzas[6] = laSavoyarde;
+		this.pizzas.add(laSavoyarde);
 
 		Pizza lOrientale = new Pizza(6, "ORI", "L'orientale", 13.50);
-		this.pizzas[7] = lOrientale;
+		this.pizzas.add(lOrientale);
 
 		Pizza lIndienne = new Pizza(7, "IND", "L'indienne", 14.00);
-		this.pizzas[8] = lIndienne;
-
-		Pizza.setNbPizzas(8);
+		this.pizzas.add(lIndienne);
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see fr.pizzeria.dao.IPizzaDao#findAllPizzas()
+	 * @see fr.pizzeria.dao.IItemDao#findAllPizzas()
 	 */
 	@Override
-	public Pizza[] findAllPizzas() {
+	public List<Pizza> findAllItems() {
 		return pizzas;
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see fr.pizzeria.dao.IPizzaDao#saveNewPizza(fr.pizzeria.model.Pizza)
+	 * @see fr.pizzeria.dao.IItemDao#saveNewPizza(fr.pizzeria.dao)
 	 */
 	@Override
-	public void saveNewPizza(Pizza pizza) throws SavePizzaException{
+	public void saveNewItem(Pizza pizza) throws StockageException{
 		if(pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")){
-			throw new SavePizzaException("Le code de la pizza est incorrect !");
+			throw new StockageException("Le code de la pizza est incorrect !");
 		}
 		if(pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")){
-			throw new SavePizzaException("Le nom de la pizza est incorrect !");
+			throw new StockageException("Le nom de la pizza est incorrect !");
 		}
-		for (int i = 1; i <= pizzas.length; i++) {
-			if (pizzas[i] == null) {
-				pizza.setId(i);
-				pizzas[i] = pizza;
-				Pizza.setNbPizzas(Pizza.getNbPizzas() + 1);
-				break;
+		this.pizzas.add(pizza);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.pizzeria.dao.IItemDao#updatePizza(java.lang.String,
+	 * fr.pizzeria.dao)
+	 */
+	@Override
+	public void updateItem(String codePizza, Pizza pizza) throws StockageException{
+		if(codePizza == null || codePizza.equalsIgnoreCase("")){
+			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
+		}
+		if(pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")){
+			throw new StockageException("Le code modifié de la pizza est incorrect !");
+		}
+		if(pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")){
+			throw new StockageException("Le nom modifié de la pizza est incorrect !");
+		}
+		pizzaInList = false;
+		this.pizzas.forEach(new Consumer<Pizza>() {
+			@Override
+			public void accept(Pizza laPizza) {
+				if(laPizza.getCode().equalsIgnoreCase(codePizza)){
+					laPizza.setCode(pizza.getCode());
+					laPizza.setNom(pizza.getNom());
+					laPizza.setPrix(pizza.getPrix());
+					pizzaInList = true;
+				}
 			}
+		});
+		if(!pizzaInList){
+			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see fr.pizzeria.dao.IPizzaDao#updatePizza(java.lang.String,
-	 * fr.pizzeria.model.Pizza)
+	 * @see fr.pizzeria.dao.IItemDao#deletePizza(java.lang.String)
 	 */
 	@Override
-	public void updatePizza(String codePizza, Pizza pizza) throws UpdatePizzaException{
+	public void deleteItem(String codePizza) throws StockageException{
 		if(codePizza == null || codePizza.equalsIgnoreCase("")){
-			throw new UpdatePizzaException("Le code de la pizza sélectionnée est incorrect !");
+			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
 		}
-		if(pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")){
-			throw new UpdatePizzaException("Le code modifié de la pizza est incorrect !");
-		}
-		if(pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")){
-			throw new UpdatePizzaException("Le nom modifié de la pizza est incorrect !");
-		}
-		Boolean pizzaInList = false;
-		for (int i = 0; i < pizzas.length; i++) {
-			if (pizzas[i] != null && pizzas[i].getCode().equalsIgnoreCase(codePizza)) {
-				pizzas[i].setCode(pizza.getCode());
-				pizzas[i].setNom(pizza.getNom());
-				pizzas[i].setPrix(pizza.getPrix());
+		pizzaInList = false;
+		this.pizzas.forEach(new Consumer<Pizza>() {
+			@Override
+			public void accept(Pizza laPizza) {
+				pizzas.remove(laPizza);
 				pizzaInList = true;
-				break;
 			}
-		}
+		});
 		if(!pizzaInList){
-			throw new UpdatePizzaException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
-		}
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.pizzeria.dao.IPizzaDao#deletePizza(java.lang.String)
-	 */
-	@Override
-	public void deletePizza(String codePizza) throws DeletePizzaException{
-		if(codePizza == null || codePizza.equalsIgnoreCase("")){
-			throw new DeletePizzaException("Le code de la pizza sélectionnée est incorrect !");
-		}
-		Boolean pizzaInList = false;
-		for (int i = 0; i < pizzas.length; i++) {
-			if (pizzas[i] != null && pizzas[i].getCode().equalsIgnoreCase(codePizza)) {
-				pizzas[i] = null;
-				Pizza.setNbPizzas(Pizza.getNbPizzas() - 1);
-				pizzaInList = true;
-				break;
-			}
-		}
-		if(!pizzaInList){
-			throw new DeletePizzaException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
+			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
 		}
 	}
 

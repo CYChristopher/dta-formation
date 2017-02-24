@@ -1,32 +1,35 @@
 /**
- * 22 févr. 2017 Christopher CHARLERY
+ * 24 févr. 2017 Christopher CHARLERY
  */
 package fr.pizzeria.console;
 
-import java.util.Scanner;
+import java.util.List;
 
-import fr.pizzeria.dao.IPizzaDaoImpl;
+import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.ihmtools.Choix;
+import fr.pizzeria.ihmtools.PizzasTools;
 import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
  *
  */
-public final class ChoixLister extends Choix {
+final class ChoixLister extends Choix<String, Pizza> {
+	
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
 	 */
-	public ChoixLister(Integer numeroChoix, String nomChoix) {
-		super(numeroChoix, nomChoix);
+	public ChoixLister(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> pizzaDao) {
+		super(numeroChoix, nomChoix, pizzaDao);
 	}
 
 	@Override
-	public void faireUneAction(Integer num, IPizzaDaoImpl pizzaDao, Scanner sc) {
-		if (num == this.getNumeroChoix()) {
-			listPizzas(pizzaDao.findAllPizzas());
-			System.out.println("-> " + Pizza.getNbPizzas() + " pizzas dans le menu");
-			System.out.println();
-		}
+	public Boolean faireUneAction() {
+		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+		new PizzasTools().listPizzas(lesPizzas);
+		System.out.println("-> " + lesPizzas.size() + " pizzas dans le menu");
+		System.out.println();
+		return true;
 	}
 }
