@@ -5,8 +5,6 @@ package fr.pizzeria.ihmtools;
 
 import java.util.Scanner;
 
-import fr.pizzeria.model.Pizza;
-
 /**
  * @author Christopher CHARLERY
  *
