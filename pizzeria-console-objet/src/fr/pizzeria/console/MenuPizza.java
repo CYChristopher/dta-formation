@@ -35,20 +35,30 @@ public class MenuPizza {
 
 	// Sortir de l'application
 	private Choix<String, Pizza> sortir;
+	
+	//Lister les pizzas par catégorie
+	private Choix<String, Pizza> listerCateg;
+	
+	//Affiche la pizza la plus chère
+	private Choix<String, Pizza> afficherPizzaMAx;
 
 	/**
 	 * Crée un menu pizza
 	 */
 	public MenuPizza(Scanner scan, IItemDao<String, Pizza> dao) {
-		this.menu = new Menu("***** Pizzeria Administration V2 *****");
+		this.menu = new Menu("***** Pizzeria Administration *****");
 		
 		this.lister = new ChoixLister(1, "Lister les pizzas",dao);
-		this.ajouter = new ChoixAjouter(2, "Ajouter une nouvelle pizza", dao, scan);
-		this.modifier = new ChoixModifier(3, "Mettre à jour une pizza", dao, scan);
-		this.supprimer = new ChoixSupprimer(4, "Supprimer une pizza", dao, scan);
+		this.listerCateg = new ChoixListerCateg(2, "Lister les pizzas par catégories", dao);
+		this.afficherPizzaMAx = new ChoixPizzaMax(3, "Afficher la pizza au tarif le plus élevé", dao, scan);
+		this.ajouter = new ChoixAjouter(4, "Ajouter une nouvelle pizza", dao, scan);
+		this.modifier = new ChoixModifier(5, "Mettre à jour une pizza", dao, scan);
+		this.supprimer = new ChoixSupprimer(6, "Supprimer une pizza", dao, scan);
 		this.sortir = new ChoixSortir(99, "Sortir", scan);
 		
 		this.menu.addChoix(this.lister);
+		this.menu.addChoix(this.listerCateg);
+		this.menu.addChoix(this.afficherPizzaMAx);
 		this.menu.addChoix(this.ajouter);
 		this.menu.addChoix(this.modifier);
 		this.menu.addChoix(this.supprimer);

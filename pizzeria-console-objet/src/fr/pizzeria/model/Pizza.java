@@ -3,8 +3,6 @@
  */
 package fr.pizzeria.model;
 
-import java.lang.reflect.Field;
-
 /**
  * @author Christopher CHARLERY
  *
@@ -12,9 +10,9 @@ import java.lang.reflect.Field;
 public class Pizza {
 
 	private Integer id;
-	@ToString(uppercase = false)
+	//@ToString(uppercase = false)
 	private String code;
-	@ToString(uppercase = true)
+	//@ToString(uppercase = true)
 	private String nom;
 	private Double prix;
 	private CategoriePizza categorie;
@@ -116,7 +114,7 @@ public class Pizza {
 	 */
 	@Override
 	public String toString() {
-		StringBuilder description = new StringBuilder();
+		/*StringBuilder description = new StringBuilder();
 		for (Field field : this.getClass().getDeclaredFields()) {
 			ToString annotationTrouve = field.getAnnotation(ToString.class);
 			if (field.isAnnotationPresent(ToString.class)) {
@@ -135,8 +133,8 @@ public class Pizza {
 				description.append(" ");
 			}
 		}
-		return description.toString();
-		// return this.code + " -> " + this.nom + " (" + this.prix + " €) : " + this.categorie;
+		return description.toString();*/
+		return this.code + " -> " + this.nom + " (" + this.prix + " €) : " + this.categorie;
 	}
 
 }
