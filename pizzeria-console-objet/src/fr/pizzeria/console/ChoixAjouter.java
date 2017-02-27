@@ -3,7 +3,10 @@
  */
 package fr.pizzeria.console;
 
+import java.util.Map;
 import java.util.Scanner;
+import java.util.TreeMap;
+import java.util.function.BiConsumer;
 
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.exception.StockageException;
@@ -16,7 +19,7 @@ import fr.pizzeria.model.Pizza;
  *
  */
 final class ChoixAjouter extends Choix<String, Pizza> {
-	
+
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
@@ -30,13 +33,26 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 		Boolean saisieOk = false;
 		while (!saisieOk) {
 			try {
+				Map<Integer, CategoriePizza> categories = new TreeMap<Integer, CategoriePizza>();
+				categories.put(1, CategoriePizza.POISSON);
+				categories.put(2, CategoriePizza.SANS_VIANDE);
+				categories.put(3, CategoriePizza.VIANDE);
+
 				System.out.print("Veuillez saisir le code : ");
 				String codePizza = this.getSc().nextLine();
 				System.out.print("Veuillez saisir le nom (sans espace) : ");
 				String nomPizza = this.getSc().nextLine();
 				System.out.print("Veuillez saisir le prix : ");
 				Double prixPizza = Double.parseDouble(this.getSc().nextLine());
-				this.getItemDao().saveNewItem(new Pizza(0, codePizza, nomPizza, prixPizza, CategoriePizza.VIANDE));
+
+				System.out.println("Veuillez choisir la catégorie de la pizza : ");
+				categories.forEach((id, categorie) -> {
+					System.out.print(" / " + id + ". " + categorie.toString());
+				});
+				System.out.println();
+				Integer idCategorie = Integer.parseInt(this.getSc().nextLine());
+
+				this.getItemDao().saveNewItem(new Pizza(0, codePizza, nomPizza, prixPizza, categories.get(idCategorie)));
 				System.out.println();
 				saisieOk = true;
 			} catch (NumberFormatException e) {

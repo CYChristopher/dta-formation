@@ -95,6 +95,9 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 		if (pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")) {
 			throw new StockageException("Le nom de la pizza est incorrect !");
 		}
+		if(pizza.getCategorie() == null){
+			throw new StockageException("Vous devez choisir une catégorie de pizza !");
+		}
 		this.pizzas.add(pizza);
 		saveInFile(pizza);
 	}
