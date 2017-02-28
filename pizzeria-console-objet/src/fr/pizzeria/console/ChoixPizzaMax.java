@@ -3,6 +3,7 @@
  */
 package fr.pizzeria.console;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.Scanner;
@@ -11,7 +12,6 @@ import java.util.stream.Collectors;
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.model.Pizza;
-import fr.pizzeria.model.PizzaComparator;
 
 /**
  * @author Christopher CHARLERY
@@ -35,7 +35,7 @@ public class ChoixPizzaMax extends Choix<String, Pizza> {
 	@Override
 	public Boolean faireUneAction() {
 		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
-		Optional<Pizza> laPizza = lesPizzas.stream().collect(Collectors.maxBy(new PizzaComparator()));
+		Optional<Pizza> laPizza = lesPizzas.stream().collect(Collectors.maxBy(Comparator.comparing(Pizza::getPrix)));
 		if(laPizza.isPresent()){
 			lesPizzas.forEach(pizza -> {
 				if(pizza.getPrix() == laPizza.get().getPrix()){

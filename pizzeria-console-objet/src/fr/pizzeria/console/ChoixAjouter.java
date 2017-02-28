@@ -39,7 +39,7 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 				categories.put(3, CategoriePizza.VIANDE);
 
 				System.out.print("Veuillez saisir le code : ");
-				String codePizza = this.getSc().nextLine();
+				String codePizza = this.getSc().nextLine().toUpperCase();
 				System.out.print("Veuillez saisir le nom (sans espace) : ");
 				String nomPizza = this.getSc().nextLine();
 				System.out.print("Veuillez saisir le prix : ");

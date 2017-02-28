@@ -26,8 +26,6 @@ public class PizzeriaAdminConsoleApp {
 		IItemDao<String, Pizza> pizzaDao = new IPizzaDaoImpl();
 		MenuPizza menuPizza = new MenuPizza(sc, pizzaDao);
 
-		pizzaDao.initializeList();
-
 		menuPizza.getMenu().show();
 		readline = sc.nextLine();
 		choice = Integer.parseInt(readline);
