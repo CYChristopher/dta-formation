@@ -26,6 +26,8 @@ public class ChatConsoleConversationView extends ViewComposite{
 	@Override
 	public void print() {
 		System.out.println("== Conversation ==");
+		System.out.println("Welcome : " + this.login);
 	}
-
+	
+	
 }

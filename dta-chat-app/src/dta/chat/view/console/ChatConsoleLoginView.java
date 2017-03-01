@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  */
 public class ChatConsoleLoginView extends ViewComposite{
-	
+
 	private Scanner sc;
 	
 	/**
@@ -27,6 +27,7 @@ public class ChatConsoleLoginView extends ViewComposite{
 	public void print() {
 		System.out.println("== Authentification ==");
 		System.out.print("Veuillez saisir votre login : ");
-		String login = this.sc.next();
+		this.controller.authenticate(sc.next());
 	}
+	
 }
