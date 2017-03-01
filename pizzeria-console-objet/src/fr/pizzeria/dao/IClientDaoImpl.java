@@ -7,26 +7,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.model.AbstractPersonne;
 import fr.pizzeria.model.Client;
-import fr.pizzeria.model.Livreur;
 
 /**
  * @author Christopher CHARLERY
  *
  */
-public class IPersonneDaoImpl implements IItemDao<Integer, AbstractPersonne> {
+public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	
 	private List<Client> lesClients = new ArrayList<Client>();
-	private List<Livreur> lesLivreurs = new ArrayList<Livreur>();
 
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.IItemDao#findAllItems()
 	 */
 	@Override
-	public List<AbstractPersonne> findAllItems() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Client> findAllItems() {
+		return lesClients;
 	}
 
 	/* (non-Javadoc)
@@ -34,26 +30,27 @@ public class IPersonneDaoImpl implements IItemDao<Integer, AbstractPersonne> {
 	 */
 	@Override
 	public void initializeList() {
-		// TODO Auto-generated method stub
-
+		Client jRobert = new Client(12, "Robert", "Jules", 200.0);
+		this.lesClients.add(jRobert);
+		
+		Client hRobert = new Client(15, "Robert", "Hugues", 2.0);
+		this.lesClients.add(hRobert);
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.IItemDao#saveNewItem(java.lang.Object)
 	 */
 	@Override
-	public void saveNewItem(AbstractPersonne item) throws StockageException {
+	public void saveNewItem(Client item) throws StockageException {
 		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.IItemDao#updateItem(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void updateItem(Integer idItem, AbstractPersonne item) throws StockageException {
+	public void updateItem(Integer idItem, Client item) throws StockageException {
 		// TODO Auto-generated method stub
-
 	}
 
 	/* (non-Javadoc)
@@ -62,7 +59,6 @@ public class IPersonneDaoImpl implements IItemDao<Integer, AbstractPersonne> {
 	@Override
 	public void deleteItem(Integer idItem) throws StockageException {
 		// TODO Auto-generated method stub
-
 	}
 
 }
