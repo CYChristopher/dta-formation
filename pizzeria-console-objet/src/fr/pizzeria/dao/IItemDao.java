@@ -6,6 +6,7 @@ package fr.pizzeria.dao;
 import java.util.List;
 
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
@@ -45,5 +46,4 @@ public interface IItemDao<I, G> {
 	 * @throws DeleteItemException
 	 */
 	void deleteItem(I idItem) throws StockageException;
-	
 }

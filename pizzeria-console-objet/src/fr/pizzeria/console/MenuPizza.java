@@ -48,7 +48,7 @@ public class MenuPizza {
 	public MenuPizza(Scanner scan, IItemDao<String, Pizza> dao) {
 		this.menu = new Menu("***** Pizzeria Administration *****");
 		
-		this.lister = new ChoixLister(1, "Lister les pizzas",dao);
+		this.lister = new ChoixListerPizza(1, "Lister les pizzas",dao);
 		this.listerCateg = new ChoixListerCateg(2, "Lister les pizzas par catégories", dao);
 		this.afficherPizzaMAx = new ChoixPizzaMax(3, "Afficher la pizza au tarif le plus élevé", dao, scan);
 		this.ajouter = new ChoixAjouter(4, "Ajouter une nouvelle pizza", dao, scan);

@@ -14,13 +14,13 @@ import fr.pizzeria.model.Pizza;
  * @author Christopher CHARLERY
  *
  */
-final class ChoixLister extends Choix<String, Pizza> {
+final class ChoixListerPizza extends Choix<String, Pizza> {
 	
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
 	 */
-	public ChoixLister(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> pizzaDao) {
+	public ChoixListerPizza(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> pizzaDao) {
 		super(numeroChoix, nomChoix, pizzaDao);
 	}
 

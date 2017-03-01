@@ -40,10 +40,10 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 		try {
 			this.pizzas = new ArrayList<Pizza>();
 			cheminDossier = new File("").getCanonicalPath();
-			dossierData = new File(cheminDossier + "\\data");
+			dossierData = new File(cheminDossier + "\\data\\pizzas");
 			initializeList();
 		} catch (IOException e) {
-			System.out.println("Le dossier data est introuvable !");
+			System.out.println("Le dossier data\\pizza est introuvable !");
 		}
 	}
 
@@ -71,7 +71,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 				generatePizzas();
 			}
 		} catch (IOException e) {
-			System.out.println("Le dossier data est introuvable !");
+			System.out.println("Le dossier data\\pizza est introuvable !");
 		}
 	}
 
@@ -214,7 +214,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 			}
 			Files.write(fichierPizza, donneesPizza, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			System.out.println("Le dossier data est introuvable !");
+			System.out.println("Le dossier data\\pizza est introuvable !");
 		}
 	}
 
