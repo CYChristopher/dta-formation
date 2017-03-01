@@ -8,13 +8,15 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 import fr.pizzeria.model.CategoriePizza;
+import fr.pizzeria.model.Client;
+import fr.pizzeria.model.Livreur;
 import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
  *
  */
-public class PizzasTools {
+public class Tools {
 
 	/**
 	 * Affiche la liste les pizzas
@@ -23,11 +25,28 @@ public class PizzasTools {
 	 *            Tableau des pizzas
 	 */
 	public void listPizzas(List<Pizza> pizzas) {
-		pizzas.forEach(new Consumer<Pizza>() {
-			@Override
-			public void accept(Pizza pizza) {
-				System.out.println(pizza.toString());
-			}
+		pizzas.forEach(pizza -> {
+			System.out.println(pizza.toString());
+		});
+	}
+
+	/**
+	 * Affiche la liste des clients
+	 * @param clients
+	 */
+	public void listClients(List<Client> clients) {
+		clients.forEach(client -> {
+			System.out.println(client.toString());
+		});
+	}
+	
+	/**
+	 * Affiche la liste des livreurs
+	 * @param livreurs
+	 */
+	public void listLivreurs(List<Livreur> livreurs){
+		livreurs.forEach(livreur -> {
+			System.out.println(livreur.toString());
 		});
 	}
 

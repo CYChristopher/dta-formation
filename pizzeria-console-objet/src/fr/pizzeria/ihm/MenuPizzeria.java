@@ -1,14 +1,17 @@
 /**
  * 24 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
+import fr.pizzeria.dao.IClientDaoImpl;
 import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.IPizzaDaoImpl;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.ChoixSortir;
 import fr.pizzeria.ihmtools.Menu;
+import fr.pizzeria.model.Client;
 import fr.pizzeria.model.Pizza;
 
 
@@ -17,7 +20,7 @@ import fr.pizzeria.model.Pizza;
  * @author Christopher CHARLERY
  *
  */
-public class MenuPizza {
+public class MenuPizzeria {
 
 	private Menu menu;
 
@@ -41,19 +44,26 @@ public class MenuPizza {
 	
 	//Affiche la pizza la plus chère
 	private Choix<String, Pizza> afficherPizzaMAx;
+	
+	//Affiche la liste des clients
+	private Choix<Integer, Client> listerClient;
 
 	/**
 	 * Crée un menu pizza
 	 */
-	public MenuPizza(Scanner scan, IItemDao<String, Pizza> dao) {
+	public MenuPizzeria(Scanner scan) {
+		IItemDao<String, Pizza> pizzaDao = new IPizzaDaoImpl();
+		IItemDao<Integer, Client> clientDao = new IClientDaoImpl();
+		
 		this.menu = new Menu("***** Pizzeria Administration *****");
 		
-		this.lister = new ChoixListerPizza(1, "Lister les pizzas",dao);
-		this.listerCateg = new ChoixListerCateg(2, "Lister les pizzas par catégories", dao);
-		this.afficherPizzaMAx = new ChoixPizzaMax(3, "Afficher la pizza au tarif le plus élevé", dao, scan);
-		this.ajouter = new ChoixAjouter(4, "Ajouter une nouvelle pizza", dao, scan);
-		this.modifier = new ChoixModifier(5, "Mettre à jour une pizza", dao, scan);
-		this.supprimer = new ChoixSupprimer(6, "Supprimer une pizza", dao, scan);
+		this.lister = new ChoixListerPizza(1, "Lister les pizzas",pizzaDao);
+		this.listerCateg = new ChoixListerCateg(2, "Lister les pizzas par catégories", pizzaDao);
+		this.afficherPizzaMAx = new ChoixPizzaMax(3, "Afficher la pizza au tarif le plus élevé", pizzaDao, scan);
+		this.ajouter = new ChoixAjouter(4, "Ajouter une nouvelle pizza", pizzaDao, scan);
+		this.modifier = new ChoixModifier(5, "Mettre à jour une pizza", pizzaDao, scan);
+		this.supprimer = new ChoixSupprimer(6, "Supprimer une pizza", pizzaDao, scan);
+		this.listerClient = new ChoixListerClient(7, "Lister les clients", clientDao);
 		this.sortir = new ChoixSortir(99, "Sortir", scan);
 		
 		this.menu.addChoix(this.lister);
@@ -62,6 +72,7 @@ public class MenuPizza {
 		this.menu.addChoix(this.ajouter);
 		this.menu.addChoix(this.modifier);
 		this.menu.addChoix(this.supprimer);
+		this.menu.addChoix(this.listerClient);
 		this.menu.addChoix(this.sortir);
 	}
 

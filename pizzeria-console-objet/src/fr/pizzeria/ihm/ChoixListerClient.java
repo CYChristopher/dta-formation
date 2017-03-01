@@ -1,12 +1,13 @@
 /**
  * 28 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.List;
 
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.ihmtools.Choix;
+import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.AbstractPersonne;
 import fr.pizzeria.model.Client;
 
@@ -14,17 +15,17 @@ import fr.pizzeria.model.Client;
  * @author Christopher CHARLERY
  *
  */
-public class ChoixListerClient extends Choix<String, Client> {
+public class ChoixListerClient extends Choix<Integer, Client> {
 	
 	
 
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
-	 * @param dao
+	 * @param clientDao
 	 */
-	public ChoixListerClient(Integer numeroChoix, String nomChoix, IItemDao<String, Client> dao) {
-		super(numeroChoix, nomChoix, dao);
+	public ChoixListerClient(Integer numeroChoix, String nomChoix, IItemDao<Integer, Client> clientDao) {
+		super(numeroChoix, nomChoix, clientDao);
 	}
 
 	/* (non-Javadoc)
@@ -33,6 +34,8 @@ public class ChoixListerClient extends Choix<String, Client> {
 	@Override
 	public Boolean faireUneAction() {
 		List<Client> lesClients = this.getItemDao().findAllItems();
+		new Tools().listClients(lesClients);
+		System.out.println();
 		return true;
 	}
 

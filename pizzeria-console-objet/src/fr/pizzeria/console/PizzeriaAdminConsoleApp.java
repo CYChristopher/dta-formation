@@ -5,9 +5,7 @@ package fr.pizzeria.console;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IItemDao;
-import fr.pizzeria.dao.IPizzaDaoImpl;
-import fr.pizzeria.model.Pizza;
+import fr.pizzeria.ihm.MenuPizzeria;
 
 /**
  * @author Christopher CHARLERY
@@ -23,8 +21,7 @@ public class PizzeriaAdminConsoleApp {
 		String readline = "";
 		Scanner sc = new Scanner(System.in);
 		Integer choice;
-		IItemDao<String, Pizza> pizzaDao = new IPizzaDaoImpl();
-		MenuPizza menuPizza = new MenuPizza(sc, pizzaDao);
+		MenuPizzeria menuPizza = new MenuPizzeria(sc);
 
 		menuPizza.getMenu().show();
 		readline = sc.nextLine();

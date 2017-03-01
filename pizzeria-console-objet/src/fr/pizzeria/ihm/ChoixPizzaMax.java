@@ -1,7 +1,7 @@
 /**
  * 27 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.Comparator;
 import java.util.List;

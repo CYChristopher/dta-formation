@@ -1,7 +1,7 @@
 /**
  * 27 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.List;
 import java.util.Map;
@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.ihmtools.Choix;
-import fr.pizzeria.ihmtools.PizzasTools;
+import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
@@ -38,7 +38,7 @@ public class ChoixListerCateg extends Choix<String, Pizza> {
 		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
 		Map<CategoriePizza, List<Pizza>> categPizza = 
 				lesPizzas.stream().collect(Collectors.groupingBy(Pizza::getCategorie));
-		new PizzasTools().listPizzasCateg(categPizza);
+		new Tools().listPizzasCateg(categPizza);
 		System.out.println();
 		return true;
 	}

@@ -1,13 +1,13 @@
 /**
  * 24 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.List;
 
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.ihmtools.Choix;
-import fr.pizzeria.ihmtools.PizzasTools;
+import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -27,7 +27,7 @@ final class ChoixListerPizza extends Choix<String, Pizza> {
 	@Override
 	public Boolean faireUneAction() {
 		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
-		new PizzasTools().listPizzas(lesPizzas);
+		new Tools().listPizzas(lesPizzas);
 		System.out.println("-> " + lesPizzas.size() + " pizzas dans le menu");
 		System.out.println();
 		return true;

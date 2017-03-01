@@ -13,11 +13,11 @@ import fr.pizzeria.dao.IItemDao;
  * @param <G>
  *
  */
-public abstract class Choix<G, I> {
+public abstract class Choix<I, G> {
 	
 	private Integer numeroChoix;
 	private String nomChoix;
-	private IItemDao<G, I> itemDao;
+	private IItemDao<I, G> itemDao;
 	private Scanner sc;
 	
 	/**
@@ -48,7 +48,7 @@ public abstract class Choix<G, I> {
 	 * @param nomChoix
 	 * @param dao
 	 */
-	public Choix(Integer numeroChoix, String nomChoix, IItemDao<G, I> dao) {
+	public Choix(Integer numeroChoix, String nomChoix, IItemDao<I, G> dao) {
 		this(numeroChoix, nomChoix);
 		this.setItemDao(dao);
 	}
@@ -60,7 +60,7 @@ public abstract class Choix<G, I> {
 	 * @param dao
 	 * @param scan
 	 */
-	public Choix(Integer numeroChoix, String nomChoix, IItemDao<G, I> dao, Scanner scan) {
+	public Choix(Integer numeroChoix, String nomChoix, IItemDao<I, G> dao, Scanner scan) {
 		this(numeroChoix, nomChoix, dao);
 		this.setSc(scan);
 	}
@@ -105,14 +105,14 @@ public abstract class Choix<G, I> {
 	/**
 	 * @return the itemDao
 	 */
-	public IItemDao<G, I> getItemDao() {
+	public IItemDao<I, G> getItemDao() {
 		return itemDao;
 	}
 
 	/**
 	 * @param itemDao the itemDao to set
 	 */
-	public void setItemDao(IItemDao<G, I> itemDao) {
+	public void setItemDao(IItemDao<I, G> itemDao) {
 		this.itemDao = itemDao;
 	}
 

@@ -1,7 +1,7 @@
 /**
  * 24 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
-import fr.pizzeria.ihmtools.PizzasTools;
+import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -33,7 +33,7 @@ final class ChoixSupprimer extends Choix<String, Pizza> {
 		while (!saisieOk && !codeSaisiS.equalsIgnoreCase("99")) {
 			try {
 				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
-				new PizzasTools().listPizzas(lesPizzas);
+				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à supprimer (99 pour abandonner): ");
 				codeSaisiS = this.getSc().nextLine();
 				if (!codeSaisiS.equalsIgnoreCase("99") && lesPizzas.size() < 99) {

@@ -16,6 +16,14 @@ import fr.pizzeria.model.Client;
 public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	
 	private List<Client> lesClients = new ArrayList<Client>();
+	
+	/**
+	 * 
+	 */
+	public IClientDaoImpl() {
+		this.lesClients = new ArrayList<Client>();
+		initializeList();
+	}
 
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.IItemDao#findAllItems()

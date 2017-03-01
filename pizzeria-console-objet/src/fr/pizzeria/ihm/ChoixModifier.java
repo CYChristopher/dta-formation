@@ -1,7 +1,7 @@
 /**
  * 24 févr. 2017 Christopher CHARLERY
  */
-package fr.pizzeria.console;
+package fr.pizzeria.ihm;
 
 import java.util.List;
 import java.util.Scanner;
@@ -9,7 +9,7 @@ import java.util.Scanner;
 import fr.pizzeria.dao.IItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
-import fr.pizzeria.ihmtools.PizzasTools;
+import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
@@ -34,12 +34,12 @@ final class ChoixModifier extends Choix<String, Pizza> {
 		while (!saisieOk && !codeSaisi.equalsIgnoreCase("99")) {
 			try {
 				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
-				new PizzasTools().listPizzas(lesPizzas);
+				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à modifier (99 pour abandonner): ");
 				codeSaisi = this.getSc().nextLine();
 				if (!codeSaisi.equalsIgnoreCase("99") && lesPizzas.size() < 99) {
 					System.out.print("Veuillez saisir le code : ");
-					String codePizzaM = this.getSc().nextLine();
+					String codePizzaM = this.getSc().nextLine().toUpperCase();
 					System.out.print("Veuillez saisir le nom (sans espace) : ");
 					String nomPizzaM = this.getSc().nextLine();
 					System.out.print("Veuillez saisir le prix : ");
