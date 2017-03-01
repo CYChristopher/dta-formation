@@ -12,7 +12,7 @@ import dta.chat.controller.ChatAuthController;
  * @author Christopher CHARLERY
  *	Interface Composite
  */
-public abstract class ViewComposite {
+public abstract class ViewComposite{
 
 	private List<ViewComposite> children = new ArrayList<>();
 	protected ChatAuthController controller;

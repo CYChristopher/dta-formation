@@ -16,5 +16,4 @@ public class ChatConsoleTitleView extends ViewComposite{
 	public void print() {
 		System.out.println("= CHAT APP =");
 	}
-
 }

@@ -5,13 +5,15 @@ package dta.chat.view.console;
 
 import java.util.Scanner;
 
-import dta.chat.controller.ChatAuthController;
+import dta.chat.model.ChatMessage;
+import dta.chat.model.observer.ChatObservable;
+import dta.chat.model.observer.ChatObserver;
 
 /**
  * @author Christopher CHARLERY
  *
  */
-public class ChatConsoleView extends ViewComposite{
+public class ChatConsoleView extends ViewComposite implements ChatObserver<ChatMessage>{
 	
 	private ChatConsoleTitleView titleView;
 	private ChatConsoleLoginView loginView;
@@ -48,5 +50,18 @@ public class ChatConsoleView extends ViewComposite{
 	 */
 	public ChatConsoleConversationView getConversationView() {
 		return conversationView;
+	}
+
+	/* (non-Javadoc)
+	 * @see dta.chat.model.observer.ChatObserver#update(dta.chat.model.observer.ChatObservable, java.lang.Object)
+	 */
+	@Override
+	public void update(ChatObservable<ChatMessage> obersvable, ChatMessage obj) {
+		if(obj.getText() != null){
+			this.conversationView.update(obersvable, obj);
+		}
+		if(this.login == null){
+			this.setLogin(obj.getLogin());
+		}
 	}	
 }
