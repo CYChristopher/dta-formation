@@ -20,5 +20,15 @@ public class ChatClientException extends Exception {
 	public ChatClientException(String msg) {
 		super(msg);
 	}
+
+	/**
+	 * @param message
+	 * @param cause
+	 */
+	public ChatClientException(String message, Throwable cause) {
+		super(message, cause);
+	}
+	
+	
 	
 }

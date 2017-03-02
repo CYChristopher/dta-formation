@@ -3,6 +3,7 @@
  */
 package dta.chat;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 import dta.chat.exception.ChatClientException;
@@ -20,7 +21,9 @@ public class ChatClientApp {
 		try (Scanner scan = new Scanner(System.in)) {
 			System.out.print("Veuillez rentrer l'adresse du serveur : ");
 			String ipServeur = scan.nextLine();
-			ChatSocketImpl chatSocket = new ChatSocketImpl(ipServeur, 1800);
+			System.out.print("Veuillez rentrer le port du serveur : ");
+			Integer portServeur = Integer.parseInt(scan.nextLine());
+			ChatSocketImpl chatSocket = new ChatSocketImpl(ipServeur, portServeur);
 			ChatConversationModel model = new ChatConversationModel(chatSocket);
 			final ChatConsoleView view = new ChatConsoleView(scan, model);
 			view.setAuthController((login) -> {
@@ -40,9 +43,11 @@ public class ChatClientApp {
 			if(!model.getStayConnected()){
 				chatSocket.close();
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e){
+			System.out.println("Vous devez rentrer un numero de port valide !");
+		} catch (IOException | ChatClientException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 
 }

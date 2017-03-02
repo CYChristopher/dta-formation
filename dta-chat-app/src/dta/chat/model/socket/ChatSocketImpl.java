@@ -14,16 +14,16 @@ import dta.chat.model.ChatMessage;
  */
 public class ChatSocketImpl implements ChatSocket {
 
-	private ClientSocket socket;
+	private ClientSocket client;
 	
 	/**
 	 * 
 	 */
-	public ChatSocketImpl(String hostname, Integer port) {
+	public ChatSocketImpl(String hostname, Integer port) throws ChatClientException{
 		try {
-			this.socket = new ClientSocket(hostname, port);
+			this.client = new ClientSocket(hostname, port);
 		} catch (IOException e) {
-			//e.printStackTrace();
+			throw new ChatClientException("Probleme lors de la création de la connexion", e);
 		}
 	}
 	
@@ -31,8 +31,8 @@ public class ChatSocketImpl implements ChatSocket {
 	 * @see java.lang.AutoCloseable#close()
 	 */
 	@Override
-	public void close() throws Exception {
-		this.socket.close();
+	public void close() throws IOException {
+		this.client.close();
 	}
 
 	/* (non-Javadoc)
@@ -41,9 +41,9 @@ public class ChatSocketImpl implements ChatSocket {
 	@Override
 	public void sendMessage(ChatMessage chatMessage) throws ChatClientException {
 		try {
-			this.socket.sendObject(chatMessage);
+			this.client.sendObject(chatMessage);
 		} catch (IOException e) {
-			e.printStackTrace();
+			throw new ChatClientException("Probleme lors de l'envoi du message", e); 
 		}
 	}
 
@@ -54,9 +54,9 @@ public class ChatSocketImpl implements ChatSocket {
 	public ChatMessage readMessage() throws ChatClientException {
 		ChatMessage chatMessage = null ;
 		try {
-			chatMessage = (ChatMessage) this.socket.readObject();
+			chatMessage = (ChatMessage) this.client.readObject();
 		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
+			throw new ChatClientException("Probleme lors de la reception du message", e); 
 		}
 		return chatMessage;
 	}
