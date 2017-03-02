@@ -20,7 +20,6 @@ public class ChatClientApp {
 		try (Scanner scan = new Scanner(System.in)) {
 			System.out.print("Veuillez rentrer l'adresse du serveur : ");
 			String ipServeur = scan.nextLine();
-			//"192.168.99.31"
 			ChatSocketImpl chatSocket = new ChatSocketImpl(ipServeur, 1800);
 			ChatConversationModel model = new ChatConversationModel(chatSocket);
 			final ChatConsoleView view = new ChatConsoleView(scan, model);
@@ -29,13 +28,6 @@ public class ChatClientApp {
 			});
 			model.addObserver(view);
 			new Thread(() -> {
-				if(!model.getStayConnected()){
-					try {
-						chatSocket.close();
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-				}
 				while (model.getStayConnected()) {
 					try {
 						model.setMessage();
@@ -44,7 +36,12 @@ public class ChatClientApp {
 					}
 				}
 			}).start();
-			view.print();		
+			view.print();	
+			if(!model.getStayConnected()){
+				chatSocket.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
