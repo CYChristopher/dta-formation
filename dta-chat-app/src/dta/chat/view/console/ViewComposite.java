@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import dta.chat.controller.ChatAuthController;
+import dta.chat.controller.ChatConvController;
+import dta.chat.model.ChatConversationModel;
 
 /**
  * @author Christopher CHARLERY
@@ -15,7 +17,10 @@ import dta.chat.controller.ChatAuthController;
 public abstract class ViewComposite{
 
 	private List<ViewComposite> children = new ArrayList<>();
-	protected ChatAuthController controller;
+	protected ChatAuthController authController;
+	protected ChatConvController convController;
+	protected ChatConversationModel model;
+
 	protected String login;
 
 	public void add(ViewComposite view) {
@@ -46,8 +51,15 @@ public abstract class ViewComposite{
 	 * @param controller
 	 */
 	public void setAuthController(ChatAuthController controller){
-		this.controller = controller;
-		this.children.forEach(composite -> composite.controller = controller);
+		this.authController = controller;
+		this.children.forEach(composite -> composite.authController = controller);
+	}
+
+	/**
+	 * @return the login
+	 */
+	public String getLogin() {
+		return login;
 	}
 
 	/**
@@ -58,4 +70,20 @@ public abstract class ViewComposite{
 		this.children.forEach(composite -> composite.login = login);
 	}
 
+	/**
+	 * @param convController the convController to set
+	 */
+	public void setConvController(ChatConvController convController) {
+		this.convController = convController;
+		this.children.forEach(composite -> composite.convController = convController);
+	}
+
+	/**
+	 * @param model the model to set
+	 */
+	public void setModel(ChatConversationModel model) {
+		this.model = model;
+		this.children.forEach(composite -> composite.model = model);
+	}
+	
 }

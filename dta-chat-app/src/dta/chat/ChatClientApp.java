@@ -8,6 +8,7 @@ import java.util.Scanner;
 
 import dta.chat.exception.ChatClientException;
 import dta.chat.model.ChatConversationModel;
+import dta.chat.model.ChatMessage;
 import dta.chat.model.socket.ChatSocketImpl;
 import dta.chat.view.console.ChatConsoleView;
 
@@ -25,29 +26,44 @@ public class ChatClientApp {
 			Integer portServeur = Integer.parseInt(scan.nextLine());
 			ChatSocketImpl chatSocket = new ChatSocketImpl(ipServeur, portServeur);
 			ChatConversationModel model = new ChatConversationModel(chatSocket);
-			final ChatConsoleView view = new ChatConsoleView(scan, model);
+			final ChatConsoleView view = new ChatConsoleView(scan);
+
 			view.setAuthController((login) -> {
 				model.setLogin(login); // Notifie les vues abonnées
 			});
+
+			view.setConvController((message) -> {
+				try {
+					if (message != null && !message.equalsIgnoreCase("exit") && !message.trim().equalsIgnoreCase("")) {
+						model.sendMessage(new ChatMessage(view.getLogin(), message));
+					} else {
+						model.setStayConnected(false);
+					}
+				} catch (IOException | ChatClientException e) {
+					e.printStackTrace();
+				}
+			});
+
+			view.setModel(model);
 			model.addObserver(view);
+
 			new Thread(() -> {
 				while (model.getStayConnected()) {
 					try {
 						model.setMessage();
 					} catch (ChatClientException e) {
-						e.printStackTrace();
+						System.out.println("Au revoir :)");
 					}
 				}
 			}).start();
-			view.print();	
-			if(!model.getStayConnected()){
-				chatSocket.close();
-			}
-		} catch (NumberFormatException e){
+
+			view.print();
+
+		} catch (NumberFormatException e) {
 			System.out.println("Vous devez rentrer un numero de port valide !");
-		} catch (IOException | ChatClientException e) {
+		} catch (ChatClientException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
 }

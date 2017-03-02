@@ -28,6 +28,6 @@ public class ChatConsoleLoginView extends ViewComposite{
 		System.out.println("== Authentification ==");
 		System.out.print("Veuillez saisir votre login : ");
 		String login = sc.nextLine();
-		this.controller.authenticate(login);
+		this.authController.authenticate(login);
 	}
 }

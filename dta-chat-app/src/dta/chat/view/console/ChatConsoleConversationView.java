@@ -5,8 +5,6 @@ package dta.chat.view.console;
 
 import java.util.Scanner;
 
-import dta.chat.exception.ChatClientException;
-import dta.chat.model.ChatConversationModel;
 import dta.chat.model.ChatMessage;
 import dta.chat.model.observer.ChatObservable;
 import dta.chat.model.observer.ChatObserver;
@@ -18,15 +16,12 @@ import dta.chat.model.observer.ChatObserver;
 public class ChatConsoleConversationView extends ViewComposite implements ChatObserver<ChatMessage> {
 
 	private Scanner sc;
-	private String message;
-	private ChatConversationModel model;
 
 	/**
 	 * 
 	 */
-	public ChatConsoleConversationView(Scanner scan, ChatConversationModel model) {
+	public ChatConsoleConversationView(Scanner scan) {
 		this.sc = scan;
-		this.model = model;
 	}
 
 	/*
@@ -38,17 +33,8 @@ public class ChatConsoleConversationView extends ViewComposite implements ChatOb
 	public void print() {
 		System.out.println("Welcome : " + this.login);
 		System.out.println("== Conversation ==");
-		while (this.model.getStayConnected()) {
-			this.message = sc.nextLine();
-			if (this.message != null && !this.message.equalsIgnoreCase("exit") && !this.message.trim().equalsIgnoreCase("")) {
-				try {
-					this.model.sendMessage(new ChatMessage(this.login, this.message));
-				} catch (ChatClientException e) {
-					e.printStackTrace();
-				}
-			} else {
-				this.model.setStayConnected(false);
-			}
+		while(this.model.getStayConnected()){
+			this.convController.sendMessage(sc.nextLine());
 		}
 	}
 

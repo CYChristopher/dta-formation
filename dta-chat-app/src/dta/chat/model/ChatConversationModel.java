@@ -3,6 +3,8 @@
  */
 package dta.chat.model;
 
+import java.io.IOException;
+
 import dta.chat.exception.ChatClientException;
 import dta.chat.model.observer.ChatObservable;
 import dta.chat.model.socket.ChatSocketImpl;
@@ -13,20 +15,19 @@ import dta.chat.model.socket.ChatSocketImpl;
  */
 public class ChatConversationModel extends ChatObservable<ChatMessage> {
 	
-	private String login;
 	private ChatSocketImpl chatSocket;
 	private Boolean stayConnected;
 	
 	/**
+	 * @throws IOException 
 	 * 
 	 */
 	public ChatConversationModel(ChatSocketImpl chatSocket) {
 		this.chatSocket = chatSocket;
-		this.setStayConnected(true);
+		this.stayConnected = true;
 	}
 	
 	public void setLogin(String login){
-		this.login = login;
 		this.notifyObservers(new ChatMessage(login, null));
 	}
 	
@@ -47,9 +48,13 @@ public class ChatConversationModel extends ChatObservable<ChatMessage> {
 
 	/**
 	 * @param stayConnected the stayConnected to set
+	 * @throws IOException 
 	 */
-	public void setStayConnected(Boolean stayConnected) {
+	public void setStayConnected(Boolean stayConnected) throws IOException {
 		this.stayConnected = stayConnected;
+		if(!this.stayConnected){
+			this.chatSocket.close();
+		}
 	}
 
 }
