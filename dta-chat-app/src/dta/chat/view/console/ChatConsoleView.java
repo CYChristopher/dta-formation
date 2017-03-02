@@ -5,6 +5,7 @@ package dta.chat.view.console;
 
 import java.util.Scanner;
 
+import dta.chat.model.ChatConversationModel;
 import dta.chat.model.ChatMessage;
 import dta.chat.model.observer.ChatObservable;
 import dta.chat.model.observer.ChatObserver;
@@ -22,12 +23,12 @@ public class ChatConsoleView extends ViewComposite implements ChatObserver<ChatM
 	/**
 	 * 
 	 */
-	public ChatConsoleView(Scanner scan) {
+	public ChatConsoleView(Scanner scan, ChatConversationModel model) {
 		this.titleView = new ChatConsoleTitleView();
 		this.add(this.titleView);
 		this.loginView = new ChatConsoleLoginView(scan);
 		this.add(this.loginView);
-		this.conversationView = new ChatConsoleConversationView(scan);
+		this.conversationView = new ChatConsoleConversationView(scan, model);
 		this.add(this.conversationView);
 	}
 

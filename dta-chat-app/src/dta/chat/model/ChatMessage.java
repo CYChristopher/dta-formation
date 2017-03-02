@@ -3,15 +3,27 @@
  */
 package dta.chat.model;
 
+import java.io.Serializable;
+
 /**
  * @author Christopher CHARLERY
  *
  */
-public class ChatMessage {
+public class ChatMessage implements Serializable{
 	
+	private static final long serialVersionUID = 12L;
 	private String login;
 	private String text;
 	
+	/**
+	 * @param login
+	 * @param text
+	 */
+	public ChatMessage(String login, String text) {
+		super();
+		this.login = login;
+		this.text = text;
+	}
 	/**
 	 * @return the login
 	 */
@@ -35,6 +47,14 @@ public class ChatMessage {
 	 */
 	public void setText(String text) {
 		this.text = text;
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return this.login + " : " + this.text;
 	}
 	
 }

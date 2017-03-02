@@ -3,7 +3,9 @@
  */
 package dta.chat.model;
 
+import dta.chat.exception.ChatClientException;
 import dta.chat.model.observer.ChatObservable;
+import dta.chat.model.socket.ChatSocketImpl;
 
 /**
  * @author Christopher CHARLERY
@@ -11,23 +13,43 @@ import dta.chat.model.observer.ChatObservable;
  */
 public class ChatConversationModel extends ChatObservable<ChatMessage> {
 	
-	private ChatMessage chatMessage;
+	private String login;
+	private ChatSocketImpl chatSocket;
+	private Boolean stayConnected;
 	
 	/**
 	 * 
 	 */
-	public ChatConversationModel() {
-		this.chatMessage = new ChatMessage();
+	public ChatConversationModel(ChatSocketImpl chatSocket) {
+		this.chatSocket = chatSocket;
+		this.setStayConnected(true);
 	}
 	
 	public void setLogin(String login){
-		this.chatMessage.setLogin(login);
-		this.notifyObservers(chatMessage);
+		this.login = login;
+		this.notifyObservers(new ChatMessage(login, null));
 	}
 	
-	public void setMessage(String message){
-		this.chatMessage.setText(message);
-		this.notifyObservers(chatMessage);
+	public void setMessage() throws ChatClientException{
+		this.notifyObservers(this.chatSocket.readMessage());
+	}
+	
+	public void sendMessage(ChatMessage chat) throws ChatClientException{
+		this.chatSocket.sendMessage(chat);
+	}
+
+	/**
+	 * @return the stayConnected
+	 */
+	public Boolean getStayConnected() {
+		return stayConnected;
+	}
+
+	/**
+	 * @param stayConnected the stayConnected to set
+	 */
+	public void setStayConnected(Boolean stayConnected) {
+		this.stayConnected = stayConnected;
 	}
 
 }
