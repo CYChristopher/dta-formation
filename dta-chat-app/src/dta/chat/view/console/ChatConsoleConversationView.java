@@ -5,6 +5,7 @@ package dta.chat.view.console;
 
 import java.util.Scanner;
 
+import dta.chat.exception.ChatClientException;
 import dta.chat.model.ChatMessage;
 import dta.chat.model.observer.ChatObservable;
 import dta.chat.model.observer.ChatObserver;
@@ -33,6 +34,13 @@ public class ChatConsoleConversationView extends ViewComposite implements ChatOb
 	public void print() {
 		System.out.println("Welcome : " + this.login);
 		System.out.println("== Conversation ==");
+		try {
+			System.out.println("*** ANCIENNE CONVERSATION ***");
+			this.model.initializeChat();
+			System.out.println("***  ***");
+		} catch (ChatClientException e) {
+			e.printStackTrace();
+		}
 		while(this.model.getStayConnected()){
 			this.convController.sendMessage(sc.nextLine());
 		}

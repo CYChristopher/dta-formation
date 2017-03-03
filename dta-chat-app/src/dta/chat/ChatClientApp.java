@@ -9,7 +9,7 @@ import java.util.Scanner;
 import dta.chat.exception.ChatClientException;
 import dta.chat.model.ChatConversationModel;
 import dta.chat.model.ChatMessage;
-import dta.chat.model.socket.ChatSocketImpl;
+import dta.chat.model.socket.ChatSocketProxy;
 import dta.chat.view.console.ChatConsoleView;
 
 /**
@@ -24,7 +24,7 @@ public class ChatClientApp {
 			String ipServeur = scan.nextLine();
 			System.out.print("Veuillez rentrer le port du serveur : ");
 			Integer portServeur = Integer.parseInt(scan.nextLine());
-			ChatSocketImpl chatSocket = new ChatSocketImpl(ipServeur, portServeur);
+			ChatSocketProxy chatSocket = new ChatSocketProxy(ipServeur, portServeur);
 			ChatConversationModel model = new ChatConversationModel(chatSocket);
 			final ChatConsoleView view = new ChatConsoleView(scan);
 
@@ -50,7 +50,7 @@ public class ChatClientApp {
 			new Thread(() -> {
 				while (model.getStayConnected()) {
 					try {
-						model.setMessage();
+						model.getMessage();
 					} catch (ChatClientException e) {
 						System.out.println("Au revoir :)");
 					}

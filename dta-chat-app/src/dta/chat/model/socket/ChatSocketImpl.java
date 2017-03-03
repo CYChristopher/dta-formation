@@ -60,5 +60,4 @@ public class ChatSocketImpl implements ChatSocket {
 		}
 		return chatMessage;
 	}
-
 }

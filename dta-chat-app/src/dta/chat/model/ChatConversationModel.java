@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import dta.chat.exception.ChatClientException;
 import dta.chat.model.observer.ChatObservable;
-import dta.chat.model.socket.ChatSocketImpl;
+import dta.chat.model.socket.ChatSocketProxy;
 
 /**
  * @author Christopher CHARLERY
@@ -15,14 +15,15 @@ import dta.chat.model.socket.ChatSocketImpl;
  */
 public class ChatConversationModel extends ChatObservable<ChatMessage> {
 	
-	private ChatSocketImpl chatSocket;
+	private ChatSocketProxy chatSocket;
 	private Boolean stayConnected;
 	
 	/**
+	 * @throws ChatClientException 
 	 * @throws IOException 
 	 * 
 	 */
-	public ChatConversationModel(ChatSocketImpl chatSocket) {
+	public ChatConversationModel(ChatSocketProxy chatSocket) throws ChatClientException {
 		this.chatSocket = chatSocket;
 		this.stayConnected = true;
 	}
@@ -31,12 +32,19 @@ public class ChatConversationModel extends ChatObservable<ChatMessage> {
 		this.notifyObservers(new ChatMessage(login, null));
 	}
 	
-	public void setMessage() throws ChatClientException{
-		this.notifyObservers(this.chatSocket.readMessage());
+	public void getMessage() throws ChatClientException{
+		ChatMessage newMessage = this.chatSocket.readMessage();
+		this.notifyObservers(newMessage);
 	}
 	
 	public void sendMessage(ChatMessage chat) throws ChatClientException{
 		this.chatSocket.sendMessage(chat);
+	}
+	
+	public void initializeChat() throws ChatClientException{
+		this.chatSocket.findLastMessages().forEach((message) -> {
+			this.notifyObservers(message);
+		});
 	}
 
 	/**
@@ -48,9 +56,9 @@ public class ChatConversationModel extends ChatObservable<ChatMessage> {
 
 	/**
 	 * @param stayConnected the stayConnected to set
-	 * @throws IOException 
+	 * @throws Exception 
 	 */
-	public void setStayConnected(Boolean stayConnected) throws IOException {
+	public void setStayConnected(Boolean stayConnected) throws IOException  {
 		this.stayConnected = stayConnected;
 		if(!this.stayConnected){
 			this.chatSocket.close();
