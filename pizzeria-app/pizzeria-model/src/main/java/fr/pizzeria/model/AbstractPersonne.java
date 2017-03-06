@@ -33,7 +33,7 @@ public abstract class AbstractPersonne {
 
 	public void crediterCompte(double montant) throws CreditException {
 		this.solde += montant;
-		if (this.solde > 5_000) {
+		if (this.solde > 5000) {
 			throw new CreditException("Vous ne pouvez depasser le seuil maximum qui est de 5 000 euros !");
 		}
 	}

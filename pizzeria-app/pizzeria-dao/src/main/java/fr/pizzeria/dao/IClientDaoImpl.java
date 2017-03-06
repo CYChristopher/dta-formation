@@ -30,7 +30,6 @@ public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#findAllItems()
 	 */
-	@Override
 	public List<Client> findAllItems() {
 		return lesClients;
 	}
@@ -40,7 +39,6 @@ public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#initializeList()
 	 */
-	@Override
 	public void initializeList() {
 		Client jRobert = new Client(12, "Robert", "Jules", 200.0);
 		this.lesClients.add(jRobert);
@@ -54,7 +52,6 @@ public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#saveNewItem(java.lang.Object)
 	 */
-	@Override
 	public void saveNewItem(Client item) throws StockageException {
 		// TODO Auto-generated method stub
 	}
@@ -65,7 +62,6 @@ public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	 * @see fr.pizzeria.dao.IItemDao#updateItem(java.lang.Object,
 	 * java.lang.Object)
 	 */
-	@Override
 	public void updateItem(Integer idItem, Client item) throws StockageException {
 
 	}
@@ -75,7 +71,6 @@ public class IClientDaoImpl implements IItemDao<Integer, Client> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#deleteItem(java.lang.Object)
 	 */
-	@Override
 	public void deleteItem(Integer idItem) throws StockageException {
 		// TODO Auto-generated method stub
 	}

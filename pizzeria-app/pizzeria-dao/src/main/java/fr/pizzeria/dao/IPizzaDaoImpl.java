@@ -117,7 +117,6 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#findAllPizzas()
 	 */
-	@Override
 	public List<Pizza> findAllItems() {
 		return pizzas;
 	}
@@ -127,7 +126,6 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#saveNewPizza(fr.pizzeria.dao)
 	 */
-	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
 		if (pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza est incorrect !");
@@ -148,7 +146,6 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.IItemDao#updatePizza(java.lang.String,
 	 * fr.pizzeria.dao)
 	 */
-	@Override
 	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
 		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
@@ -179,7 +176,6 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#deletePizza(java.lang.String)
 	 */
-	@Override
 	public void deleteItem(String codePizza) throws StockageException {
 		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
