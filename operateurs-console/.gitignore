@@ -1,5 +1,5 @@
 /.settings/
 /bin/
-.classpath
-.project
+/.classpath
+/.project
 /fr/operateurs/console/OperateursApp.class
