@@ -46,12 +46,12 @@
 		</dependency>
 		<dependency>
 			<groupId>dta</groupId>
-			<artifactId>pizzeria-dao</artifactId>
+			<artifactId>christopher-pizzeria-dao</artifactId>
 			<version>1</version>
 		</dependency>
 		<dependency>
 			<groupId>dta</groupId>
-			<artifactId>pizzeria-model</artifactId>
+			<artifactId>christopher-pizzeria-model</artifactId>
 			<version>1</version>
 		</dependency>
 	</dependencies>

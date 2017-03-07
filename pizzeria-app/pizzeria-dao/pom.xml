@@ -18,7 +18,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>dta</groupId>
-			<artifactId>pizzeria-model</artifactId>
+			<artifactId>christopher-pizzeria-model</artifactId>
 			<version>1</version>
 		</dependency>
 	</dependencies>
