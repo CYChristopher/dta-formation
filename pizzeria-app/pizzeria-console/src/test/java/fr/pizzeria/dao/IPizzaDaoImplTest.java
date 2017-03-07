@@ -22,7 +22,7 @@ import fr.pizzeria.model.Pizza;
  */
 public class IPizzaDaoImplTest {
 	
-	private IPizzaDaoImpl pizzaDao;
+	private PizzaDaoImplFile pizzaDao;
 	
 	/*@Before
 	public void test(){
@@ -40,9 +40,9 @@ public class IPizzaDaoImplTest {
 		Pizza pizza = new Pizza(0, null, null, null, null);
 		pizzaDao.saveNewItem(pizza);
 		List<Pizza> pizzas = pizzaDao.findAllItems();		
-		//Préferer assertThat à assertEquals
+		//Prï¿½ferer assertThat ï¿½ assertEquals
 		assertEquals(8, pizzas.size());
-		//On peut mettre plusieures conditions les unes à la suite de l'autre
+		//On peut mettre plusieures conditions les unes ï¿½ la suite de l'autre
 		assertThat(pizzas.size(), allOf(is(8), is(8))); 
 	}
 	

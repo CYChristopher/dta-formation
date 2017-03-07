@@ -6,7 +6,7 @@ package fr.pizzeria.ihm;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.Client;
@@ -23,7 +23,7 @@ public class ChoixCrediterClient extends Choix<Integer, Client> {
 	 * @param dao
 	 * @param scan
 	 */
-	public ChoixCrediterClient(Integer numeroChoix, String nomChoix, IItemDao<Integer, Client> dao, Scanner scan) {
+	public ChoixCrediterClient(Integer numeroChoix, String nomChoix, ItemDao<Integer, Client> dao, Scanner scan) {
 		super(numeroChoix, nomChoix, dao, scan);
 	}
 

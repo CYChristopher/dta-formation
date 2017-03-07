@@ -5,7 +5,7 @@ package fr.pizzeria.ihm;
 
 import java.util.List;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.Client;
@@ -23,7 +23,7 @@ public class ChoixListerClient extends Choix<Integer, Client> {
 	 * @param nomChoix
 	 * @param clientDao
 	 */
-	public ChoixListerClient(Integer numeroChoix, String nomChoix, IItemDao<Integer, Client> clientDao) {
+	public ChoixListerClient(Integer numeroChoix, String nomChoix, ItemDao<Integer, Client> clientDao) {
 		super(numeroChoix, nomChoix, clientDao);
 	}
 

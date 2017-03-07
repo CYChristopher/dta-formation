@@ -4,16 +4,33 @@
 
 	<parent>
 		<groupId>dta</groupId>
-		<artifactId>pizzeria-parent</artifactId>
+		<artifactId>christopher-pizzeria-parent</artifactId>
 		<version>1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>pizzeria-console</artifactId>
+	<artifactId>christopher-pizzeria-console</artifactId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 
 	<dependencies>
 		<dependency>

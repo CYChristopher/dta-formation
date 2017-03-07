@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
 import fr.pizzeria.model.CategoriePizza;
@@ -26,7 +26,7 @@ public class ChoixListerCateg extends Choix<String, Pizza> {
 	 * @param nomChoix
 	 * @param dao
 	 */
-	public ChoixListerCateg(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> dao) {
+	public ChoixListerCateg(Integer numeroChoix, String nomChoix, ItemDao<String, Pizza> dao) {
 		super(numeroChoix, nomChoix, dao);
 	}
 

@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.model.CategoriePizza;
@@ -23,7 +23,7 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 	 * @param numeroChoix
 	 * @param nomChoix
 	 */
-	public ChoixAjouter(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> pizzaDao, Scanner scan) {
+	public ChoixAjouter(Integer numeroChoix, String nomChoix, ItemDao<String, Pizza> pizzaDao, Scanner scan) {
 		super(numeroChoix, nomChoix, pizzaDao, scan);
 	}
 

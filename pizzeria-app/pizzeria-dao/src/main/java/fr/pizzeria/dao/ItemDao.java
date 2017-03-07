@@ -11,7 +11,7 @@ import fr.pizzeria.exception.StockageException;
  * @author Christopher CHARLERY
  *
  */
-public interface IItemDao<I, G> {
+public interface ItemDao<I, G> {
 
 	/**
 	 * Retourne le tableau d'item

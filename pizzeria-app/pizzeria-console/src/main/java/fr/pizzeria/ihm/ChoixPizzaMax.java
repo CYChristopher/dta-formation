@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.model.Pizza;
 
@@ -25,7 +25,7 @@ public class ChoixPizzaMax extends Choix<String, Pizza> {
 	 * @param dao
 	 * @param scan
 	 */
-	public ChoixPizzaMax(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> dao, Scanner scan) {
+	public ChoixPizzaMax(Integer numeroChoix, String nomChoix, ItemDao<String, Pizza> dao, Scanner scan) {
 		super(numeroChoix, nomChoix, dao, scan);
 	}
 

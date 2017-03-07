@@ -1,11 +1,11 @@
 /**
- * 22 févr. 2017 Christopher CHARLERY
+ * 22 fï¿½vr. 2017 Christopher CHARLERY
  */
 package fr.pizzeria.ihmtools;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 
 /**
  * @author Christopher CHARLERY
@@ -17,11 +17,11 @@ public abstract class Choix<I, G> {
 	
 	private Integer numeroChoix;
 	private String nomChoix;
-	private IItemDao<I, G> itemDao;
+	private ItemDao<I, G> itemDao;
 	private Scanner sc;
 	
 	/**
-	 * Crée un nouvel item d'un menu
+	 * Crï¿½e un nouvel item d'un menu
 	 * @param numeroChoix Position dans le menu
 	 * @param nomChoix Nom du choix
 	 */
@@ -48,7 +48,7 @@ public abstract class Choix<I, G> {
 	 * @param nomChoix
 	 * @param dao
 	 */
-	public Choix(Integer numeroChoix, String nomChoix, IItemDao<I, G> dao) {
+	public Choix(Integer numeroChoix, String nomChoix, ItemDao<I, G> dao) {
 		this(numeroChoix, nomChoix);
 		this.setItemDao(dao);
 	}
@@ -60,13 +60,13 @@ public abstract class Choix<I, G> {
 	 * @param dao
 	 * @param scan
 	 */
-	public Choix(Integer numeroChoix, String nomChoix, IItemDao<I, G> dao, Scanner scan) {
+	public Choix(Integer numeroChoix, String nomChoix, ItemDao<I, G> dao, Scanner scan) {
 		this(numeroChoix, nomChoix, dao);
 		this.setSc(scan);
 	}
 
 	/**
-	 * Effectue l'action liée au choix
+	 * Effectue l'action liï¿½e au choix
 	 */
 	public abstract Boolean faireUneAction();
 
@@ -87,7 +87,7 @@ public abstract class Choix<I, G> {
 	}
 
 	/**
-	 * Récupère le nom du choix
+	 * Rï¿½cupï¿½re le nom du choix
 	 * @return the nomChoix
 	 */
 	public String getNomChoix() {
@@ -105,14 +105,14 @@ public abstract class Choix<I, G> {
 	/**
 	 * @return the itemDao
 	 */
-	public IItemDao<I, G> getItemDao() {
+	public ItemDao<I, G> getItemDao() {
 		return itemDao;
 	}
 
 	/**
 	 * @param itemDao the itemDao to set
 	 */
-	public void setItemDao(IItemDao<I, G> itemDao) {
+	public void setItemDao(ItemDao<I, G> itemDao) {
 		this.itemDao = itemDao;
 	}
 

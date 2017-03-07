@@ -6,7 +6,7 @@ package fr.pizzeria.ihm;
 import java.util.List;
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IItemDao;
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
@@ -23,7 +23,7 @@ final class ChoixModifier extends Choix<String, Pizza> {
 	 * @param numeroChoix
 	 * @param nomChoix
 	 */
-	public ChoixModifier(Integer numeroChoix, String nomChoix, IItemDao<String, Pizza> pizzaDao, Scanner scan) {
+	public ChoixModifier(Integer numeroChoix, String nomChoix, ItemDao<String, Pizza> pizzaDao, Scanner scan) {
 		super(numeroChoix, nomChoix, pizzaDao, scan);
 	}
 

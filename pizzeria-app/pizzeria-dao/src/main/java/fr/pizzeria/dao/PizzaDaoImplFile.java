@@ -25,7 +25,7 @@ import fr.pizzeria.model.Pizza;
  * @author Christopher CHARLERY
  *
  */
-public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
+public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
 	private List<Pizza> pizzas;
 	private Boolean pizzaInList = false;
@@ -36,7 +36,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @param taille
 	 */
-	public IPizzaDaoImpl() {
+	public PizzaDaoImplFile() {
 		try {
 			this.pizzas = new ArrayList<Pizza>();
 			cheminDossier = new File("").getCanonicalPath();
@@ -50,6 +50,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	/**
 	 * Initialise le tableau des pizzas
 	 */
+	@Override
 	public void initializeList() {
 		try {
 			boolean isCreated = dossierData.mkdirs();
@@ -117,8 +118,9 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#findAllPizzas()
 	 */
+	@Override
 	public List<Pizza> findAllItems() {
-		return pizzas;
+		return this.pizzas;
 	}
 
 	/*
@@ -126,6 +128,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#saveNewPizza(fr.pizzeria.dao)
 	 */
+	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
 		if (pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza est incorrect !");
@@ -146,6 +149,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.IItemDao#updatePizza(java.lang.String,
 	 * fr.pizzeria.dao)
 	 */
+	@Override
 	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
 		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
@@ -176,6 +180,7 @@ public class IPizzaDaoImpl implements IItemDao<String, Pizza> {
 	 * 
 	 * @see fr.pizzeria.dao.IItemDao#deletePizza(java.lang.String)
 	 */
+	@Override
 	public void deleteItem(String codePizza) throws StockageException {
 		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");

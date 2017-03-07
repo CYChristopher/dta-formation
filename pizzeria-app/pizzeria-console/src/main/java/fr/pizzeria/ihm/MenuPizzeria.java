@@ -5,9 +5,10 @@ package fr.pizzeria.ihm;
 
 import java.util.Scanner;
 
-import fr.pizzeria.dao.IClientDaoImpl;
-import fr.pizzeria.dao.IItemDao;
-import fr.pizzeria.dao.IPizzaDaoImpl;
+import fr.pizzeria.dao.ClientDaoImpl;
+import fr.pizzeria.dao.ItemDao;
+import fr.pizzeria.dao.PizzaDaoImplFile;
+import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.ChoixSortir;
 import fr.pizzeria.ihmtools.Menu;
@@ -51,9 +52,16 @@ public class MenuPizzeria {
 	/**
 	 * Cr�e un menu pizza
 	 */
-	public MenuPizzeria(Scanner scan) {
-		IItemDao<String, Pizza> pizzaDao = new IPizzaDaoImpl();
-		IItemDao<Integer, Client> clientDao = new IClientDaoImpl();
+	public MenuPizzeria(Scanner scan, ItemDao<String, Pizza> pizzaDao) {
+		if(pizzaDao == null){
+			try {
+				throw new StockageException("Impossible de charger la liste des pizzas !");
+			} catch (StockageException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		ItemDao<Integer, Client> clientDao = new ClientDaoImpl();
 		
 		this.menu = new Menu("***** Pizzeria Administration *****");
 		

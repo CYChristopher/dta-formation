@@ -3,17 +3,46 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>dta</groupId>
-	<artifactId>pizzeria-parent</artifactId>
+	<artifactId>christopher-pizzeria-parent</artifactId>
 	<version>1</version>
 	<packaging>pom</packaging>
 
 	<modules>
-		<module>pizzeria-console</module>
-		<module>pizzeria-dao</module>
-		<module>pizzeria-model</module>
+		<module>christopher-pizzeria-console</module>
+		<module>christopher-pizzeria-dao</module>
+		<module>christopher-pizzeria-model</module>
 	</modules>
 
+	<properties>
+		<!-- plugins versions -->
+		<shade-plugin.version>3.0.0</shade-plugin.version>
+	</properties>
+
+	<profiles>
+		<profile>
+			<id>prod</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<implementation>fr.pizzeria.dao.PizzaDaoImplFile</implementation>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<implementation>fr.pizzeria.dao.PizzaDaoImplMemory</implementation>
+			</properties>
+		</profile>
+	</profiles>
+
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -50,8 +79,12 @@
 					</archive>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>${shade-plugin.version}</version>
+			</plugin>
 		</plugins>
-		<finalName>pizzeria-app</finalName>
 	</build>
 
 	<dependencies>

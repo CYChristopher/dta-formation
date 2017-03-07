@@ -4,12 +4,12 @@
 
 	<parent>
 		<groupId>dta</groupId>
-		<artifactId>pizzeria-parent</artifactId>
+		<artifactId>christopher-pizzeria-parent</artifactId>
 		<version>1</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>pizzeria-dao</artifactId>
+	<artifactId>christopher-pizzeria-dao</artifactId>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
