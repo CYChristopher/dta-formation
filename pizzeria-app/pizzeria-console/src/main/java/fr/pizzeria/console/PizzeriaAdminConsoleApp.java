@@ -5,6 +5,8 @@ package fr.pizzeria.console;
 
 import java.util.ResourceBundle;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihm.MenuPizzeria;
@@ -15,13 +17,20 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public class PizzeriaAdminConsoleApp {
+	
+	/**
+	 * 
+	 */
+	private PizzeriaAdminConsoleApp() {
+		// Pour cacher le constructeur public
+	}
 
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
 
-		String readline = "";
+		String readline;
 		Scanner sc = new Scanner(System.in);
 		Integer choice;
 		ItemDao<String, Pizza> instanceDaoImpl = null;
@@ -31,7 +40,7 @@ public class PizzeriaAdminConsoleApp {
         try {
         	instanceDaoImpl = (ItemDao<String, Pizza>) Class.forName(daoImpl).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			e.printStackTrace();
+			Logger.getLogger(PizzeriaAdminConsoleApp.class.getName()).log(Level.WARNING, e.getMessage(), e);
 		}
 		MenuPizzeria menuPizza = new MenuPizzeria(sc, instanceDaoImpl);
 

@@ -130,7 +130,6 @@ public class Pizza {
 					}
 					description.append(valeur);
 				} catch (IllegalArgumentException | IllegalAccessException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				description.append(" ");

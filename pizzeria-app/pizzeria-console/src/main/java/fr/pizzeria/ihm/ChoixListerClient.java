@@ -16,8 +16,6 @@ import fr.pizzeria.model.Client;
  */
 public class ChoixListerClient extends Choix<Integer, Client> {
 	
-	
-
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix

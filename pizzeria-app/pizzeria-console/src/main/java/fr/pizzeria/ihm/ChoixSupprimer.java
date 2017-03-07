@@ -5,6 +5,8 @@ package fr.pizzeria.ihm;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
@@ -30,13 +32,13 @@ final class ChoixSupprimer extends Choix<String, Pizza> {
 	public Boolean faireUneAction() {
 		Boolean saisieOk = false;
 		String codeSaisiS = "";
-		while (!saisieOk && !codeSaisiS.equalsIgnoreCase("99")) {
+		while (!saisieOk && !"99".equalsIgnoreCase(codeSaisiS)) {
 			try {
 				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
 				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à supprimer (99 pour abandonner): ");
 				codeSaisiS = this.getSc().nextLine();
-				if (!codeSaisiS.equalsIgnoreCase("99") && lesPizzas.size() < 99) {
+				if (!"99".equalsIgnoreCase(codeSaisiS) && lesPizzas.size() < 99) {
 					this.getItemDao().deleteItem(codeSaisiS);
 					saisieOk = true;
 				} else {
@@ -45,11 +47,11 @@ final class ChoixSupprimer extends Choix<String, Pizza> {
 				}
 				System.out.println();
 			} catch (StockageException e) {
-				System.out.println(e.getMessage());
-				System.out.println();
+				Logger myLogger = Logger.getLogger(this.getClass().getName());
+				myLogger.log(Level.WARNING, e.getMessage(), e);
 				System.out.print("Tapez 99 si vous voulez abandonner, n'importe quoi pour continuer :");
 				String choix = this.getSc().nextLine();
-				if (choix != null && choix.equalsIgnoreCase("99")) {
+				if (choix != null && "99".equalsIgnoreCase(choix)) {
 					saisieOk = true;
 				}
 			}

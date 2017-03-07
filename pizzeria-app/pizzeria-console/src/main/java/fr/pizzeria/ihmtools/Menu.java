@@ -21,7 +21,7 @@ public class Menu {
 	 */
 	public Menu(String titre) {
 		this.titre = titre;
-		this.items = new TreeMap<Integer, Choix<?, ?>>();
+		this.items = new TreeMap<>();
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class Menu {
 	 * @param numero
 	 */
 	public Boolean appliquerChoix(Integer numero) {
-		Boolean continuer = true;
+		Boolean continuer;
 		continuer = this.items.get(numero).faireUneAction();
 		return continuer;
 	}

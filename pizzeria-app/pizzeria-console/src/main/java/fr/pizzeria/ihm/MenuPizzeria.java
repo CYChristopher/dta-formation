@@ -4,10 +4,11 @@
 package fr.pizzeria.ihm;
 
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.ClientDaoImpl;
 import fr.pizzeria.dao.ItemDao;
-import fr.pizzeria.dao.PizzaDaoImplFile;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.ChoixSortir;
@@ -54,10 +55,11 @@ public class MenuPizzeria {
 	 */
 	public MenuPizzeria(Scanner scan, ItemDao<String, Pizza> pizzaDao) {
 		if(pizzaDao == null){
+			Logger myLogger = Logger.getLogger(this.getClass().getName());
 			try {
 				throw new StockageException("Impossible de charger la liste des pizzas !");
 			} catch (StockageException e) {
-				e.printStackTrace();
+				myLogger.log(Level.WARNING, e.getMessage(), e);
 			}
 		}
 		

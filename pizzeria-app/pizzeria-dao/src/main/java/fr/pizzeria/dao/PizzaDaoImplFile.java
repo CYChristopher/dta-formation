@@ -14,8 +14,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.CategoriePizza;
@@ -27,8 +29,10 @@ import fr.pizzeria.model.Pizza;
  */
 public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
+	private static final String MSG_DOSSIER_NON_TROUVE = "Le dossier data\\pizza est introuvable !";
+	private Logger myLogger = Logger.getLogger(this.getClass().getName());
+
 	private List<Pizza> pizzas;
-	private Boolean pizzaInList = false;
 	private String cheminDossier;
 	private File dossierData;
 
@@ -38,12 +42,12 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	public PizzaDaoImplFile() {
 		try {
-			this.pizzas = new ArrayList<Pizza>();
+			this.pizzas = new ArrayList<>();
 			cheminDossier = new File("").getCanonicalPath();
 			dossierData = new File(cheminDossier + "\\data\\pizzas");
 			initializeList();
 		} catch (IOException e) {
-			System.out.println("Le dossier data\\pizza est introuvable !");
+			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
 		}
 	}
 
@@ -67,19 +71,23 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 							Double.parseDouble(donneesTab[1]), CategoriePizza.valueOf(donneesTab[2]));
 					this.pizzas.add(pizza);
 					buff.close();
+					flux.close();
 				}
 			} else {
 				generatePizzas();
 			}
 		} catch (IOException e) {
-			System.out.println("Le dossier data\\pizza est introuvable !");
+			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
+		} catch (StockageException e) {
+			myLogger.log(Level.WARNING, e.getMessage(), e);
 		}
 	}
 
 	/**
+	 * @throws StockageException 
 	 * 
 	 */
-	private void generatePizzas() {
+	private void generatePizzas() throws StockageException {
 		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50, CategoriePizza.VIANDE);
 		this.pizzas.add(peperoni);
 		saveInFile(peperoni, false, null);
@@ -130,10 +138,10 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
-		if (pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")) {
+		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new StockageException("Le code de la pizza est incorrect !");
 		}
-		if (pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")) {
+		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
 			throw new StockageException("Le nom de la pizza est incorrect !");
 		}
 		if (pizza.getCategorie() == null) {
@@ -151,26 +159,23 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
-		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
+		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
 		}
-		if (pizza.getCode() == null || pizza.getCode().equalsIgnoreCase("")) {
+		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new StockageException("Le code modifié de la pizza est incorrect !");
 		}
-		if (pizza.getNom() == null || pizza.getNom().equalsIgnoreCase("")) {
+		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
 			throw new StockageException("Le nom modifié de la pizza est incorrect !");
 		}
-		pizzaInList = false;
-		this.pizzas.forEach((laPizza) -> {
-			if (laPizza.getCode().equalsIgnoreCase(codePizza)) {
-				laPizza.setCode(pizza.getCode());
-				laPizza.setNom(pizza.getNom());
-				laPizza.setPrix(pizza.getPrix());
-				pizzaInList = true;
-				saveInFile(laPizza, true, codePizza);
-			}
-		});
-		if (!pizzaInList) {
+
+		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
+				.findFirst();
+
+		if (optPizza.isPresent()) {
+			this.pizzas.set(this.pizzas.indexOf(optPizza.get()), pizza);
+			saveInFile(pizza, true, codePizza);
+		} else {
 			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
 		}
 	}
@@ -182,30 +187,26 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
-		if (codePizza == null || codePizza.equalsIgnoreCase("")) {
+		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
 		}
-		pizzaInList = false;
-		Iterator<Pizza> iterator = this.pizzas.iterator();
-		while (iterator.hasNext()) {
-			Pizza unePizza = iterator.next();
-			if (unePizza.getCode().equalsIgnoreCase(codePizza)) {
-				pizzas.remove(unePizza);
-				deleteFile(unePizza.getCode());
-				pizzaInList = true;
-				break;
-			}
-		}
-		if (!pizzaInList) {
+
+		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
+				.findFirst();
+
+		if (optPizza.isPresent()) {
+			this.pizzas.remove(optPizza.get());
+			deleteFile(codePizza);
+		} else {
 			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
 		}
 	}
 
-	private void saveInFile(Pizza pizza, boolean rename, String ancienCode) {
+	private void saveInFile(Pizza pizza, boolean rename, String ancienCode) throws StockageException {
 		try {
 			String cheminFichier = dossierData.getCanonicalPath() + "\\" + pizza.getCode() + ".txt";
 			Path fichierPizza = Paths.get(cheminFichier);
-			List<String> donneesPizza = new ArrayList<String>();
+			List<String> donneesPizza = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
 			sb.append(pizza.getNom()).append(";").append(Double.toString(pizza.getPrix())).append(";")
 					.append(pizza.getCategorie().name());
@@ -215,13 +216,15 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 			}
 			Files.write(fichierPizza, donneesPizza, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			System.out.println("Le dossier data\\pizza est introuvable !");
+			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
 		}
 	}
 
-	private void deleteFile(String code) {
+	private void deleteFile(String code) throws StockageException {
 		File fichier = new File(dossierData + "\\" + code + ".txt");
-		fichier.delete();
+		if(!fichier.delete()){
+			throw new StockageException("Impossible de supprimer le fichier " + dossierData + "\\" + code + ".txt !");
+		}
 	}
 
 }

@@ -6,6 +6,8 @@ package fr.pizzeria.ihm;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
@@ -30,9 +32,10 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 	@Override
 	public Boolean faireUneAction() {
 		Boolean saisieOk = false;
+		Logger myLogger = Logger.getLogger(this.getClass().getName());
 		while (!saisieOk) {
 			try {
-				Map<Integer, CategoriePizza> categories = new TreeMap<Integer, CategoriePizza>();
+				Map<Integer, CategoriePizza> categories = new TreeMap<>();
 				categories.put(1, CategoriePizza.POISSON);
 				categories.put(2, CategoriePizza.SANS_VIANDE);
 				categories.put(3, CategoriePizza.VIANDE);
@@ -55,14 +58,12 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 				System.out.println();
 				saisieOk = true;
 			} catch (NumberFormatException e) {
-				System.out.println("Le prix est incorrect !");
-				System.out.println();
+				myLogger.log(Level.INFO, e.getMessage(), e);
 			} catch (StockageException e) {
-				System.out.println(e.getMessage());
-				System.out.println();
+				myLogger.log(Level.WARNING, e.getMessage(), e);
 				System.out.print("Tapez 99 si vous voulez abandonner, n'importe quoi pour continuer :");
 				String choix = this.getSc().nextLine();
-				if (choix != null && choix.equalsIgnoreCase("99")) {
+				if (choix != null && "99".equalsIgnoreCase(choix)) {
 					saisieOk = true;
 				}
 			}

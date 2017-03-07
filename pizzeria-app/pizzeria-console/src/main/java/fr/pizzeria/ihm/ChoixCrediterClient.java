@@ -35,7 +35,7 @@ public class ChoixCrediterClient extends Choix<Integer, Client> {
 		List<Client> lesClients = this.getItemDao().findAllItems();
 		new Tools().listClients(lesClients);
 		System.out.print("Veuillez selectionner l'identifiant d'un client : ");
-		Integer idChoisi = Integer.parseInt(this.getSc().nextLine());
+		// Integer idChoisi = Integer.parseInt(this.getSc().nextLine());
 		
 		return null;
 	}

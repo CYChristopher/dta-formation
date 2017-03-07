@@ -1,5 +1,5 @@
 /**
- * 22 f�vr. 2017 Christopher CHARLERY
+ * 22 février. 2017 Christopher CHARLERY
  */
 package fr.pizzeria.ihmtools;
 
@@ -21,7 +21,7 @@ public abstract class Choix<I, G> {
 	private Scanner sc;
 	
 	/**
-	 * Cr�e un nouvel item d'un menu
+	 * Crée un nouvel item d'un menu
 	 * @param numeroChoix Position dans le menu
 	 * @param nomChoix Nom du choix
 	 */

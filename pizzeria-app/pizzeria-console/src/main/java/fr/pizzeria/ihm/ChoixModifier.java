@@ -5,6 +5,8 @@ package fr.pizzeria.ihm;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
@@ -31,13 +33,14 @@ final class ChoixModifier extends Choix<String, Pizza> {
 	public Boolean faireUneAction() {
 		Boolean saisieOk = false;
 		String codeSaisi = "";
-		while (!saisieOk && !codeSaisi.equalsIgnoreCase("99")) {
+		Logger myLogger = Logger.getLogger(this.getClass().getName());
+		while (!saisieOk && !"99".equalsIgnoreCase(codeSaisi)) {
 			try {
 				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
 				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à modifier (99 pour abandonner): ");
 				codeSaisi = this.getSc().nextLine();
-				if (!codeSaisi.equalsIgnoreCase("99") && lesPizzas.size() < 99) {
+				if (!"99".equalsIgnoreCase(codeSaisi) && lesPizzas.size() < 99) {
 					System.out.print("Veuillez saisir le code : ");
 					String codePizzaM = this.getSc().nextLine().toUpperCase();
 					System.out.print("Veuillez saisir le nom (sans espace) : ");
@@ -48,20 +51,15 @@ final class ChoixModifier extends Choix<String, Pizza> {
 					saisieOk = true;
 				}
 				System.out.println();
-			} catch (NumberFormatException e) {
-				System.out.println("Le prix est incorrect !");
-				System.out.println();
-				System.out.print("Tapez 99 si vous voulez abandonner, n'importe quoi pour continuer :");
-				String choix = this.getSc().nextLine();
-				if (choix != null && choix.equalsIgnoreCase("99")) {
-					saisieOk = true;
+			} catch (NumberFormatException | StockageException e) {
+				myLogger.log(Level.INFO, e.getMessage(), e);
+				if(e.getClass().equals(NumberFormatException.class)){
+					System.out.println("Le prix est incorrect !");
+					System.out.println();
 				}
-			} catch (StockageException e) {
-				System.out.println(e.getMessage());
-				System.out.println();
 				System.out.print("Tapez 99 si vous voulez abandonner, n'importe quoi pour continuer :");
 				String choix = this.getSc().nextLine();
-				if (choix != null && choix.equalsIgnoreCase("99")) {
+				if (choix != null && "99".equalsIgnoreCase(choix)) {
 					saisieOk = true;
 				}
 			}

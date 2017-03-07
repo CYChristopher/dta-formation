@@ -15,13 +15,13 @@ import fr.pizzeria.model.Client;
  */
 public class ClientDaoImpl implements ItemDao<Integer, Client> {
 
-	private List<Client> lesClients = new ArrayList<Client>();
+	private List<Client> lesClients = new ArrayList<>();
 
 	/**
 	 * 
 	 */
 	public ClientDaoImpl() {
-		this.lesClients = new ArrayList<Client>();
+		this.lesClients = new ArrayList<>();
 		initializeList();
 	}
 
@@ -56,7 +56,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 */
 	@Override
 	public void saveNewItem(Client item) throws StockageException {
-		// TODO Auto-generated method stub
+		//Implémentation à effectuer ultérieurement
 	}
 
 	/*
@@ -67,7 +67,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 */
 	@Override
 	public void updateItem(Integer idItem, Client item) throws StockageException {
-
+		//Implémentation à effectuer ultérieurement
 	}
 
 	/*
@@ -77,6 +77,6 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 */
 	@Override
 	public void deleteItem(Integer idItem) throws StockageException {
-		// TODO Auto-generated method stub
+		// Implémentation à effectuer ultérieurement
 	}
 }
