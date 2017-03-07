@@ -1,5 +1,5 @@
 /**
- * 24 févr. 2017 Christopher CHARLERY
+ * 24 fÃ©vrier 2017 Christopher CHARLERY
  */
 package fr.pizzeria.ihmtools;
 

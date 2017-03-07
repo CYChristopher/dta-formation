@@ -1,5 +1,5 @@
 /**
- * 22 févr. 2017 Christopher CHARLERY
+ * 22 fÃ©vrier 2017 Christopher CHARLERY
  */
 package fr.pizzeria.ihmtools;
 
@@ -34,7 +34,7 @@ public class Menu {
 	}
 
 	/**
-	 * Effectue l'action lié au choix choisi par l'utilisateur
+	 * Effectue l'action liÃ©e  au choix choisi par l'utilisateur
 	 * 
 	 * @param numero
 	 */
