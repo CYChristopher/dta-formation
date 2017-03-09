@@ -3,6 +3,7 @@
  */
 package fr.pizzeria.ihm;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -12,7 +13,6 @@ import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
-import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -46,8 +46,8 @@ final class ChoixModifier extends Choix<String, Pizza> {
 					System.out.print("Veuillez saisir le nom (sans espace) : ");
 					String nomPizzaM = this.getSc().nextLine();
 					System.out.print("Veuillez saisir le prix : ");
-					Double prixPizzaM = Double.parseDouble(this.getSc().nextLine());
-					this.getItemDao().updateItem(codeSaisi, new Pizza(0, codePizzaM, nomPizzaM, prixPizzaM, CategoriePizza.VIANDE));
+					BigDecimal prixPizzaM = BigDecimal.valueOf(Double.parseDouble(this.getSc().nextLine()));
+					this.getItemDao().updateItem(codeSaisi, new Pizza(codePizzaM, nomPizzaM, null, prixPizzaM));
 					saisieOk = true;
 				}
 				System.out.println();

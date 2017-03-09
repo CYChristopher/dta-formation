@@ -35,7 +35,7 @@ public class PizzeriaAdminConsoleApp {
 		Integer choice;
 		ItemDao<String, Pizza> instanceDaoImpl = null;
 		ResourceBundle bundle = ResourceBundle.getBundle("application");
-        String daoImpl = bundle.getString("service.impl");
+        String daoImpl = bundle.getString("service.impl");        
         
         try {
         	instanceDaoImpl = (ItemDao<String, Pizza>) Class.forName(daoImpl).newInstance();

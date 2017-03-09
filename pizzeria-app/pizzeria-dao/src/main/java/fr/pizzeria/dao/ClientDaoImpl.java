@@ -66,7 +66,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(Integer idItem, Client item) throws StockageException {
+	public void updateItem(Integer index, Client item) throws StockageException {
 		//Implémentation à effectuer ultérieurement
 	}
 
@@ -76,7 +76,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * @see fr.pizzeria.dao.IItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(Integer idItem) throws StockageException {
+	public void deleteItem(Integer index) throws StockageException {
 		// Implémentation à effectuer ultérieurement
 	}
 }

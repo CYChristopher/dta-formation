@@ -20,10 +20,16 @@
 
 	<profiles>
 		<profile>
-			<id>prod</id>
+			<id>bd</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
 			</activation>
+			<properties>
+				<implementation>fr.pizzeria.dao.PizzaDaoImplDB</implementation>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
 			<properties>
 				<implementation>fr.pizzeria.dao.PizzaDaoImplFile</implementation>
 			</properties>

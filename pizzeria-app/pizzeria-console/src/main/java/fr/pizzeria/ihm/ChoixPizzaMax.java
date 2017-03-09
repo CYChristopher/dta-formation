@@ -3,7 +3,6 @@
  */
 package fr.pizzeria.ihm;
 
-import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +38,7 @@ public class ChoixPizzaMax extends Choix<String, Pizza> {
 		Optional<Pizza> laPizza = lesPizzas.stream().collect(Collectors.maxBy(Comparator.comparing(Pizza::getPrix)));
 		if(laPizza.isPresent()){
 			lesPizzas.forEach(pizza -> {
-				if(BigDecimal.valueOf(pizza.getPrix()).compareTo(BigDecimal.valueOf(laPizza.get().getPrix()))==0){
+				if(pizza.getPrix().compareTo(laPizza.get().getPrix()) == 0){
 					System.out.println(pizza.toString());
 				}
 			});

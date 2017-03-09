@@ -1,5 +1,5 @@
 /**
- * 24 février 2017 Christopher CHARLERY
+ * 9 mars 2017 Christopher CHARLERY
  */
 package fr.pizzeria.model;
 
@@ -8,10 +8,10 @@ package fr.pizzeria.model;
  *
  */
 public enum CategoriePizza {
+
+	VIANDE ("Viande"), POISSON ("Poisson"), VEGETARIENNE ("Végétarienne"), FROMAGE ("Fromage");
 	
-	VIANDE ("Viande"), POISSON ("Poisson"), SANS_VIANDE ("Sans Viande");
-	
-	private String categorie;
+private String categorie;
 	
 	/**
 	 * 
@@ -34,4 +34,5 @@ public enum CategoriePizza {
 	public String toString() {
 		return categorie;
 	}
+	
 }

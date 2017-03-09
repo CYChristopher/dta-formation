@@ -3,8 +3,8 @@
  */
 package fr.pizzeria.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +19,6 @@ import fr.pizzeria.model.Pizza;
 public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	
 	private List<Pizza> pizzas;
-	private Boolean pizzaInList = false;
 	
 	/**
 	 * 
@@ -42,28 +41,28 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void initializeList() {
-		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50, CategoriePizza.VIANDE);
+		Pizza peperoni = new Pizza(null, "PEP", "Pépéroni", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
 		this.pizzas.add(peperoni);
 
-		Pizza margherita = new Pizza(1, "MAR", "Margherita", 14.00, CategoriePizza.VIANDE);
+		Pizza margherita = new Pizza(null, "MAR", "Margherita", BigDecimal.valueOf(14.00), CategoriePizza.VEGETARIENNE);
 		this.pizzas.add(margherita);
 
-		Pizza laReine = new Pizza(2, "REI", "La Reine", 11.50, CategoriePizza.VIANDE);
+		Pizza laReine = new Pizza(null, "REI", "La Reine", BigDecimal.valueOf(11.50), CategoriePizza.VIANDE);
 		this.pizzas.add(laReine);
 
-		Pizza la4Fromages = new Pizza(3, "FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE);
+		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00), CategoriePizza.VEGETARIENNE);
 		this.pizzas.add(la4Fromages);
 
-		Pizza laCannibale = new Pizza(4, "CAN", "La cannibale", 12.50, CategoriePizza.VIANDE);
+		Pizza laCannibale = new Pizza(null, "CAN", "La cannibale", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
 		this.pizzas.add(laCannibale);
 
-		Pizza laSavoyarde = new Pizza(5, "SAV", "La savoyarde", 13.00, CategoriePizza.VIANDE);
+		Pizza laSavoyarde = new Pizza(null, "SAV", "La savoyarde", BigDecimal.valueOf(13.00), CategoriePizza.VIANDE);
 		this.pizzas.add(laSavoyarde);
 
-		Pizza lOrientale = new Pizza(6, "ORI", "L'orientale", 13.50, CategoriePizza.VIANDE);
+		Pizza lOrientale = new Pizza(null, "ORI", "L'orientale", BigDecimal.valueOf(13.50), CategoriePizza.VIANDE);
 		this.pizzas.add(lOrientale);
 
-		Pizza lIndienne = new Pizza(7, "IND", "L'indienne", 14.00, CategoriePizza.VIANDE);
+		Pizza lIndienne = new Pizza(null, "IND", "L'indienne", BigDecimal.valueOf(14.00), CategoriePizza.VIANDE);
 		this.pizzas.add(lIndienne);
 	}
 

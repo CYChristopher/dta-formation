@@ -9,6 +9,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -67,8 +68,8 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 					String donneesLigne = buff.readLine();
 					String codePizza = fichiers[i].split(".txt")[0];
 					String[] donneesTab = donneesLigne.split(";");
-					Pizza pizza = new Pizza(this.pizzas.size(), codePizza, donneesTab[0],
-							Double.parseDouble(donneesTab[1]), CategoriePizza.valueOf(donneesTab[2]));
+					Pizza pizza = new Pizza(null, codePizza, donneesTab[0],
+							BigDecimal.valueOf(Double.parseDouble(donneesTab[1])), CategoriePizza.valueOf(donneesTab[2]));
 					this.pizzas.add(pizza);
 					buff.close();
 					flux.close();
@@ -88,35 +89,35 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * 
 	 */
 	private void generatePizzas() throws StockageException {
-		Pizza peperoni = new Pizza(0, "PEP", "Pépéroni", 12.50, CategoriePizza.VIANDE);
+		Pizza peperoni = new Pizza(null, "PEP", "Pépéroni", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
 		this.pizzas.add(peperoni);
 		saveInFile(peperoni, false, null);
 
-		Pizza margherita = new Pizza(1, "MAR", "Margherita", 14.00, CategoriePizza.VIANDE);
+		Pizza margherita = new Pizza(null, "MAR", "Margherita", BigDecimal.valueOf(14.00), CategoriePizza.VEGETARIENNE);
 		this.pizzas.add(margherita);
 		saveInFile(margherita, false, null);
 
-		Pizza laReine = new Pizza(2, "REI", "La Reine", 11.50, CategoriePizza.VIANDE);
+		Pizza laReine = new Pizza(null, "REI", "La Reine", BigDecimal.valueOf(11.50), CategoriePizza.VIANDE);
 		this.pizzas.add(laReine);
 		saveInFile(laReine, false, null);
 
-		Pizza la4Fromages = new Pizza(3, "FRO", "La 4 fromages", 12.00, CategoriePizza.SANS_VIANDE);
+		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00), CategoriePizza.VEGETARIENNE);
 		this.pizzas.add(la4Fromages);
 		saveInFile(la4Fromages, false, null);
 
-		Pizza laCannibale = new Pizza(4, "CAN", "La cannibale", 12.50, CategoriePizza.VIANDE);
+		Pizza laCannibale = new Pizza(null, "CAN", "La cannibale", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
 		this.pizzas.add(laCannibale);
 		saveInFile(laCannibale, false, null);
 
-		Pizza laSavoyarde = new Pizza(5, "SAV", "La savoyarde", 13.00, CategoriePizza.VIANDE);
+		Pizza laSavoyarde = new Pizza(null, "SAV", "La savoyarde", BigDecimal.valueOf(13.00), CategoriePizza.VIANDE);
 		this.pizzas.add(laSavoyarde);
 		saveInFile(laSavoyarde, false, null);
 
-		Pizza lOrientale = new Pizza(6, "ORI", "L'orientale", 13.50, CategoriePizza.VIANDE);
+		Pizza lOrientale = new Pizza(null, "ORI", "L'orientale", BigDecimal.valueOf(13.50), CategoriePizza.VIANDE);
 		this.pizzas.add(lOrientale);
 		saveInFile(lOrientale, false, null);
 
-		Pizza lIndienne = new Pizza(7, "IND", "L'indienne", 14.00, CategoriePizza.VIANDE);
+		Pizza lIndienne = new Pizza(null, "IND", "L'indienne", BigDecimal.valueOf(14.00), CategoriePizza.VIANDE);
 		this.pizzas.add(lIndienne);
 		saveInFile(lIndienne, false, null);
 	}
@@ -208,7 +209,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 			Path fichierPizza = Paths.get(cheminFichier);
 			List<String> donneesPizza = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
-			sb.append(pizza.getNom()).append(";").append(Double.toString(pizza.getPrix())).append(";")
+			sb.append(pizza.getNom()).append(";").append(pizza.getPrix().toString()).append(";")
 					.append(pizza.getCategorie().name());
 			donneesPizza.add(sb.toString());
 			if (rename) {

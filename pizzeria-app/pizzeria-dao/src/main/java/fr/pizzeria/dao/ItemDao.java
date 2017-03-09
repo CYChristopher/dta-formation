@@ -11,13 +11,13 @@ import fr.pizzeria.exception.StockageException;
  * @author Christopher CHARLERY
  *
  */
-public interface ItemDao<I, G> {
+public interface ItemDao<I, O> {
 
 	/**
 	 * Retourne le tableau d'item
 	 * @return
 	 */
-	List<G> findAllItems();
+	List<O> findAllItems();
 	
 	/**
 	 * Initialise le tableau
@@ -29,7 +29,7 @@ public interface ItemDao<I, G> {
 	 * @param item
 	 * @throws SaveItemException
 	 */
-	void saveNewItem(G item) throws StockageException; 
+	void saveNewItem(O item) throws StockageException; 
 	
 	/**
 	 * Mets � jour un item
@@ -37,12 +37,12 @@ public interface ItemDao<I, G> {
 	 * @param item
 	 * @throws UpdateItemException
 	 */
-	void updateItem(I idItem, G item) throws StockageException;
+	void updateItem(I index,O item) throws StockageException;
 	
 	/**
 	 * Supprime un item
 	 * @param idItem
 	 * @throws DeleteItemException
 	 */
-	void deleteItem(I idItem) throws StockageException;
+	void deleteItem(I index) throws StockageException;
 }

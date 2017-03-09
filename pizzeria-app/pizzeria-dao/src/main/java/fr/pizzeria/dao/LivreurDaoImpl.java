@@ -13,7 +13,7 @@ import fr.pizzeria.model.Livreur;
  * @author Christopher CHARLERY
  *
  */
-public class LivreurDaoImpl implements ItemDao<Integer, Livreur> {
+public class LivreurDaoImpl implements ItemDao<Integer,Livreur> {
 
 	private List<Livreur> lesLivreurs = new ArrayList<>();
 
@@ -50,7 +50,7 @@ public class LivreurDaoImpl implements ItemDao<Integer, Livreur> {
 	 * @see fr.pizzeria.dao.IItemDao#updateItem(java.lang.Object, java.lang.Object)
 	 */
 	@Override
-	public void updateItem(Integer idItem, Livreur item) throws StockageException {
+	public void updateItem(Integer index, Livreur item) throws StockageException {
 		// Implémentation à effectuer ultérieurement
 
 	}
@@ -59,7 +59,7 @@ public class LivreurDaoImpl implements ItemDao<Integer, Livreur> {
 	 * @see fr.pizzeria.dao.IItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(Integer idItem) throws StockageException {
+	public void deleteItem(Integer index) throws StockageException {
 		// Implémentation à effectuer ultérieurement
 
 	}

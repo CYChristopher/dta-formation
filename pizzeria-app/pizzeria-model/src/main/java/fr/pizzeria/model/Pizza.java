@@ -3,6 +3,8 @@
  */
 package fr.pizzeria.model;
 
+import java.math.BigDecimal;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -13,26 +15,112 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 public class Pizza {
 
 	private Integer id;
-	//@ToString(uppercase = false)
 	private String code;
-	//@ToString(uppercase = true)
 	private String nom;
-	private Double prix;
+	private String description;
+	private BigDecimal prix;
 	private CategoriePizza categorie;
+
+	/**
+	 * @param code
+	 * @param nom
+	 */
+	public Pizza(String code, String nom) {
+		super();
+		this.code = code;
+		this.nom = nom;
+	}
+
+	/**
+	 * @param code
+	 * @param nom
+	 */
+	public Pizza(String code, String nom, String description) {
+		super();
+		this.code = code;
+		this.nom = nom;
+		this.description = description;
+	}
 
 	/**
 	 * @param id
 	 * @param code
 	 * @param nom
+	 * @param description
+	 * @param categorie
+	 */
+	public Pizza(String code, String nom, String description, BigDecimal prix) {
+		this(code, nom, description);
+		this.prix = prix;
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
+	 * @param categorie
+	 */
+	public Pizza(String code, String nom, String description, BigDecimal prix, String categorie) {
+		this(code, nom, description, prix);
+		this.setCategorie(categorie);
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
+	 * @param categorie
+	 */
+	public Pizza(String code, String nom, String description, BigDecimal prix, CategoriePizza categorie) {
+		this(code, nom, description, prix);
+		this.setCategorie(categorie);
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 */
+	public Pizza(Integer id, String code, String nom) {
+		this(code, nom);
+		this.id = id;
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
+	 */
+	public Pizza(Integer id, String code, String nom, String description) {
+		this(id, code, nom);
+		this.description = description;
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
 	 * @param prix
 	 */
-	public Pizza(Integer id, String code, String nom, Double prix, CategoriePizza categ) {
-		super();
-		this.id = id;
-		this.code = code;
-		this.nom = nom;
+	public Pizza(Integer id, String code, String nom, String description, BigDecimal prix) {
+		this(id, code, nom, description);
 		this.prix = prix;
-		this.setCategorie(categ);
+	}
+
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
+	 * @param categorie
+	 */
+	public Pizza(Integer id, String code, String nom, String description, BigDecimal prix, String categorie) {
+		this(id, code, nom, description, prix);
+		this.setCategorie(categorie);
 	}
 
 	/**
@@ -40,14 +128,6 @@ public class Pizza {
 	 */
 	public int getId() {
 		return id;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	/**
@@ -81,9 +161,24 @@ public class Pizza {
 	}
 
 	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description
+	 *            the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
 	 * @return the prix
 	 */
-	public double getPrix() {
+	public BigDecimal getPrix() {
 		return prix;
 	}
 
@@ -91,7 +186,7 @@ public class Pizza {
 	 * @param prix
 	 *            the prix to set
 	 */
-	public void setPrix(Double prix) {
+	public void setPrix(BigDecimal prix) {
 		this.prix = prix;
 	}
 
@@ -110,6 +205,18 @@ public class Pizza {
 		this.categorie = categorie;
 	}
 
+	/**
+	 * @param categorie
+	 *            the categorie to set
+	 */
+	public void setCategorie(String categorie) {
+		for (int i = 0; i < CategoriePizza.values().length; i++) {
+			if (categorie.equalsIgnoreCase(CategoriePizza.values()[i].toString())) {
+				this.categorie = CategoriePizza.values()[i];
+			}
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -117,50 +224,28 @@ public class Pizza {
 	 */
 	@Override
 	public String toString() {
-		/*StringBuilder description = new StringBuilder();
-		for (Field field : this.getClass().getDeclaredFields()) {
-			ToString annotationTrouve = field.getAnnotation(ToString.class);
-			if (field.isAnnotationPresent(ToString.class)) {
-				try {
-					String valeur = (String) field.get(this);
-					if (annotationTrouve.uppercase()) {
-						valeur = valeur.toUpperCase();
-					} else {
-						valeur = valeur.toLowerCase();
-					}
-					description.append(valeur);
-				} catch (IllegalArgumentException | IllegalAccessException e) {
-					e.printStackTrace();
-				}
-				description.append(" ");
-			}
-		}
-		return description.toString();*/
-		return this.code + " -> " + this.nom + " (" + this.prix + " euros) : " + this.categorie;
+		return this.code + " -> " + this.nom + " (" + this.prix + " €) : " + this.categorie;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		Pizza pizza = (Pizza) obj;
-		return new EqualsBuilder().appendSuper(super.equals(pizza))
-				.append(this.code, pizza.code)
-				.append(this.nom, pizza.code)
-				.isEquals();
+		return new EqualsBuilder().appendSuper(super.equals(pizza)).append(this.id, pizza.id).append(this.code, pizza.code).isEquals();
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
 	public int hashCode() {
-		return new HashCodeBuilder(12, 7)
-				.append(this.code)
-				.append(this.nom)
-				.toHashCode();
+		return new HashCodeBuilder(12, 7).append(this.code).append(this.id).toHashCode();
 	}
-	
 
 }

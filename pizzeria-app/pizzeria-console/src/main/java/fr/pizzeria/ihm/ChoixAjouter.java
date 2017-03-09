@@ -3,6 +3,7 @@
  */
 package fr.pizzeria.ihm;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -37,15 +38,16 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 			try {
 				Map<Integer, CategoriePizza> categories = new TreeMap<>();
 				categories.put(1, CategoriePizza.POISSON);
-				categories.put(2, CategoriePizza.SANS_VIANDE);
+				categories.put(2, CategoriePizza.VEGETARIENNE);
 				categories.put(3, CategoriePizza.VIANDE);
+				categories.put(4, CategoriePizza.FROMAGE);
 
 				System.out.print("Veuillez saisir le code : ");
 				String codePizza = this.getSc().nextLine().toUpperCase();
 				System.out.print("Veuillez saisir le nom (sans espace) : ");
 				String nomPizza = this.getSc().nextLine();
 				System.out.print("Veuillez saisir le prix : ");
-				Double prixPizza = Double.parseDouble(this.getSc().nextLine());
+				BigDecimal prixPizza = BigDecimal.valueOf(Double.parseDouble(this.getSc().nextLine()));
 
 				System.out.println("Veuillez choisir la catégorie de la pizza : ");
 				categories.forEach((id, categorie) -> {
@@ -54,7 +56,7 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 				System.out.println();
 				Integer idCategorie = Integer.parseInt(this.getSc().nextLine());
 
-				this.getItemDao().saveNewItem(new Pizza(0, codePizza, nomPizza, prixPizza, categories.get(idCategorie)));
+				this.getItemDao().saveNewItem(new Pizza(codePizza, nomPizza, null, prixPizza, categories.get(idCategorie)));
 				System.out.println();
 				saisieOk = true;
 			} catch (NumberFormatException e) {
