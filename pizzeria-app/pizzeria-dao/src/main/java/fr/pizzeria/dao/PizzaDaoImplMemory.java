@@ -21,7 +21,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	private List<Pizza> pizzas;
 	
 	/**
-	 * 
+	 * Crée un dao pour une implémentation en memoire des pizzas
 	 */
 	public PizzaDaoImplMemory() {
 		this.pizzas = new ArrayList<>();

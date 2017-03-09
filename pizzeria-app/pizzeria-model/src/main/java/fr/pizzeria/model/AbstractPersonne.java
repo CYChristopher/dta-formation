@@ -31,6 +31,11 @@ public abstract class AbstractPersonne {
 		this.solde = solde;
 	}
 
+	/**
+	 * 
+	 * @param montant
+	 * @throws CreditException
+	 */
 	public void crediterCompte(double montant) throws CreditException {
 		this.solde += montant;
 		if (this.solde > 5000) {
@@ -38,6 +43,11 @@ public abstract class AbstractPersonne {
 		}
 	}
 
+	/**
+	 * 
+	 * @param montant
+	 * @throws DebitException
+	 */
 	public void debiterCompte(double montant) throws DebitException {
 		this.solde -= montant;
 		if (this.solde < 0) {

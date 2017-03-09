@@ -51,7 +51,9 @@ public class MenuPizzeria {
 	private Choix<Integer, Client> listerClient;
 
 	/**
-	 * Cr�e un menu pizza
+	 * Crée un menu pizza
+	 * @param scan Scanner utilisé dans toute l'application
+	 * @param pizzaDao Dao des pizza (varie en fonction de l(implémentation)
 	 */
 	public MenuPizzeria(Scanner scan, ItemDao<String, Pizza> pizzaDao) {
 		if(pizzaDao == null){

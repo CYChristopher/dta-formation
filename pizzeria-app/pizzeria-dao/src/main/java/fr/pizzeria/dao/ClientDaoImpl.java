@@ -18,7 +18,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	private List<Client> lesClients = new ArrayList<>();
 
 	/**
-	 * 
+	 * Crée un nouveau dao d'un client
 	 */
 	public ClientDaoImpl() {
 		this.lesClients = new ArrayList<>();

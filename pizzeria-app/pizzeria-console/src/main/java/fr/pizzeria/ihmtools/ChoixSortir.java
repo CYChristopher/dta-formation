@@ -14,6 +14,7 @@ public final class ChoixSortir extends Choix {
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
+	 * @param sc
 	 */
 	public ChoixSortir(Integer numeroChoix, String nomChoix, Scanner sc) {
 		super(numeroChoix, nomChoix, sc);

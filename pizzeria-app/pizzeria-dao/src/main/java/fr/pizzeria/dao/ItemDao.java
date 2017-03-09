@@ -9,7 +9,8 @@ import fr.pizzeria.exception.StockageException;
 
 /**
  * @author Christopher CHARLERY
- *
+ * @param I Index
+ * @param O Objet de la dao
  */
 public interface ItemDao<I, O> {
 
@@ -33,7 +34,7 @@ public interface ItemDao<I, O> {
 	
 	/**
 	 * Mets � jour un item
-	 * @param idItem
+	 * @param index 
 	 * @param item
 	 * @throws UpdateItemException
 	 */

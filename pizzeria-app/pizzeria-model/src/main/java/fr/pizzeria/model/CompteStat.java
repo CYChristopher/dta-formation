@@ -9,7 +9,10 @@ package fr.pizzeria.model;
  */
 @FunctionalInterface
 public interface CompteStat {
-	
+	/**
+	 * 
+	 * @return
+	 */
 	double getSolde();
 
 }

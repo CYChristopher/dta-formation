@@ -50,13 +50,12 @@ final class ChoixAjouter extends Choix<String, Pizza> {
 				BigDecimal prixPizza = BigDecimal.valueOf(Double.parseDouble(this.getSc().nextLine()));
 
 				System.out.println("Veuillez choisir la catégorie de la pizza : ");
-				categories.forEach((id, categorie) -> {
-					System.out.print(" / " + id + ". " + categorie.toString());
-				});
+				categories.forEach((id, categorie) -> System.out.print(" / " + id + ". " + categorie.toString()));
 				System.out.println();
 				Integer idCategorie = Integer.parseInt(this.getSc().nextLine());
 
-				this.getItemDao().saveNewItem(new Pizza(codePizza, nomPizza, null, prixPizza, categories.get(idCategorie)));
+				this.getItemDao()
+						.saveNewItem(new Pizza(codePizza, nomPizza, null, prixPizza, categories.get(idCategorie)));
 				System.out.println();
 				saisieOk = true;
 			} catch (NumberFormatException e) {

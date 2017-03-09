@@ -17,7 +17,7 @@ public class Menu {
 
 	/**
 	 * 
-	 * @param taille
+	 * @param titre
 	 */
 	public Menu(String titre) {
 		this.titre = titre;
@@ -34,9 +34,10 @@ public class Menu {
 	}
 
 	/**
-	 * Effectue l'action liée  au choix choisi par l'utilisateur
+	 * Effectue l'action liée au choix choisi par l'utilisateur
 	 * 
 	 * @param numero
+	 * @return
 	 */
 	public Boolean appliquerChoix(Integer numero) {
 		Boolean continuer;
@@ -49,9 +50,7 @@ public class Menu {
 	 */
 	public void show() {
 		System.out.println(this.titre);
-		this.items.forEach((id, choix) -> {
-			System.out.println(id + ". " + choix.getNomChoix());
-		});
+		this.items.forEach((id, choix) -> System.out.println(id + ". " + choix.getNomChoix()));
 	}
 
 }

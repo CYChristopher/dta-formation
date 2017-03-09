@@ -66,7 +66,8 @@ public abstract class Choix<I, G> {
 	}
 
 	/**
-	 * Effectue l'action li�e au choix
+	 * Effectue l'action liée  au choix
+	 * @return S'il faut continuer après l'execution de l'action liée à ce choix
 	 */
 	public abstract Boolean faireUneAction();
 
@@ -87,7 +88,7 @@ public abstract class Choix<I, G> {
 	}
 
 	/**
-	 * R�cup�re le nom du choix
+	 * Récupere le nom du choix
 	 * @return the nomChoix
 	 */
 	public String getNomChoix() {

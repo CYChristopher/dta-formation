@@ -24,29 +24,25 @@ public class Tools {
 	 *            Tableau des pizzas
 	 */
 	public void listPizzas(List<Pizza> pizzas) {
-		pizzas.forEach(pizza -> {
-			System.out.println(pizza.toString());
-		});
+		pizzas.forEach(pizza -> System.out.println(pizza.toString()));
 	}
 
 	/**
 	 * Affiche la liste des clients
+	 * 
 	 * @param clients
 	 */
 	public void listClients(List<Client> clients) {
-		clients.forEach(client -> {
-			System.out.println(client.toString());
-		});
+		clients.forEach(client -> System.out.println(client.toString()));
 	}
-	
+
 	/**
 	 * Affiche la liste des livreurs
+	 * 
 	 * @param livreurs
 	 */
-	public void listLivreurs(List<Livreur> livreurs){
-		livreurs.forEach(livreur -> {
-			System.out.println(livreur.toString());
-		});
+	public void listLivreurs(List<Livreur> livreurs) {
+		livreurs.forEach(livreur -> System.out.println(livreur.toString()));
 	}
 
 	/**
@@ -58,9 +54,7 @@ public class Tools {
 	public void listPizzasCateg(Map<CategoriePizza, List<Pizza>> pizzas) {
 		pizzas.forEach((categorie, list) -> {
 			System.out.println("- " + categorie.toString().toUpperCase() + " - ");
-			list.forEach(pizza -> {
-				System.out.println("\t" + pizza.toString());
-			});
+			list.forEach(pizza -> System.out.println("\t" + pizza.toString()));
 			System.out.println("-> " + list.size() + " pizzas dans la catégorie " + categorie.toString());
 		});
 	}

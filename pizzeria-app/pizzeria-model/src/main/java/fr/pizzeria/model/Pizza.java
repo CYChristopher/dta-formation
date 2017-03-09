@@ -34,6 +34,7 @@ public class Pizza {
 	/**
 	 * @param code
 	 * @param nom
+	 * @param description
 	 */
 	public Pizza(String code, String nom, String description) {
 		super();
@@ -43,11 +44,10 @@ public class Pizza {
 	}
 
 	/**
-	 * @param id
 	 * @param code
 	 * @param nom
 	 * @param description
-	 * @param categorie
+	 * @param prix
 	 */
 	public Pizza(String code, String nom, String description, BigDecimal prix) {
 		this(code, nom, description);
@@ -55,10 +55,10 @@ public class Pizza {
 	}
 
 	/**
-	 * @param id
 	 * @param code
 	 * @param nom
 	 * @param description
+	 * @param prix
 	 * @param categorie
 	 */
 	public Pizza(String code, String nom, String description, BigDecimal prix, String categorie) {
@@ -67,10 +67,10 @@ public class Pizza {
 	}
 
 	/**
-	 * @param id
 	 * @param code
 	 * @param nom
 	 * @param description
+	 * @param prix
 	 * @param categorie
 	 */
 	public Pizza(String code, String nom, String description, BigDecimal prix, CategoriePizza categorie) {
@@ -116,6 +116,7 @@ public class Pizza {
 	 * @param code
 	 * @param nom
 	 * @param description
+	 * @param prix
 	 * @param categorie
 	 */
 	public Pizza(Integer id, String code, String nom, String description, BigDecimal prix, String categorie) {
@@ -234,8 +235,12 @@ public class Pizza {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		Pizza pizza = (Pizza) obj;
-		return new EqualsBuilder().appendSuper(super.equals(pizza)).append(this.id, pizza.id).append(this.code, pizza.code).isEquals();
+		boolean isEqual = false;
+		if(obj instanceof Pizza){
+			Pizza pizza = (Pizza) obj;
+			isEqual = new EqualsBuilder().appendSuper(super.equals(pizza)).append(this.id, pizza.id).append(this.code, pizza.code).isEquals();
+		}
+		return isEqual;
 	}
 
 	/*
