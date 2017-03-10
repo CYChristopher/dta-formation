@@ -44,8 +44,8 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		Class.forName(this.bundle.getString("driver"));
 		this.url = this.bundle.getString("url");
 		this.user = this.bundle.getString("user");
-	    this.password = this.bundle.getString("password");
-	    initializeList();
+		this.password = this.bundle.getString("password");
+		initializeList();
 	}
 
 	/*
@@ -65,7 +65,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void initializeList() {
-		try (Connection connection = DriverManager.getConnection(url, user, password); 
+		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("SELECT * FROM pizza");
 				ResultSet resultats = pStatement.executeQuery();) {
 			while (resultats.next()) {
@@ -84,6 +84,22 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		}
 	}
 
+	/**
+	 * @param pizza
+	 * @throws StockageException
+	 */
+	private void verifySaisie(Pizza pizza) throws StockageException {
+		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
+			throw new StockageException("Le code de la pizza est incorrect !");
+		}
+		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
+			throw new StockageException("Le nom de la pizza est incorrect !");
+		}
+		if (pizza.getCategorie() == null) {
+			throw new StockageException("Vous devez choisir une catégorie de pizza !");
+		}
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -91,10 +107,11 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza item) throws StockageException {
-		try (Connection connection = DriverManager.getConnection(url, user, password); 
+		verifySaisie(item);
+		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"" + "INSERT INTO pizza (ID_Pizza, Categorie, Code, Nom, Description, Prix, URL_image) "
-								+ "VALUES(?, ?, ?, ?, ?, ?, ?)");){
+								+ "VALUES(?, ?, ?, ?, ?, ?, ?)");) {
 			pStatement.setString(1, null);
 			pStatement.setString(2, item.getCategorie().toString());
 			pStatement.setString(3, item.getCode());
@@ -116,11 +133,15 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(String code, Pizza item) throws StockageException {
-		try (Connection connection = DriverManager.getConnection(url, user, password); 
+	public void updateItem(String codePizza, Pizza item) throws StockageException {
+		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
+			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
+		}
+		verifySaisie(item);
+		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
-						"UPDATE pizza SET Code=?, Nom=?, Description=?, Prix=? " + "WHERE ID_Pizza=?");){
-			Pizza laPizza = getPizza(code);
+						"UPDATE pizza SET Code=?, Nom=?, Description=?, Prix=? " + "WHERE ID_Pizza=?");) {
+			Pizza laPizza = getPizza(codePizza);
 			if (laPizza != null) {
 				pStatement.setString(1, item.getCode());
 				pStatement.setString(2, item.getNom());
@@ -128,7 +149,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 				pStatement.setBigDecimal(4, item.getPrix());
 				pStatement.setInt(5, laPizza.getId());
 				pStatement.executeUpdate();
-				
+
 				int index = this.pizzas.indexOf(laPizza);
 				this.pizzas.get(index).setCode(item.getCode());
 				this.pizzas.get(index).setNom(item.getNom());
@@ -148,11 +169,13 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(String code) throws StockageException {
-		try (Connection connection = DriverManager.getConnection(url, user, password); 
-				PreparedStatement pStatement = connection
-						.prepareStatement("DELETE FROM pizza WHERE ID_Pizza=?");){
-			Pizza laPizza = getPizza(code);
+	public void deleteItem(String codePizza) throws StockageException {
+		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
+			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
+		}
+		try (Connection connection = DriverManager.getConnection(url, user, password);
+				PreparedStatement pStatement = connection.prepareStatement("DELETE FROM pizza WHERE ID_Pizza=?");) {
+			Pizza laPizza = getPizza(codePizza);
 			if (laPizza != null) {
 				pStatement.setInt(1, laPizza.getId());
 				pStatement.executeUpdate();

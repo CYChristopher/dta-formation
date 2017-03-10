@@ -16,6 +16,7 @@ public class DebitException extends Exception {
 	
 	/**
 	 * Crée une nouvelle instance d'une exception sur un crédit
+	 * @param message
 	 */
 	public DebitException(String message) {
 		super(message);

@@ -16,6 +16,7 @@ public class CreditException extends Exception {
 	
 	/**
 	 * Crée une nouvelle instance d'une exception sur un crédit
+	 * @param message
 	 */
 	public CreditException(String message) {
 		super(message);

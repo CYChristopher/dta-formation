@@ -71,6 +71,15 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
+		verifySaisie(pizza);
+		this.pizzas.add(pizza);
+	}
+
+	/**
+	 * @param pizza
+	 * @throws StockageException
+	 */
+	private void verifySaisie(Pizza pizza) throws StockageException {
 		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new StockageException("Le code de la pizza est incorrect !");
 		}
@@ -80,7 +89,6 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 		if (pizza.getCategorie() == null) {
 			throw new StockageException("Vous devez choisir une catégorie de pizza !");
 		}
-		this.pizzas.add(pizza);
 	}
 
 	/* (non-Javadoc)
@@ -91,12 +99,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
 		}
-		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
-			throw new StockageException("Le code modifié de la pizza est incorrect !");
-		}
-		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
-			throw new StockageException("Le nom modifié de la pizza est incorrect !");
-		}
+		verifySaisie(pizza);
 
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();

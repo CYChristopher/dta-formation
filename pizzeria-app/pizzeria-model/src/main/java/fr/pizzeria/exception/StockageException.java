@@ -16,6 +16,7 @@ public class StockageException extends Exception{
 	
 	/**
 	 * Crée une nouvelle instance d'une exception sur le stockage des pizzas
+	 * @param message
 	 */
 	public StockageException(String message) {
 		super(message);

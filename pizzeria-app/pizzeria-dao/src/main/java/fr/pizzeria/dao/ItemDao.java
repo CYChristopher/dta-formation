@@ -42,7 +42,7 @@ public interface ItemDao<I, O> {
 	
 	/**
 	 * Supprime un item
-	 * @param idItem
+	 * @param index
 	 * @throws DeleteItemException
 	 */
 	void deleteItem(I index) throws StockageException;

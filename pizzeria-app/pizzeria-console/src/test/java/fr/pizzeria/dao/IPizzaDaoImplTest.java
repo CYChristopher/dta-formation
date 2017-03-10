@@ -3,17 +3,16 @@
  */
 package fr.pizzeria.dao;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.allOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
 
 import java.util.List;
 
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -27,7 +26,7 @@ public class IPizzaDaoImplTest {
 	/*@Before
 	public void test(){
 		pizzaDao = new IPizzaDaoImpl();
-	}
+	}*/
 	
 	@Test
 	public void testFindAll(){
@@ -46,7 +45,7 @@ public class IPizzaDaoImplTest {
 		assertThat(pizzas.size(), allOf(is(8), is(8))); 
 	}
 	
-	@Test
+	/*@Test
 	public void testSaveValid() throws StockageException{
 		Pizza pizza = new Pizza(0, "TEX", "Texane", 18.00, CategoriePizza.VIANDE);
 		pizzaDao.saveNewItem(pizza);

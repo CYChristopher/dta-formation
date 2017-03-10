@@ -69,7 +69,8 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 					String codePizza = fichiers[i].split(".txt")[0];
 					String[] donneesTab = donneesLigne.split(";");
 					Pizza pizza = new Pizza(null, codePizza, donneesTab[0],
-							BigDecimal.valueOf(Double.parseDouble(donneesTab[1])), CategoriePizza.valueOf(donneesTab[2]));
+							BigDecimal.valueOf(Double.parseDouble(donneesTab[1])),
+							CategoriePizza.valueOf(donneesTab[2]));
 					this.pizzas.add(pizza);
 					buff.close();
 					flux.close();
@@ -85,7 +86,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	}
 
 	/**
-	 * @throws StockageException 
+	 * @throws StockageException
 	 * 
 	 */
 	private void generatePizzas() throws StockageException {
@@ -101,7 +102,8 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		this.pizzas.add(laReine);
 		saveInFile(laReine, false, null);
 
-		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00), CategoriePizza.VEGETARIENNE);
+		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00),
+				CategoriePizza.VEGETARIENNE);
 		this.pizzas.add(la4Fromages);
 		saveInFile(la4Fromages, false, null);
 
@@ -139,6 +141,16 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
+		verifySaisie(pizza);
+		this.pizzas.add(pizza);
+		saveInFile(pizza, false, null);
+	}
+
+	/**
+	 * @param pizza
+	 * @throws StockageException
+	 */
+	private void verifySaisie(Pizza pizza) throws StockageException {
 		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new StockageException("Le code de la pizza est incorrect !");
 		}
@@ -148,8 +160,6 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		if (pizza.getCategorie() == null) {
 			throw new StockageException("Vous devez choisir une catégorie de pizza !");
 		}
-		this.pizzas.add(pizza);
-		saveInFile(pizza, false, null);
 	}
 
 	/*
@@ -163,12 +173,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
 			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
 		}
-		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
-			throw new StockageException("Le code modifié de la pizza est incorrect !");
-		}
-		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
-			throw new StockageException("Le nom modifié de la pizza est incorrect !");
-		}
+		verifySaisie(pizza);
 
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
@@ -223,7 +228,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
 	private void deleteFile(String code) throws StockageException {
 		File fichier = new File(dossierData + "\\" + code + ".txt");
-		if(!fichier.delete()){
+		if (!fichier.delete()) {
 			throw new StockageException("Impossible de supprimer le fichier " + dossierData + "\\" + code + ".txt !");
 		}
 	}
