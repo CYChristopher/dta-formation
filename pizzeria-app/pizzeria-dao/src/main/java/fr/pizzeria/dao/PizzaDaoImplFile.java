@@ -150,7 +150,8 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @param pizza
 	 * @throws StockageException
 	 */
-	private void verifySaisie(Pizza pizza) throws StockageException {
+	@Override
+	public void verifySaisie(Pizza pizza) throws StockageException {
 		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new StockageException("Le code de la pizza est incorrect !");
 		}

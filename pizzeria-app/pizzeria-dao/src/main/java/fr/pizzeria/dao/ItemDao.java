@@ -9,8 +9,8 @@ import fr.pizzeria.exception.StockageException;
 
 /**
  * @author Christopher CHARLERY
- * @param I Index
- * @param O Objet de la dao
+ * @param <I> Index
+ * @param <O> Objet de la dao
  */
 public interface ItemDao<I, O> {
 
@@ -46,4 +46,11 @@ public interface ItemDao<I, O> {
 	 * @throws DeleteItemException
 	 */
 	void deleteItem(I index) throws StockageException;
+	
+	/**
+	 * 
+	 * @param item
+	 * @throws StockageException
+	 */
+	void verifySaisie(O item) throws StockageException; 
 }
