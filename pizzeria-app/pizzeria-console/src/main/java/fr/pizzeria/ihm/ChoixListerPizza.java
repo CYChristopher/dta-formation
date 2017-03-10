@@ -26,7 +26,7 @@ final class ChoixListerPizza extends Choix<String, Pizza> {
 
 	@Override
 	public Boolean faireUneAction() {
-		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+		List<Pizza> lesPizzas = this.getItemDao().getItems();
 		new Tools().listPizzas(lesPizzas);
 		System.out.println("-> " + lesPizzas.size() + " pizzas dans le menu");
 		System.out.println();

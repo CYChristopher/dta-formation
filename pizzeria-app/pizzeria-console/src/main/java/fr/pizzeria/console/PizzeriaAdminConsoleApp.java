@@ -17,7 +17,7 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public class PizzeriaAdminConsoleApp {
-	
+
 	/**
 	 * 
 	 */
@@ -35,13 +35,18 @@ public class PizzeriaAdminConsoleApp {
 		Integer choice;
 		ItemDao<String, Pizza> instanceDaoImpl = null;
 		ResourceBundle bundle = ResourceBundle.getBundle("application");
-        String daoImpl = bundle.getString("service.impl");        
-        
-        try {
-        	instanceDaoImpl = (ItemDao<String, Pizza>) Class.forName(daoImpl).newInstance();
+		String daoImpl = bundle.getString("service.impl");
+		
+		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
+		
+		System.out.println(daoImpl);
+		
+		try {
+			instanceDaoImpl = (ItemDao<String, Pizza>) Class.forName(daoImpl).newInstance();
 		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			Logger.getLogger(PizzeriaAdminConsoleApp.class.getName()).log(Level.WARNING, e.getMessage(), e);
 		}
+		
 		MenuPizzeria menuPizza = new MenuPizzeria(sc, instanceDaoImpl);
 
 		menuPizza.getMenu().show();

@@ -3,13 +3,11 @@
  */
 package fr.pizzeria.dao;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -27,45 +25,23 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	public PizzaDaoImplMemory() {
 		this.pizzas = new ArrayList<>();
 		this.daoTools = new DaoPizzaTools();
-		initializeList();
+		findAllItems();
+	}
+
+	/**
+	 * @return the pizzas
+	 */
+	@Override
+	public List<Pizza> getItems() {
+		return pizzas;
 	}
 
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.ItemDao#findAllItems()
 	 */
 	@Override
-	public List<Pizza> findAllItems() {
-		return this.pizzas;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.pizzeria.dao.ItemDao#initializeList()
-	 */
-	@Override
-	public void initializeList() {
-		Pizza peperoni = new Pizza(null, "PEP", "Pépéroni", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
-		this.pizzas.add(peperoni);
-
-		Pizza margherita = new Pizza(null, "MAR", "Margherita", BigDecimal.valueOf(14.00), CategoriePizza.VEGETARIENNE);
-		this.pizzas.add(margherita);
-
-		Pizza laReine = new Pizza(null, "REI", "La Reine", BigDecimal.valueOf(11.50), CategoriePizza.VIANDE);
-		this.pizzas.add(laReine);
-
-		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00), CategoriePizza.VEGETARIENNE);
-		this.pizzas.add(la4Fromages);
-
-		Pizza laCannibale = new Pizza(null, "CAN", "La cannibale", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
-		this.pizzas.add(laCannibale);
-
-		Pizza laSavoyarde = new Pizza(null, "SAV", "La savoyarde", BigDecimal.valueOf(13.00), CategoriePizza.VIANDE);
-		this.pizzas.add(laSavoyarde);
-
-		Pizza lOrientale = new Pizza(null, "ORI", "L'orientale", BigDecimal.valueOf(13.50), CategoriePizza.VIANDE);
-		this.pizzas.add(lOrientale);
-
-		Pizza lIndienne = new Pizza(null, "IND", "L'indienne", BigDecimal.valueOf(14.00), CategoriePizza.VIANDE);
-		this.pizzas.add(lIndienne);
+	public void findAllItems() {
+		this.pizzas = this.daoTools.generatePizzas();
 	}
 
 	/* (non-Javadoc)

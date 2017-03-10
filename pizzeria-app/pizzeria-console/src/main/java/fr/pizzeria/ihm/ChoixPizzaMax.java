@@ -34,7 +34,7 @@ public class ChoixPizzaMax extends Choix<String, Pizza> {
 	 */
 	@Override
 	public Boolean faireUneAction() {
-		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+		List<Pizza> lesPizzas = this.getItemDao().getItems();
 		Optional<Pizza> laPizza = lesPizzas.stream().collect(Collectors.maxBy(Comparator.comparing(Pizza::getPrix)));
 		if(laPizza.isPresent()){
 			lesPizzas.forEach(pizza -> {

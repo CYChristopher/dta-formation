@@ -17,19 +17,21 @@ public class LivreurDaoImpl implements ItemDao<Integer,Livreur> {
 
 	private List<Livreur> lesLivreurs = new ArrayList<>();
 
+	
+	
+	/**
+	 * @return the lesLivreurs
+	 */
+	@Override
+	public List<Livreur> getItems() {
+		return lesLivreurs;
+	}
+
 	/* (non-Javadoc)
 	 * @see fr.pizzeria.dao.IItemDao#findAllItems()
 	 */
 	@Override
-	public List<Livreur> findAllItems() {
-		return this.lesLivreurs;
-	}
-
-	/* (non-Javadoc)
-	 * @see fr.pizzeria.dao.IItemDao#initializeList()
-	 */
-	@Override
-	public void initializeList() {
+	public void findAllItems() {
 		Livreur dRobert = new Livreur(1, "Robert", "Daniel", 50.0);
 		this.lesLivreurs.add(dRobert);
 		

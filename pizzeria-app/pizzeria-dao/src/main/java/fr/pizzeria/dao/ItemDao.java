@@ -13,17 +13,18 @@ import fr.pizzeria.exception.StockageException;
  * @param <O> Objet de la dao
  */
 public interface ItemDao<I, O> {
-
-	/**
-	 * Retourne le tableau d'item
-	 * @return
-	 */
-	List<O> findAllItems();
 	
 	/**
-	 * Initialise le tableau
+	 * 
+	 * @return 
 	 */
-	void initializeList();
+	List<O> getItems();
+
+	/**
+	 * Initialise et retourne le tableau d'item
+	 * @return
+	 */
+	void findAllItems();
 	
 	/**
 	 * Ajoute un nouvel item dans le tableau

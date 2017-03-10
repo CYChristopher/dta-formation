@@ -49,6 +49,8 @@ public class MenuPizzeria {
 	
 	//Affiche la liste des clients
 	private Choix<Integer, Client> listerClient;
+	
+	private Choix<String, Pizza> importerPizzas;
 
 	/**
 	 * Crée un menu pizza
@@ -76,6 +78,7 @@ public class MenuPizzeria {
 		this.modifier = new ChoixModifier(5, "Mettre à jour une pizza", pizzaDao, scan);
 		this.supprimer = new ChoixSupprimer(6, "Supprimer une pizza", pizzaDao, scan);
 		this.listerClient = new ChoixListerClient(7, "Lister les clients", clientDao);
+		this.importerPizzas = new ChoixImporterPizzas(8, "Importer des données", pizzaDao, scan);
 		this.sortir = new ChoixSortir(99, "Sortir", scan);
 		
 		this.menu.addChoix(this.lister);
@@ -85,6 +88,7 @@ public class MenuPizzeria {
 		this.menu.addChoix(this.modifier);
 		this.menu.addChoix(this.supprimer);
 		this.menu.addChoix(this.listerClient);
+		this.menu.addChoix(importerPizzas);
 		this.menu.addChoix(this.sortir);
 	}
 

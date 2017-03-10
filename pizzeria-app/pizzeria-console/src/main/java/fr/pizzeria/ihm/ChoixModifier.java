@@ -36,7 +36,7 @@ final class ChoixModifier extends Choix<String, Pizza> {
 		Logger myLogger = Logger.getLogger(this.getClass().getName());
 		while (!saisieOk && !"99".equalsIgnoreCase(codeSaisi)) {
 			try {
-				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+				List<Pizza> lesPizzas = this.getItemDao().getItems();
 				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à modifier (99 pour abandonner): ");
 				codeSaisi = this.getSc().nextLine();

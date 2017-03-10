@@ -47,7 +47,15 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		this.url = this.bundle.getString("url");
 		this.user = this.bundle.getString("user");
 		this.password = this.bundle.getString("password");
-		initializeList();
+		findAllItems();
+	}
+	
+	/**
+	 * @return the pizzas
+	 */
+	@Override
+	public List<Pizza> getItems() {
+		return pizzas;
 	}
 
 	/*
@@ -56,17 +64,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#findAllItems()
 	 */
 	@Override
-	public List<Pizza> findAllItems() {
-		return this.pizzas;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.pizzeria.dao.ItemDao#initializeList()
-	 */
-	@Override
-	public void initializeList() {
+	public void findAllItems() {
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("SELECT * FROM pizza");
 				ResultSet resultats = pStatement.executeQuery();) {
@@ -99,7 +97,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 						"" + "INSERT INTO pizza (ID_Pizza, Categorie, Code, Nom, Description, Prix, URL_image) "
 								+ "VALUES(?, ?, ?, ?, ?, ?, ?)");) {
 			pStatement.setString(1, null);
-			pStatement.setString(2, item.getCategorie().toString());
+			pStatement.setString(2, item.getCategorie().name());
 			pStatement.setString(3, item.getCode());
 			pStatement.setString(4, item.getNom());
 			pStatement.setString(5, item.getDescription());
@@ -178,6 +176,18 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 			laPizza = optPizza.get();
 		}
 		return laPizza;
+	}
+
+	public void importPizzas() {
+		try (Connection connection = DriverManager.getConnection(url, user, password);
+				PreparedStatement pStatement = connection.prepareStatement("SELECT * FROM WHERE ID_Pizza=?");) {
+			List<Pizza> list = this.daoTools.readFile();
+			list.forEach(pizzaInFile -> {
+
+			});
+		} catch (SQLException e) {
+			myLogger.log(Level.WARNING, e.getMessage(), e);
+		}
 	}
 
 }

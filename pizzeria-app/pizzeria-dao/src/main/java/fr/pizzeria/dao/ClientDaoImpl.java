@@ -22,7 +22,15 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 */
 	public ClientDaoImpl() {
 		this.lesClients = new ArrayList<>();
-		initializeList();
+		findAllItems();
+	}	
+	
+	/**
+	 * @return the lesClients
+	 */
+	@Override
+	public List<Client> getItems() {
+		return this.lesClients;
 	}
 
 	/*
@@ -31,17 +39,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * @see fr.pizzeria.dao.IItemDao#findAllItems()
 	 */
 	@Override
-	public List<Client> findAllItems() {
-		return lesClients;
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see fr.pizzeria.dao.IItemDao#initializeList()
-	 */
-	@Override
-	public void initializeList() {
+	public void findAllItems() {
 		Client jRobert = new Client(12, "Robert", "Jules", 200.0);
 		this.lesClients.add(jRobert);
 

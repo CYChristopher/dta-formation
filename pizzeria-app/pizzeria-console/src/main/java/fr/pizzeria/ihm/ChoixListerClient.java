@@ -30,7 +30,7 @@ public class ChoixListerClient extends Choix<Integer, Client> {
 	 */
 	@Override
 	public Boolean faireUneAction() {
-		List<Client> lesClients = this.getItemDao().findAllItems();
+		List<Client> lesClients = this.getItemDao().getItems();
 		new Tools().listClients(lesClients);
 		System.out.println();
 		return true;

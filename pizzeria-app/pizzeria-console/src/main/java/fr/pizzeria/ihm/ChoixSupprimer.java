@@ -34,7 +34,7 @@ final class ChoixSupprimer extends Choix<String, Pizza> {
 		String codeSaisiS = "";
 		while (!saisieOk && !"99".equalsIgnoreCase(codeSaisiS)) {
 			try {
-				List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+				List<Pizza> lesPizzas = this.getItemDao().getItems();
 				new Tools().listPizzas(lesPizzas);
 				System.out.print("Veuillez choisir la pizza à supprimer (99 pour abandonner): ");
 				codeSaisiS = this.getSc().nextLine();

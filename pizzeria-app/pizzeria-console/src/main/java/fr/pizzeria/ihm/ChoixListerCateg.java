@@ -35,7 +35,7 @@ public class ChoixListerCateg extends Choix<String, Pizza> {
 	 */
 	@Override
 	public Boolean faireUneAction() {
-		List<Pizza> lesPizzas = this.getItemDao().findAllItems();
+		List<Pizza> lesPizzas = this.getItemDao().getItems();
 		Map<CategoriePizza, List<Pizza>> categPizza = 
 				lesPizzas.stream().collect(Collectors.groupingBy(Pizza::getCategorie));
 		new Tools().listPizzasCateg(categPizza);

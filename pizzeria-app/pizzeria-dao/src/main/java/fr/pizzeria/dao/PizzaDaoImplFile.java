@@ -3,13 +3,8 @@
  */
 package fr.pizzeria.dao;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import fr.pizzeria.exception.StockageException;
-import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -30,100 +24,43 @@ import fr.pizzeria.model.Pizza;
  */
 public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
-	private static final String MSG_DOSSIER_NON_TROUVE = "Le dossier data\\pizza est introuvable !";
 	private Logger myLogger = Logger.getLogger(this.getClass().getName());
 
 	private List<Pizza> pizzas;
 	private DaoPizzaTools daoTools;
-	private String cheminDossier;
-	private File dossierData;
 
 	/**
 	 * 
 	 * @param taille
 	 */
 	public PizzaDaoImplFile() {
-		try {
-			this.pizzas = new ArrayList<>();
-			this.daoTools = new DaoPizzaTools();
-			cheminDossier = new File("").getCanonicalPath();
-			dossierData = new File(cheminDossier + "\\data\\pizzas");
-			initializeList();
-		} catch (IOException e) {
-			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
-		}
+
+		this.pizzas = new ArrayList<>();
+		this.daoTools = new DaoPizzaTools(true);
+		findAllItems();
 	}
 
 	/**
-	 * Initialise le tableau des pizzas
+	 * @return the pizzas
 	 */
 	@Override
-	public void initializeList() {
-		try {
-			boolean isCreated = dossierData.mkdirs();
-			if (!isCreated) {
-				String[] fichiers = dossierData.list();
-				for (int i = 0; i < fichiers.length; i++) {
-					InputStream flux = new FileInputStream(dossierData + "\\" + fichiers[i]);
-					InputStreamReader lecteur = new InputStreamReader(flux, StandardCharsets.UTF_8);
-					BufferedReader buff = new BufferedReader(lecteur);
-					String donneesLigne = buff.readLine();
-					String codePizza = fichiers[i].split(".txt")[0];
-					String[] donneesTab = donneesLigne.split(";");
-					Pizza pizza = new Pizza(null, codePizza, donneesTab[0],
-							BigDecimal.valueOf(Double.parseDouble(donneesTab[1])),
-							CategoriePizza.valueOf(donneesTab[2]));
-					this.pizzas.add(pizza);
-					buff.close();
-					flux.close();
-				}
-			} else {
-				generatePizzas();
-			}
-		} catch (IOException e) {
-			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
-		} catch (StockageException e) {
-			myLogger.log(Level.WARNING, e.getMessage(), e);
-		}
+	public List<Pizza> getItems() {
+		return pizzas;
 	}
 
 	/**
 	 * @throws StockageException
 	 * 
 	 */
-	private void generatePizzas() throws StockageException {
-		Pizza peperoni = new Pizza(null, "PEP", "Pépéroni", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
-		this.pizzas.add(peperoni);
-		saveInFile(peperoni, false, null);
-
-		Pizza margherita = new Pizza(null, "MAR", "Margherita", BigDecimal.valueOf(14.00), CategoriePizza.VEGETARIENNE);
-		this.pizzas.add(margherita);
-		saveInFile(margherita, false, null);
-
-		Pizza laReine = new Pizza(null, "REI", "La Reine", BigDecimal.valueOf(11.50), CategoriePizza.VIANDE);
-		this.pizzas.add(laReine);
-		saveInFile(laReine, false, null);
-
-		Pizza la4Fromages = new Pizza(null, "FRO", "La 4 fromages", BigDecimal.valueOf(12.00),
-				CategoriePizza.VEGETARIENNE);
-		this.pizzas.add(la4Fromages);
-		saveInFile(la4Fromages, false, null);
-
-		Pizza laCannibale = new Pizza(null, "CAN", "La cannibale", BigDecimal.valueOf(12.50), CategoriePizza.VIANDE);
-		this.pizzas.add(laCannibale);
-		saveInFile(laCannibale, false, null);
-
-		Pizza laSavoyarde = new Pizza(null, "SAV", "La savoyarde", BigDecimal.valueOf(13.00), CategoriePizza.VIANDE);
-		this.pizzas.add(laSavoyarde);
-		saveInFile(laSavoyarde, false, null);
-
-		Pizza lOrientale = new Pizza(null, "ORI", "L'orientale", BigDecimal.valueOf(13.50), CategoriePizza.VIANDE);
-		this.pizzas.add(lOrientale);
-		saveInFile(lOrientale, false, null);
-
-		Pizza lIndienne = new Pizza(null, "IND", "L'indienne", BigDecimal.valueOf(14.00), CategoriePizza.VIANDE);
-		this.pizzas.add(lIndienne);
-		saveInFile(lIndienne, false, null);
+	private void generatePizzas() {
+		this.daoTools.generatePizzas().forEach(pizza -> {
+			try {
+				saveInFile(pizza, false, null);
+				this.pizzas.add(pizza);
+			} catch (StockageException e) {
+				myLogger.log(Level.WARNING, e.getMessage(), e);
+			}
+		});
 	}
 
 	/*
@@ -132,8 +69,11 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.IItemDao#findAllPizzas()
 	 */
 	@Override
-	public List<Pizza> findAllItems() {
-		return this.pizzas;
+	public void findAllItems() {
+		this.pizzas = this.daoTools.readFile();
+		if (this.pizzas.isEmpty()) {
+			generatePizzas();
+		}
 	}
 
 	/*
@@ -188,7 +128,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
 	private void saveInFile(Pizza pizza, boolean rename, String ancienCode) throws StockageException {
 		try {
-			String cheminFichier = dossierData.getCanonicalPath() + "\\" + pizza.getCode() + ".txt";
+			String cheminFichier = this.daoTools.getDossierData().getCanonicalPath() + "\\" + pizza.getCode() + ".txt";
 			Path fichierPizza = Paths.get(cheminFichier);
 			List<String> donneesPizza = new ArrayList<>();
 			StringBuilder sb = new StringBuilder();
@@ -200,14 +140,15 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 			}
 			Files.write(fichierPizza, donneesPizza, StandardCharsets.UTF_8);
 		} catch (IOException e) {
-			myLogger.log(Level.WARNING, MSG_DOSSIER_NON_TROUVE, e);
+			myLogger.log(Level.WARNING, DaoPizzaTools.MSG_DOSSIER_NON_TROUVE, e);
 		}
 	}
 
 	private void deleteFile(String code) throws StockageException {
-		File fichier = new File(dossierData + "\\" + code + ".txt");
+		File fichier = new File(this.daoTools.getDossierData() + "\\" + code + ".txt");
 		if (!fichier.delete()) {
-			throw new StockageException("Impossible de supprimer le fichier " + dossierData + "\\" + code + ".txt !");
+			throw new StockageException(
+					"Impossible de supprimer le fichier " + this.daoTools.getDossierData() + "\\" + code + ".txt !");
 		}
 	}
 

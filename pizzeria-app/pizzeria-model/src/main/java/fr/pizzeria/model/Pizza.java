@@ -5,6 +5,16 @@ package fr.pizzeria.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -12,14 +22,35 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Christopher CHARLERY
  *
  */
+@Entity
+@NamedQueries({
+	@NamedQuery(name="findAll", query="FROM Pizza"),
+	@NamedQuery(name="getByCode", query="FROM Pizza WHERE Code=:code")
+})
 public class Pizza {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "ID_Pizza")
 	private Integer id;
+	@Column(name = "Code")
 	private String code;
+	@Column(name = "Nom")
 	private String nom;
+	@Column(name = "Description")
 	private String description;
+	@Column(name = "Prix")
 	private BigDecimal prix;
+	@Enumerated(EnumType.STRING)
+	@Column(name="Categorie")
 	private CategoriePizza categorie;
+	
+	/**
+	 * 
+	 */
+	public Pizza() {
+		// Constructeur par defaut
+	}
 
 	/**
 	 * @param code
