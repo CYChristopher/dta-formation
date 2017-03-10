@@ -19,12 +19,14 @@ import fr.pizzeria.model.Pizza;
 public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	
 	private List<Pizza> pizzas;
+	private DaoPizzaTools daoTools;
 	
 	/**
 	 * Crée un dao pour une implémentation en memoire des pizzas
 	 */
 	public PizzaDaoImplMemory() {
 		this.pizzas = new ArrayList<>();
+		this.daoTools = new DaoPizzaTools();
 		initializeList();
 	}
 
@@ -71,25 +73,8 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
-		verifySaisie(pizza);
+		this.daoTools.verifySaisie(pizza);
 		this.pizzas.add(pizza);
-	}
-
-	/**
-	 * @param pizza
-	 * @throws StockageException
-	 */
-	@Override
-	public void verifySaisie(Pizza pizza) throws StockageException {
-		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
-			throw new StockageException("Le code de la pizza est incorrect !");
-		}
-		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
-			throw new StockageException("Le nom de la pizza est incorrect !");
-		}
-		if (pizza.getCategorie() == null) {
-			throw new StockageException("Vous devez choisir une catégorie de pizza !");
-		}
 	}
 
 	/* (non-Javadoc)
@@ -97,14 +82,10 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
-		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
-			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
-		}
-		verifySaisie(pizza);
-
+		this.daoTools.verifyCode(codePizza);
+		this.daoTools.verifySaisie(pizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
-
 		if (optPizza.isPresent()) {
 			this.pizzas.set(this.pizzas.indexOf(optPizza.get()), pizza);
 		} else {
@@ -117,13 +98,9 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
-		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
-			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
-		}
-
+		this.daoTools.verifyCode(codePizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
-
 		if (optPizza.isPresent()) {
 			this.pizzas.remove(optPizza.get());
 		} else {

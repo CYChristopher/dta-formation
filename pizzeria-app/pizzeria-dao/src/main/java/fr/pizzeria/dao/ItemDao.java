@@ -46,11 +46,4 @@ public interface ItemDao<I, O> {
 	 * @throws DeleteItemException
 	 */
 	void deleteItem(I index) throws StockageException;
-	
-	/**
-	 * 
-	 * @param item
-	 * @throws StockageException
-	 */
-	void verifySaisie(O item) throws StockageException; 
 }

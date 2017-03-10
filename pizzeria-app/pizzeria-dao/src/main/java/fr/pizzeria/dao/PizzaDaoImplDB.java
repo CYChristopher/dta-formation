@@ -28,6 +28,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	private Logger myLogger = Logger.getLogger(this.getClass().getName());
 
 	private List<Pizza> pizzas;
+	private DaoPizzaTools daoTools;
 	private ResourceBundle bundle;
 	private String url;
 	private String user;
@@ -40,6 +41,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	public PizzaDaoImplDB() throws ClassNotFoundException, SQLException {
 		this.pizzas = new ArrayList<>();
+		this.daoTools = new DaoPizzaTools();
 		this.bundle = ResourceBundle.getBundle("jdbc");
 		Class.forName(this.bundle.getString("driver"));
 		this.url = this.bundle.getString("url");
@@ -84,23 +86,6 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		}
 	}
 
-	/**
-	 * @param pizza
-	 * @throws StockageException
-	 */
-	@Override
-	public void verifySaisie(Pizza pizza) throws StockageException {
-		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
-			throw new StockageException("Le code de la pizza est incorrect !");
-		}
-		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
-			throw new StockageException("Le nom de la pizza est incorrect !");
-		}
-		if (pizza.getCategorie() == null) {
-			throw new StockageException("Vous devez choisir une catégorie de pizza !");
-		}
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -108,7 +93,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza item) throws StockageException {
-		verifySaisie(item);
+		this.daoTools.verifySaisie(item);
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"" + "INSERT INTO pizza (ID_Pizza, Categorie, Code, Nom, Description, Prix, URL_image) "
@@ -135,10 +120,8 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza item) throws StockageException {
-		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
-			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
-		}
-		verifySaisie(item);
+		this.daoTools.verifyCode(codePizza);
+		this.daoTools.verifySaisie(item);
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"UPDATE pizza SET Code=?, Nom=?, Description=?, Prix=? " + "WHERE ID_Pizza=?");) {
@@ -171,9 +154,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
-		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
-			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
-		}
+		this.daoTools.verifyCode(codePizza);
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("DELETE FROM pizza WHERE ID_Pizza=?");) {
 			Pizza laPizza = getPizza(codePizza);

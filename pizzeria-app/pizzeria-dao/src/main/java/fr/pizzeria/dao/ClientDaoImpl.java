@@ -79,12 +79,4 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	public void deleteItem(Integer index) throws StockageException {
 		// Implémentation à effectuer ultérieurement
 	}
-
-	/* (non-Javadoc)
-	 * @see fr.pizzeria.dao.ItemDao#verifySaisie(java.lang.Object)
-	 */
-	@Override
-	public void verifySaisie(Client item) throws StockageException {
-		// Implémentation à effectuer ultérieurement		
-	}
 }

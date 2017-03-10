@@ -64,13 +64,4 @@ public class LivreurDaoImpl implements ItemDao<Integer,Livreur> {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see fr.pizzeria.dao.ItemDao#verifySaisie(java.lang.Object)
-	 */
-	@Override
-	public void verifySaisie(Livreur item) throws StockageException {
-		// Implémentation à effectuer ultérieurement
-		
-	}
-
 }
