@@ -3,6 +3,8 @@
  */
 package fr.pizzeria.model;
 
+import java.math.BigDecimal;
+
 /**
  * @author Christopher CHARLERY
  *
@@ -13,6 +15,6 @@ public interface CompteStat {
 	 * 
 	 * @return
 	 */
-	double getSolde();
+	BigDecimal getSolde();
 
 }

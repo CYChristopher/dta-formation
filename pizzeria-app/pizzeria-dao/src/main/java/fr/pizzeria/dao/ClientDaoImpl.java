@@ -3,6 +3,7 @@
  */
 package fr.pizzeria.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,10 +41,10 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 */
 	@Override
 	public void findAllItems() {
-		Client jRobert = new Client(12, "Robert", "Jules", 200.0);
+		Client jRobert = new Client(12, "Robert", "Jules", BigDecimal.valueOf(200.0));
 		this.lesClients.add(jRobert);
 
-		Client hRobert = new Client(15, "Robert", "Hugues", 2.0);
+		Client hRobert = new Client(15, "Robert", "Hugues", BigDecimal.valueOf(2.0));
 		this.lesClients.add(hRobert);
 	}
 

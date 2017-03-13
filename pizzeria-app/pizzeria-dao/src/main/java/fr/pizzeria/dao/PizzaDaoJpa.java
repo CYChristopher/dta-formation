@@ -74,7 +74,6 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		} finally {
 			em.close();
 		}
-		executeQuery(null, item, "save");
 	}
 
 	/*
@@ -85,18 +84,8 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza item) throws StockageException {
-		executeQuery(codePizza, item, "update");
-	}
-
-	/**
-	 * @param codePizza
-	 * @param item
-	 */
-	private void executeQuery(String codePizza, Pizza item, String mode) {
 		EntityManager em = emf.createEntityManager();
-		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class)
-				.setParameter("code", codePizza)
-				.getSingleResult();
+		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
@@ -131,9 +120,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
 		EntityManager em = emf.createEntityManager();
-		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class)
-				.setParameter("code", codePizza)
-				.getSingleResult();
+		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
@@ -153,7 +140,6 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		} finally {
 			em.close();
 		}
-		executeQuery(codePizza, null, "delete");
 	}
 
 	/*

@@ -4,6 +4,7 @@
 package fr.pizzeria.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -31,19 +32,20 @@ public class Pizza {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "ID_Pizza")
 	private Integer id;
-	@Column(name = "Code")
+	@Column(length = 5, nullable = false, unique = true)
 	private String code;
-	@Column(name = "Nom")
+	@Column(length = 255, nullable = false)
 	private String nom;
-	@Column(name = "Description")
+	@Column(length = 255, nullable = true)
 	private String description;
-	@Column(name = "Prix")
+	@Column(precision = 10, scale=2)
 	private BigDecimal prix;
 	@Enumerated(EnumType.STRING)
-	@Column(name="Categorie")
+	@Column(length = 255, nullable = false)
 	private CategoriePizza categorie;
+	@Column(name="url_image", length = 255, nullable = true)
+	private String urlImage;
 	
 	/**
 	 * 
@@ -219,6 +221,7 @@ public class Pizza {
 	 *            the prix to set
 	 */
 	public void setPrix(BigDecimal prix) {
+		this.prix.setScale(2, RoundingMode.HALF_UP);
 		this.prix = prix;
 	}
 
@@ -247,6 +250,20 @@ public class Pizza {
 				this.categorie = CategoriePizza.values()[i];
 			}
 		}
+	}
+
+	/**
+	 * @return the urlImage
+	 */
+	public String getUrlImage() {
+		return urlImage;
+	}
+
+	/**
+	 * @param urlImage the urlImage to set
+	 */
+	public void setUrlImage(String urlImage) {
+		this.urlImage = urlImage;
 	}
 
 	/*

@@ -3,6 +3,7 @@
  */
 package fr.pizzeria.dao;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,10 +33,10 @@ public class LivreurDaoImpl implements ItemDao<Integer,Livreur> {
 	 */
 	@Override
 	public void findAllItems() {
-		Livreur dRobert = new Livreur(1, "Robert", "Daniel", 50.0);
+		Livreur dRobert = new Livreur(1, "Robert", "Daniel", BigDecimal.valueOf(50.0));
 		this.lesLivreurs.add(dRobert);
 		
-		Livreur gRobert = new Livreur(3, "Robert", "Gerard", 75.0);
+		Livreur gRobert = new Livreur(3, "Robert", "Gerard", BigDecimal.valueOf(75.0));
 		this.lesLivreurs.add(gRobert);
 	}
 

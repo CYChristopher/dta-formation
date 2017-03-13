@@ -3,6 +3,16 @@
  */
 package fr.pizzeria.model;
 
+import java.math.BigDecimal;
+
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
+
 import fr.pizzeria.exception.CreditException;
 import fr.pizzeria.exception.DebitException;
 
@@ -10,12 +20,29 @@ import fr.pizzeria.exception.DebitException;
  * @author Christopher CHARLERY
  *
  */
+@MappedSuperclass
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class AbstractPersonne {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(length = 255, nullable = false)
 	private String nom;
+	@Column(length = 255, nullable = false)
 	private String prenom;
-	private double solde;
+	@Column(length = 255, nullable = true)
+	private String adresse;
+	@Column(length = 255, nullable = true)
+	private String telephone;
+	private BigDecimal solde;
+	
+	/**
+	 * 
+	 */
+	public AbstractPersonne() {
+		//Constructeur par default
+	}
 
 	/**
 	 * @param id
@@ -23,7 +50,7 @@ public abstract class AbstractPersonne {
 	 * @param prenom
 	 * @param solde
 	 */
-	public AbstractPersonne(Integer id, String nom, String prenom, Double solde) {
+	public AbstractPersonne(Integer id, String nom, String prenom, BigDecimal solde) {
 		super();
 		this.id = id;
 		this.nom = nom;
@@ -36,9 +63,9 @@ public abstract class AbstractPersonne {
 	 * @param montant
 	 * @throws CreditException
 	 */
-	public void crediterCompte(double montant) throws CreditException {
-		this.solde += montant;
-		if (this.solde > 5000) {
+	public void crediterCompte(BigDecimal montant) throws CreditException {
+		this.solde.add(montant);
+		if (this.solde.intValue() > 5000) {
 			throw new CreditException("Vous ne pouvez depasser le seuil maximum qui est de 5 000 euros !");
 		}
 	}
@@ -48,9 +75,9 @@ public abstract class AbstractPersonne {
 	 * @param montant
 	 * @throws DebitException
 	 */
-	public void debiterCompte(double montant) throws DebitException {
-		this.solde -= montant;
-		if (this.solde < 0) {
+	public void debiterCompte(BigDecimal montant) throws DebitException {
+		this.solde.subtract(montant);
+		if (this.solde.intValue() < 0) {
 			throw new DebitException("Le solde ne peut être négatif !");
 		}
 	}
@@ -110,14 +137,14 @@ public abstract class AbstractPersonne {
 	/**
 	 * @return the solde
 	 */
-	public double getSolde() {
+	public BigDecimal getSolde() {
 		return solde;
 	}
 
 	/**
 	 * @param solde the solde to set
 	 */
-	public void setSolde(double solde) {
+	public void setSolde(BigDecimal solde) {
 		this.solde = solde;
 	}
 
