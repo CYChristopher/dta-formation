@@ -30,8 +30,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	private DaoPizzaTools daoTools;
 
 	/**
-	 * 
-	 * @param taille
+	 * Implémentation fichier
 	 */
 	public PizzaDaoImplFile() {
 
@@ -96,13 +95,28 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
+		executeUpdate(codePizza, pizza, true);
+	}
+
+	/**
+	 * @param codePizza
+	 * @param pizza
+	 * @param isUpdate
+	 * @throws StockageException
+	 */
+	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate) throws StockageException {
 		this.daoTools.verifyCode(codePizza);
 		this.daoTools.verifySaisie(pizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
 		if (optPizza.isPresent()) {
-			this.pizzas.set(this.pizzas.indexOf(optPizza.get()), pizza);
-			saveInFile(pizza, true, codePizza);
+			if(isUpdate){
+				saveInFile(pizza, true, codePizza);
+				this.pizzas.set(this.pizzas.indexOf(optPizza.get()), pizza);
+			} else{				
+				deleteFile(codePizza);
+				this.pizzas.remove(optPizza.get());
+			}
 		} else {
 			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
 		}
@@ -115,15 +129,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
-		this.daoTools.verifyCode(codePizza);
-		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
-				.findFirst();
-		if (optPizza.isPresent()) {
-			this.pizzas.remove(optPizza.get());
-			deleteFile(codePizza);
-		} else {
-			throw new StockageException("Pizza introuvable ! Veuillez renseigner une pizza dans la liste !");
-		}
+		executeUpdate(codePizza, null, false);
 	}
 
 	private void saveInFile(Pizza pizza, boolean rename, String ancienCode) throws StockageException {

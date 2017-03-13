@@ -178,12 +178,15 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		return laPizza;
 	}
 
+	/**
+	 * Importation des données depuis un fichier
+	 */
 	public void importPizzas() {
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("SELECT * FROM WHERE ID_Pizza=?");) {
 			List<Pizza> list = this.daoTools.readFile();
 			list.forEach(pizzaInFile -> {
-
+				// Implémentation à faire
 			});
 		} catch (SQLException e) {
 			myLogger.log(Level.WARNING, e.getMessage(), e);

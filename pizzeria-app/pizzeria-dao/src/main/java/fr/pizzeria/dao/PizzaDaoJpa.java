@@ -31,7 +31,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	private DaoPizzaTools daoTools;
 
 	/**
-	 * 
+	 * Implémentation avec Hibernate
 	 */
 	public PizzaDaoJpa() {
 		this.pizzas = new ArrayList<>();
@@ -74,6 +74,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		} finally {
 			em.close();
 		}
+		executeQuery(null, item, "save");
 	}
 
 	/*
@@ -84,6 +85,14 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza item) throws StockageException {
+		executeQuery(codePizza, item, "update");
+	}
+
+	/**
+	 * @param codePizza
+	 * @param item
+	 */
+	private void executeQuery(String codePizza, Pizza item, String mode) {
 		EntityManager em = emf.createEntityManager();
 		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class)
 				.setParameter("code", codePizza)
@@ -144,6 +153,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		} finally {
 			em.close();
 		}
+		executeQuery(codePizza, null, "delete");
 	}
 
 	/*
