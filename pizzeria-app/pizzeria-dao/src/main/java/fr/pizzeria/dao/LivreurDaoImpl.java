@@ -67,4 +67,12 @@ public class LivreurDaoImpl implements ItemDao<Integer,Livreur> {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
+	 */
+	@Override
+	public Livreur find(Integer code) {
+		return null;
+	}
+
 }

@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,8 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import fr.pizzeria.dao.DaoTool;
-import fr.pizzeria.dao.PizzaDaoJpa;
+import fr.pizzeria.admin.metier.PizzaService;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
@@ -23,6 +23,7 @@ import fr.pizzeria.model.Pizza;
 @WebServlet(name = "EditerPizzaController", urlPatterns = {"/pizzas/edit"})
 public class EditerPizzaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Inject private PizzaService pizzaService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -40,7 +41,7 @@ public class EditerPizzaController extends HttpServlet {
 			throws ServletException, IOException {
 		try {
 			String ancienCode = request.getParameter("code");
-			Pizza pizza = ((PizzaDaoJpa) DaoTool.daoJpa).find(ancienCode);
+			Pizza pizza = pizzaService.findPizza(ancienCode);
 			request.setAttribute("pizza", pizza);
 			RequestDispatcher dispatcher = this.getServletContext()
 					.getRequestDispatcher("/WEB-INF/views/pizzas/editerPizza.jsp");
@@ -65,7 +66,7 @@ public class EditerPizzaController extends HttpServlet {
 			String description = request.getParameter("description");
 			BigDecimal prix = BigDecimal.valueOf(Double.parseDouble(request.getParameter("prix")));
 			Pizza pizza = new Pizza(code, nom, description, prix, categorie);
-			DaoTool.daoJpa.updateItem(ancienCode, pizza);
+			pizzaService.updatePizza(ancienCode, pizza);
 			response.sendRedirect(request.getContextPath() + "/pizzas/list");
 		} catch (IOException | StockageException e) {
 			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, e.getMessage(), e);

@@ -60,7 +60,13 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		this.pizzas = query.getResultList();
 		em.close();
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see fr.pizzeria.dao.ItemDao#find()
+	 */
+	@Override
 	public Pizza find(String codePizza) {
 		EntityManager em = emf.createEntityManager();
 		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();

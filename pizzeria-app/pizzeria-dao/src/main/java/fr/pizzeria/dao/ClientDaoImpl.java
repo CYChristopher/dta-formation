@@ -78,4 +78,12 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	public void deleteItem(Integer index) throws StockageException {
 		// Implémentation à effectuer ultérieurement
 	}
+
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
+	 */
+	@Override
+	public Client find(Integer code) {
+		return null;
+	}
 }

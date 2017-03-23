@@ -90,4 +90,12 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	public void deleteItem(String codePizza) throws StockageException {
 		executeUpdate(codePizza, null, false);
 	}
+
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
+	 */
+	@Override
+	public Pizza find(String code) {
+		return null;
+	}
 }

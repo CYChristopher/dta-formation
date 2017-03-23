@@ -27,6 +27,12 @@ public interface ItemDao<I, O> {
 	void findAllItems();
 	
 	/**
+	 * Retourne un item particulier
+	 * @return
+	 */
+	O find(I code);
+	
+	/**
 	 * Ajoute un nouvel item dans le tableau
 	 * @param item
 	 * @throws SaveItemException

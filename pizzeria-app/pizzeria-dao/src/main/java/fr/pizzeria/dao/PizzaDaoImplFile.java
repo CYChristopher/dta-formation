@@ -158,4 +158,12 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		}
 	}
 
+	/* (non-Javadoc)
+	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
+	 */
+	@Override
+	public Pizza find(String code) {
+		return null;
+	}
+
 }
