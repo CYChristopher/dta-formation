@@ -6,6 +6,7 @@ package fr.pizzeria.dao;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +25,11 @@ import fr.pizzeria.model.Pizza;
  */
 public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 
+	/**
+	 * 
+	 */
+	private static final String GET_BY_CODE = "getByCode";
+
 	private Logger myLogger = Logger.getLogger(this.getClass().getName());
 
 	private List<Pizza> pizzas;
@@ -36,7 +42,9 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	public PizzaDaoJpa() {
 		this.pizzas = new ArrayList<>();
 		this.daoTools = new DaoPizzaTools();
-		emf = Persistence.createEntityManagerFactory("pizzeria-console");
+		ResourceBundle bundle = ResourceBundle.getBundle("application");
+		String unit = bundle.getString("unit");
+		emf = Persistence.createEntityManagerFactory(unit);
 		findAllItems();
 	}
 
@@ -51,6 +59,13 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		TypedQuery<Pizza> query = em.createNamedQuery("findAll", Pizza.class);
 		this.pizzas = query.getResultList();
 		em.close();
+	}
+	
+	public Pizza find(String codePizza) {
+		EntityManager em = emf.createEntityManager();
+		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();
+		em.close();
+		return pizza;
 	}
 
 	/*
@@ -85,7 +100,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	@Override
 	public void updateItem(String codePizza, Pizza item) throws StockageException {
 		EntityManager em = emf.createEntityManager();
-		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class).setParameter("code", codePizza).getSingleResult();
+		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
@@ -120,7 +135,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
 		EntityManager em = emf.createEntityManager();
-		Pizza pizza = em.createNamedQuery("getByCode", Pizza.class).setParameter("code", codePizza).getSingleResult();
+		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
