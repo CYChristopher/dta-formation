@@ -3,24 +3,14 @@
  */
 package fr.pizzeria.admin.metier;
 
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-
-import fr.pizzeria.dao.ItemDao;
-import fr.pizzeria.model.Pizza;
-
 /**
  * @author Christopher CHARLERY
  *
  */
 
-public class PizzaDaoProducer {
+public interface PizzaDaoProducer {
 
-	@Produces
+	/*@Produces
 	@ApplicationScoped
 	public ItemDao<String, Pizza> pizzaDao() {
 		ItemDao<String, Pizza> instanceDaoImpl = null;
@@ -33,5 +23,5 @@ public class PizzaDaoProducer {
 			Logger.getLogger(PizzaDaoProducer.class.getName()).log(Level.WARNING, e.getMessage(), e);
 		}
 		return instanceDaoImpl;
-	}
+	}*/
 }

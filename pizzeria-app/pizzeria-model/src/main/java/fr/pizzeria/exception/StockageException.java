@@ -7,7 +7,7 @@ package fr.pizzeria.exception;
  * @author Christopher CHARLERY
  *
  */
-public class StockageException extends Exception{
+public class StockageException extends RuntimeException{
 
 	/**
 	 * 

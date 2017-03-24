@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet implementation class LoginController
  */
-@WebServlet(name = "LoginController", urlPatterns = {"/login"})
+@WebServlet(name = "LoginController", urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,11 +27,16 @@ public class LoginController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			String msg = "Vous devez être connecté pour pouvoir accéder à cette fonctionnalité !";
-			request.setAttribute("msg", msg);
-			RequestDispatcher dispatcher = this.getServletContext()
-					.getRequestDispatcher("/WEB-INF/views/pizzas/login.jsp");
-			dispatcher.forward(request, response);
+			String user = (String) request.getSession().getAttribute("user");
+			if (user == null) {
+				String msg = "Vous devez être connecté pour pouvoir accéder à cette fonctionnalité !";
+				request.setAttribute("msg", msg);
+				RequestDispatcher dispatcher = this.getServletContext()
+						.getRequestDispatcher("/WEB-INF/views/pizzas/login.jsp");
+				dispatcher.forward(request, response);
+			}else{
+				response.sendRedirect(request.getContextPath() + "/accueil");
+			}
 		} catch (IOException | ServletException e) {
 			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, e.getMessage(), e);
 		}
@@ -51,8 +56,12 @@ public class LoginController extends HttpServlet {
 				request.getSession().setAttribute("user", user);
 				HttpSession session = request.getSession();
 				String url = (String) session.getAttribute("url");
-				session.setAttribute("url", null);
-				response.sendRedirect(url);
+				if (url != null) {
+					session.setAttribute("url", null);
+					response.sendRedirect(url);
+				} else {
+					response.sendRedirect(request.getContextPath() + "/accueil");
+				}
 			} else {
 				String msg = "Vos identifiants de connexion ne sont pas bons !";
 				request.setAttribute("msg", msg);

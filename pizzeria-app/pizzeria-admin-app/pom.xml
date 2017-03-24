@@ -25,11 +25,6 @@
 		</dependency>
 		<dependency>
 			<groupId>dta</groupId>
-			<artifactId>christopher-pizzeria-dao</artifactId>
-			<version>1.0.0</version>
-		</dependency>
-		<dependency>
-			<groupId>dta</groupId>
 			<artifactId>christopher-pizzeria-model</artifactId>
 			<version>1.0.0</version>
 		</dependency>

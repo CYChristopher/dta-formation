@@ -51,8 +51,7 @@
 	<div class="col-md-4">
 		<input id="description" name="description" type="text"
 			placeholder="Description de la pizza" class="form-control input-md"
-			value="<c:if test="${(pizza != null) && (pizza.description!= null) }" >
-			<c:out value="${pizza.description}"></c:out></c:if>">
+			value="<c:if test="${(pizza != null) && (pizza.description!= null) }" >${pizza.description}</c:if>">
 
 	</div>
 </div>

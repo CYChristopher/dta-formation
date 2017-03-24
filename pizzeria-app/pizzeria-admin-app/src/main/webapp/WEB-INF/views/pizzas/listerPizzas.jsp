@@ -12,10 +12,15 @@
 <body>
 
 	<div class="container-fluid">
+		<div class="row">
+			<%@include file="navbar.jsp"%>
+		</div>
 		<div id="contenu">
 			<div class="page-header">
-				<h1>Les pizzas du moment <a class="btn btn-success pull-right"
-					href="<c:url value='/pizzas/new'></c:url>" role="button">Ajouter</a></h1>
+				<h1>
+					Les pizzas du moment <a class="btn btn-success pull-right"
+						href="<c:url value='/pizzas/new'></c:url>" role="button">Ajouter</a>
+				</h1>
 			</div>
 			<div id="pizzasDuMoment" class="row">
 				<c:forEach var="pizza" items="${pizzas }">
@@ -47,16 +52,9 @@
 	</div>
 	<!-- Fonctions JavaScript -->
 	<script>
-		$(function() {
-			// Gestion des tooltips des pizzas du moment
-			$(".tooltip-link")
-					.tooltip(
-							{
-								title : "<div style='background-color:white; border: 1px solid black'><img src='http://icons.iconarchive.com/icons/sonya/swarm/256/Pizza-icon.png' style='width:24px;'>Pizza</i></div>",
-								html : true,
-								template : '<div class="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-head"><h2><img src="http://icons.iconarchive.com/icons/sonya/swarm/256/Pizza-icon.png" style="width:24px;"> Info</h2></div><div class="tooltip-inner"></div></div>'
-							});
-		});
+		var btnUser = document.getElementById("btnUser");
+		
+		
 	</script>
 </body>
 </html>

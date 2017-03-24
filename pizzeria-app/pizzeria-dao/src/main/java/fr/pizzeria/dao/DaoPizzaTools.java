@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Pizza;
 
@@ -141,31 +140,5 @@ public class DaoPizzaTools {
 			myLogger.log(Level.WARNING, DaoPizzaTools.MSG_DOSSIER_NON_TROUVE, e);
 		}
 		return list;
-	}
-
-	/**
-	 * @param pizza
-	 * @throws StockageException
-	 */
-	public void verifySaisie(Pizza pizza) throws StockageException {
-		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
-			throw new StockageException("Le code de la pizza est incorrect !");
-		}
-		if (pizza.getNom() == null || "".equalsIgnoreCase(pizza.getNom())) {
-			throw new StockageException("Le nom de la pizza est incorrect !");
-		}
-		if (pizza.getCategorie() == null) {
-			throw new StockageException("Vous devez choisir une catégorie de pizza !");
-		}
-	}
-
-	/**
-	 * @param codePizza
-	 * @throws StockageException
-	 */
-	public void verifyCode(String codePizza) throws StockageException {
-		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
-			throw new StockageException("Le code de la pizza sélectionnée est incorrect !");
-		}
 	}
 }

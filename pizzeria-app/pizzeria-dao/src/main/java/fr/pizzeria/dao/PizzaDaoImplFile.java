@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.PizzaValidator;
 
 /**
  * @author Christopher CHARLERY
@@ -28,6 +29,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 
 	private List<Pizza> pizzas;
 	private DaoPizzaTools daoTools;
+	private PizzaValidator validator;
 
 	/**
 	 * Implémentation fichier
@@ -82,7 +84,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza pizza) throws StockageException {
-		this.daoTools.verifySaisie(pizza);
+		this.validator.verifySaisie(pizza);
 		this.pizzas.add(pizza);
 		saveInFile(pizza, false, null);
 	}
@@ -105,15 +107,15 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @throws StockageException
 	 */
 	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate) throws StockageException {
-		this.daoTools.verifyCode(codePizza);
-		this.daoTools.verifySaisie(pizza);
+		this.validator.verifyCode(codePizza);
+		this.validator.verifySaisie(pizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
 		if (optPizza.isPresent()) {
-			if(isUpdate){
+			if (isUpdate) {
 				saveInFile(pizza, true, codePizza);
 				this.pizzas.set(this.pizzas.indexOf(optPizza.get()), pizza);
-			} else{				
+			} else {
 				deleteFile(codePizza);
 				this.pizzas.remove(optPizza.get());
 			}
@@ -158,7 +160,9 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
 	 */
 	@Override

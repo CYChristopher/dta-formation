@@ -6,12 +6,12 @@ package fr.pizzeria.admin.metier;
 import java.time.ZonedDateTime;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 
 import fr.pizzeria.admin.event.PizzaEvent;
 import fr.pizzeria.admin.event.PizzaEventType;
-import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
 
@@ -20,7 +20,7 @@ import fr.pizzeria.model.Pizza;
  *
  */
 public class PizzaService {
-	@Inject private ItemDao<String, Pizza> pizzaDao;
+	@EJB private PizzaServiceEJB pizzaDao;
 	@Inject private Event<PizzaEvent> pizzaEvent;
 	
 	/**
@@ -37,8 +37,7 @@ public class PizzaService {
 	 * @return
 	 */
 	public List<Pizza> findAllPizzas(){
-		pizzaDao.findAllItems();
-		return this.pizzaDao.getItems();
+		return pizzaDao.findAllItems();
 	}
 	
 	/**
@@ -46,7 +45,7 @@ public class PizzaService {
 	 * @param item
 	 * @throws StockageException
 	 */
-	public void savePizza(Pizza item) throws StockageException{
+	public void savePizza(Pizza item){
 		this.pizzaDao.saveNewItem(item);
 		pizzaEvent.fire(new PizzaEvent(item, ZonedDateTime.now(), PizzaEventType.SAVE));
 	}
@@ -57,7 +56,7 @@ public class PizzaService {
 	 * @param item
 	 * @throws StockageException
 	 */
-	public void updatePizza(String ancienCode, Pizza item) throws StockageException{
+	public void updatePizza(String ancienCode, Pizza item){
 		Pizza pizza = findPizza(ancienCode);
 		this.pizzaDao.updateItem(ancienCode, item);
 		PizzaEvent event = new PizzaEvent(pizza, ZonedDateTime.now(), PizzaEventType.UPDATE);
@@ -70,7 +69,7 @@ public class PizzaService {
 	 * @param code
 	 * @throws StockageException
 	 */
-	public void deletePizza(String code) throws StockageException{
+	public void deletePizza(String code){
 		Pizza pizza = findPizza(code);
 		this.pizzaDao.deleteItem(code);
 		pizzaEvent.fire(new PizzaEvent(pizza, ZonedDateTime.now(), PizzaEventType.DELETE));

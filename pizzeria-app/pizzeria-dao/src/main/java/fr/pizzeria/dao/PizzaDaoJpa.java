@@ -17,7 +17,9 @@ import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import fr.pizzeria.exception.StockageException;
+import fr.pizzeria.exception.ValidationException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.PizzaValidator;
 
 /**
  * @author Christopher CHARLERY
@@ -34,14 +36,13 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 
 	private List<Pizza> pizzas;
 	private EntityManagerFactory emf;
-	private DaoPizzaTools daoTools;
+	private PizzaValidator validator;
 
 	/**
 	 * Implémentation avec Hibernate
 	 */
 	public PizzaDaoJpa() {
 		this.pizzas = new ArrayList<>();
-		this.daoTools = new DaoPizzaTools();
 		ResourceBundle bundle = ResourceBundle.getBundle("application");
 		String unit = bundle.getString("unit");
 		emf = Persistence.createEntityManagerFactory(unit);
@@ -85,11 +86,11 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
-			this.daoTools.verifySaisie(item);
+			this.validator.verifySaisie(item);
 			em.persist(item);
 			et.commit();
 			this.pizzas.add(item);
-		} catch (StockageException e) {
+		} catch (ValidationException e) {
 			myLogger.log(Level.WARNING, e.getMessage(), e);
 			et.rollback();
 		} finally {
@@ -110,8 +111,8 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
-			this.daoTools.verifyCode(codePizza);
-			this.daoTools.verifySaisie(pizza);
+			this.validator.verifyCode(codePizza);
+			this.validator.verifySaisie(pizza);
 			Optional<Pizza> optPizza = this.pizzas.stream()
 					.filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode())).findFirst();
 			if (optPizza.isPresent()) {
@@ -126,7 +127,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 			} else {
 				throw new StockageException("Code incorrect !");
 			}
-		} catch (StockageException e) {
+		} catch (StockageException | ValidationException e) {
 			myLogger.log(Level.WARNING, e.getMessage(), e);
 			et.rollback();
 		} finally {
@@ -146,7 +147,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		EntityTransaction et = em.getTransaction();
 		et.begin();
 		try {
-			this.daoTools.verifyCode(codePizza);
+			this.validator.verifyCode(codePizza);
 			Optional<Pizza> optPizza = this.pizzas.stream()
 					.filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode())).findFirst();
 			if (optPizza.isPresent()) {
@@ -156,7 +157,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 			} else {
 				throw new StockageException("Code incorrect !");
 			}
-		} catch (StockageException e) {
+		} catch (StockageException | ValidationException e) {
 			myLogger.log(Level.WARNING, e.getMessage(), e);
 			et.rollback();
 		} finally {

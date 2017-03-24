@@ -18,6 +18,7 @@ import java.util.logging.Logger;
 
 import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Pizza;
+import fr.pizzeria.model.PizzaValidator;
 
 /**
  * @author Christopher CHARLERY
@@ -33,6 +34,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	private String url;
 	private String user;
 	private String password;
+	private PizzaValidator validator;
 
 	/**
 	 * @throws ClassNotFoundException
@@ -49,7 +51,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		this.password = this.bundle.getString("password");
 		findAllItems();
 	}
-	
+
 	/**
 	 * @return the pizzas
 	 */
@@ -91,11 +93,12 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void saveNewItem(Pizza item) throws StockageException {
-		this.daoTools.verifySaisie(item);
+
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"" + "INSERT INTO pizza (ID_Pizza, Categorie, Code, Nom, Description, Prix, URL_image) "
 								+ "VALUES(?, ?, ?, ?, ?, ?, ?)");) {
+			this.validator.verifySaisie(item);
 			pStatement.setString(1, null);
 			pStatement.setString(2, item.getCategorie().name());
 			pStatement.setString(3, item.getCode());
@@ -118,11 +121,11 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void updateItem(String codePizza, Pizza item) throws StockageException {
-		this.daoTools.verifyCode(codePizza);
-		this.daoTools.verifySaisie(item);
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"UPDATE pizza SET Code=?, Nom=?, Description=?, Prix=? " + "WHERE ID_Pizza=?");) {
+			this.validator.verifyCode(codePizza);
+			this.validator.verifySaisie(item);
 			Pizza laPizza = getPizza(codePizza);
 			if (laPizza != null) {
 				pStatement.setString(1, item.getCode());
@@ -152,9 +155,10 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 */
 	@Override
 	public void deleteItem(String codePizza) throws StockageException {
-		this.daoTools.verifyCode(codePizza);
+		
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("DELETE FROM pizza WHERE ID_Pizza=?");) {
+			this.validator.verifyCode(codePizza);
 			Pizza laPizza = getPizza(codePizza);
 			if (laPizza != null) {
 				pStatement.setInt(1, laPizza.getId());
@@ -193,7 +197,9 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see fr.pizzeria.dao.ItemDao#find(java.lang.Object)
 	 */
 	@Override
