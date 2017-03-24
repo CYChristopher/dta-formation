@@ -24,14 +24,12 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  *
  */
 @Entity
-@NamedQueries({
-	@NamedQuery(name="findAll", query="FROM Pizza"),
-	@NamedQuery(name="getByCode", query="FROM Pizza WHERE Code=:code")
-})
+@NamedQueries({ @NamedQuery(name = "findAll", query = "FROM Pizza"),
+		@NamedQuery(name = "getByCode", query = "FROM Pizza WHERE Code=:code") })
 public class Pizza {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@Column(length = 5, nullable = false, unique = true)
 	private String code;
@@ -39,14 +37,14 @@ public class Pizza {
 	private String nom;
 	@Column(length = 255, nullable = true)
 	private String description;
-	@Column(precision = 10, scale=2)
+	@Column(precision = 10, scale = 2)
 	private BigDecimal prix;
 	@Enumerated(EnumType.STRING)
 	@Column(length = 255, nullable = false)
 	private CategoriePizza categorie;
-	@Column(name="url_image", length = 255, nullable = true)
+	@Column(name = "url_image", length = 255, nullable = true)
 	private String urlImage;
-	
+
 	/**
 	 * 
 	 */
@@ -246,7 +244,8 @@ public class Pizza {
 	 */
 	public void setCategorie(String categorie) {
 		for (int i = 0; i < CategoriePizza.values().length; i++) {
-			if (categorie.equalsIgnoreCase(CategoriePizza.values()[i].toString())) {
+			//Egalité sur le nom de l'énumération || Egalité sur la valeur de l'énumération
+			if (categorie.equalsIgnoreCase(CategoriePizza.values()[i].name()) || categorie.equalsIgnoreCase(CategoriePizza.values()[i].getCategorie())) {
 				this.categorie = CategoriePizza.values()[i];
 			}
 		}
@@ -260,7 +259,8 @@ public class Pizza {
 	}
 
 	/**
-	 * @param urlImage the urlImage to set
+	 * @param urlImage
+	 *            the urlImage to set
 	 */
 	public void setUrlImage(String urlImage) {
 		this.urlImage = urlImage;
@@ -284,9 +284,10 @@ public class Pizza {
 	@Override
 	public boolean equals(Object obj) {
 		boolean isEqual = false;
-		if(obj instanceof Pizza){
+		if (obj instanceof Pizza) {
 			Pizza pizza = (Pizza) obj;
-			isEqual = new EqualsBuilder().appendSuper(super.equals(pizza)).append(this.id, pizza.id).append(this.code, pizza.code).isEquals();
+			isEqual = new EqualsBuilder().appendSuper(super.equals(pizza)).append(this.id, pizza.id)
+					.append(this.code, pizza.code).isEquals();
 		}
 		return isEqual;
 	}

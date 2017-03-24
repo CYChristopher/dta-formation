@@ -117,6 +117,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 			if (optPizza.isPresent()) {
 				pizza.setCode(item.getCode());
 				pizza.setNom(item.getNom());
+				pizza.setCategorie(item.getCategorie());
 				pizza.setDescription(item.getDescription());
 				pizza.setPrix(item.getPrix());
 				em.merge(pizza);

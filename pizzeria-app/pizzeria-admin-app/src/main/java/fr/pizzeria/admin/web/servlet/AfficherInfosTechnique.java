@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,12 +13,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import fr.pizzeria.admin.metier.PizzaStatistiquesService;
+
 /**
  * Servlet implementation class AfficherInfosTechnique
  */
 @WebServlet(name = "AfficherInfosTechnique", urlPatterns = {"/technique"})
 public class AfficherInfosTechnique extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	@Inject private PizzaStatistiquesService pizzaStats;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -38,6 +42,7 @@ public class AfficherInfosTechnique extends HttpServlet {
 			Integer compteur = (Integer) this.getServletContext().getAttribute("compteur");
 			request.setAttribute("times", timeExe);
 			request.setAttribute("compteur", compteur);
+			request.setAttribute("pizzaStats", pizzaStats.getEvents());
 			RequestDispatcher dispatcher = this.getServletContext()
 					.getRequestDispatcher("/WEB-INF/views/pizzas/infosTechnique.jsp");
 			dispatcher.forward(request, response);

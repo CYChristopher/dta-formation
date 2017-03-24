@@ -11,7 +11,7 @@ public enum CategoriePizza {
 
 	VIANDE ("Viande"), POISSON ("Poisson"), VEGETARIENNE ("Végétarienne"), FROMAGE ("Fromage");
 	
-private String categorie;
+private final String categorie;
 	
 	/**
 	 * 
