@@ -4,13 +4,11 @@
 package fr.pizzeria.console;
 
 import java.util.ResourceBundle;
-import java.util.Scanner;
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-import fr.pizzeria.dao.ItemDao;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import fr.pizzeria.ihm.MenuPizzeria;
-import fr.pizzeria.model.Pizza;
 
 /**
  * @author Christopher CHARLERY
@@ -29,37 +27,12 @@ public class PizzeriaAdminConsoleApp {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-
-		String readline;
-		Scanner sc = new Scanner(System.in);
-		Integer choice;
-		ItemDao<String, Pizza> instanceDaoImpl = null;
+		java.util.logging.Logger.getLogger("org").setLevel(Level.SEVERE);
 		ResourceBundle bundle = ResourceBundle.getBundle("application");
-		String daoImpl = bundle.getString("service.impl");
-		
-		java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.SEVERE);
-		
-		System.out.println(daoImpl);
-		
-		try {
-			instanceDaoImpl = (ItemDao<String, Pizza>) Class.forName(daoImpl).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			Logger.getLogger(PizzeriaAdminConsoleApp.class.getName()).log(Level.WARNING, e.getMessage(), e);
-		}
-		
-		MenuPizzeria menuPizza = new MenuPizzeria(sc, instanceDaoImpl);
-
-		menuPizza.getMenu().show();
-		readline = sc.nextLine();
-		choice = Integer.parseInt(readline);
-		Boolean continuer = true;
-		while (continuer) {
-			continuer = menuPizza.getMenu().appliquerChoix(choice);
-			if (continuer) {
-				menuPizza.getMenu().show();
-				readline = sc.nextLine();
-				choice = Integer.parseInt(readline);
-			}
+		String daoImpl = bundle.getString("dao.impl");
+		try (ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-config.xml", daoImpl)) {
+			MenuPizzeria menuPizza = context.getBean(MenuPizzeria.class);
+			menuPizza.display();
 		}
 	}
 }

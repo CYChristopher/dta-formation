@@ -141,6 +141,19 @@ public class Pizza {
 		this(id, code, nom, description);
 		this.prix = prix;
 	}
+	
+	/**
+	 * @param id
+	 * @param code
+	 * @param nom
+	 * @param description
+	 * @param prix
+	 * @param categorie
+	 */
+	public Pizza(Integer id, String code, String nom, String description, BigDecimal prix, CategoriePizza categorie) {
+		this(id, code, nom, description, prix);
+		this.setCategorie(categorie);
+	}
 
 	/**
 	 * @param id

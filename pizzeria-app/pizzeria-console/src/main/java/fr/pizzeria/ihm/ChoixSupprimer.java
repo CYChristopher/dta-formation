@@ -18,7 +18,7 @@ import fr.pizzeria.model.Pizza;
  * @author Christopher CHARLERY
  *
  */
-final class ChoixSupprimer extends Choix<String, Pizza> {
+public final class ChoixSupprimer extends Choix<String, Pizza> {
 	
 	/**
 	 * @param numeroChoix

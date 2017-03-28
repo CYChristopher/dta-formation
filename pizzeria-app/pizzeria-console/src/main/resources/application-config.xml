@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd 
+						http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<bean id="menuPrincipal" class="fr.pizzeria.ihm.MenuPizzeria">
+		<constructor-arg ref="scanner" />
+		<constructor-arg ref="menu" />
+	</bean>
+	<bean id="scanner" class="java.util.Scanner">
+		<constructor-arg>
+			<util:constant id="scanner" static-field="java.lang.System.in" />
+		</constructor-arg>
+	</bean>
+	
+	<bean id="clientDao" class="fr.pizzeria.dao.ClientDaoImpl"></bean>
+	
+	<bean id="menu" class="fr.pizzeria.ihmtools.Menu">
+		<constructor-arg value="***** Pizzeria Administration *****" />
+		<property name="items">
+			<map>
+				<entry key="1" value-ref="lister" />
+				<entry key="2" value-ref="listerCateg" />
+				<entry key="3" value-ref="afficherPizzaMax" />
+				<entry key="4" value-ref="ajouter" />
+				<entry key="5" value-ref="modifier" />
+				<entry key="6" value-ref="supprimer" />
+				<entry key="7" value-ref="listerClient" />
+				<entry key="8" value-ref="importerPizzas" />
+				<entry key="99" value-ref="sortir" />
+			</map>
+		</property>
+	</bean>
+
+	<bean id="lister" class="fr.pizzeria.ihm.ChoixListerPizza">
+		<constructor-arg value="1" />
+		<constructor-arg value="Lister les pizzas" />
+		<constructor-arg ref="pizzaDao" />
+	</bean>
+	<bean id="listerCateg" class="fr.pizzeria.ihm.ChoixListerCateg">
+		<constructor-arg value="2" />
+		<constructor-arg value="Lister les pizzas par catégories" />
+		<constructor-arg ref="pizzaDao" />
+	</bean>
+	<bean id="afficherPizzaMax" class="fr.pizzeria.ihm.ChoixPizzaMax">
+		<constructor-arg value="3" />
+		<constructor-arg value="Afficher la pizza au tarif le plus élevé" />
+		<constructor-arg ref="pizzaDao" />
+		<constructor-arg ref="scanner" />
+	</bean>
+	<bean id="ajouter" class="fr.pizzeria.ihm.ChoixAjouter">
+		<constructor-arg value="4" />
+		<constructor-arg value="Ajouter une nouvelle pizza" />
+		<constructor-arg ref="pizzaDao" />
+		<constructor-arg ref="scanner" />
+	</bean>
+	<bean id="modifier" class="fr.pizzeria.ihm.ChoixModifier">
+		<constructor-arg value="5" />
+		<constructor-arg value="Mettre à jour une pizza" />
+		<constructor-arg ref="pizzaDao" />
+		<constructor-arg ref="scanner" />
+	</bean>
+	<bean id="supprimer" class="fr.pizzeria.ihm.ChoixSupprimer">
+		<constructor-arg value="6" />
+		<constructor-arg value="Supprimer une pizza" />
+		<constructor-arg ref="pizzaDao" />
+		<constructor-arg ref="scanner" />
+	</bean>
+	<bean id="listerClient" class="fr.pizzeria.ihm.ChoixListerClient">
+		<constructor-arg value="7" />
+		<constructor-arg value="Lister les clients" />
+		<constructor-arg ref="clientDao" />
+	</bean>
+	<bean id="importerPizzas" class="fr.pizzeria.ihm.ChoixImporterPizzas">
+		<constructor-arg value="8" />
+		<constructor-arg value="Importer des données" />
+		<constructor-arg ref="pizzaDao" />
+		<constructor-arg ref="scanner" />
+	</bean>
+	<bean id="sortir" class="fr.pizzeria.ihmtools.ChoixSortir">
+		<constructor-arg value="99" />
+		<constructor-arg value="Sortir" />
+		<constructor-arg ref="scanner" />
+	</bean>
+
+</beans>

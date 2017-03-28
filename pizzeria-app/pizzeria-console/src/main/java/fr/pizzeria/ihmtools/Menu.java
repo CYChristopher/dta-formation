@@ -53,4 +53,31 @@ public class Menu {
 		this.items.forEach((id, choix) -> System.out.println(id + ". " + choix.getNomChoix()));
 	}
 
+	/**
+	 * @return the items
+	 */
+	public Map<Integer, Choix<?, ?>> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(Map<Integer, Choix<?, ?>> items) {
+		this.items = items;
+	}
+
+	/**
+	 * @return the titre
+	 */
+	public String getTitre() {
+		return titre;
+	}
+
+	/**
+	 * @param titre the titre to set
+	 */
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
 }

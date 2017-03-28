@@ -27,6 +27,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	public PizzaDaoImplMemory() {
 		this.pizzas = new ArrayList<>();
 		this.daoTools = new DaoPizzaTools();
+		this.validator = new PizzaValidator();
 		findAllItems();
 	}
 
