@@ -23,7 +23,7 @@ public class Livreur extends AbstractPersonne implements CompteStat {
 	private List<Commande> commandes;
 	
 	/**
-	 * 
+	 * Crée un nouveau livreur
 	 */
 	public Livreur() {
 		super();

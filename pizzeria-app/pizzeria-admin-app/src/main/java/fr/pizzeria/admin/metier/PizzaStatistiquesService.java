@@ -22,6 +22,9 @@ public class PizzaStatistiquesService {
 	
 	@ApplicationScoped
 	@PostConstruct
+	/**
+	 * 
+	 */
 	public void init(){
 		this.events = new ArrayList<>();
 	}

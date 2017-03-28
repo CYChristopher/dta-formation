@@ -20,6 +20,7 @@ public class PizzaEvent {
 	/**
 	 * @param pizza
 	 * @param heure
+	 * @param type
 	 */
 	public PizzaEvent(Pizza pizza, ZonedDateTime heure, PizzaEventType type) {
 		this.pizza = pizza;

@@ -5,8 +5,6 @@ package fr.pizzeria.dao;
 
 import java.util.List;
 
-import fr.pizzeria.exception.StockageException;
-
 /**
  * @author Christopher CHARLERY
  * @param <I> Index
@@ -28,6 +26,7 @@ public interface ItemDao<I, O> {
 	
 	/**
 	 * Retourne un item particulier
+	 * @param code
 	 * @return
 	 */
 	O find(I code);
@@ -37,7 +36,7 @@ public interface ItemDao<I, O> {
 	 * @param item
 	 * @throws SaveItemException
 	 */
-	void saveNewItem(O item) throws StockageException; 
+	void saveNewItem(O item); 
 	
 	/**
 	 * Mets � jour un item
@@ -45,12 +44,12 @@ public interface ItemDao<I, O> {
 	 * @param item
 	 * @throws UpdateItemException
 	 */
-	void updateItem(I index,O item) throws StockageException;
+	void updateItem(I index,O item);
 	
 	/**
 	 * Supprime un item
 	 * @param index
 	 * @throws DeleteItemException
 	 */
-	void deleteItem(I index) throws StockageException;
+	void deleteItem(I index);
 }

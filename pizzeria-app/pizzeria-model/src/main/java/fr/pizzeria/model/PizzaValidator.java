@@ -16,7 +16,7 @@ public class PizzaValidator {
 	 * @param pizza
 	 * @throws StockageException
 	 */
-	public void verifySaisie(Pizza pizza) throws ValidationException {
+	public void verifySaisie(Pizza pizza){
 		if (pizza.getCode() == null || "".equalsIgnoreCase(pizza.getCode())) {
 			throw new ValidationException("Le code de la pizza est incorrect !");
 		}
@@ -32,7 +32,7 @@ public class PizzaValidator {
 	 * @param codePizza
 	 * @throws StockageException
 	 */
-	public void verifyCode(String codePizza) throws ValidationException {
+	public void verifyCode(String codePizza){
 		if (codePizza == null || "".equalsIgnoreCase(codePizza)) {
 			throw new ValidationException("Le code de la pizza sélectionnée est incorrect !");
 		}

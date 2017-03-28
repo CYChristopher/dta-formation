@@ -3,13 +3,13 @@
  */
 package fr.pizzeria.ihm;
 
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
+import fr.pizzeria.model.Client;
 
 /**
  * @author Christopher CHARLERY
@@ -42,6 +42,11 @@ public class ChoixSInscrire<G, I> extends Choix<I, G> {
 		String email = this.getSc().nextLine();
 		System.out.print("Veuillez saisir le mot de passe : ");
 		String mdp = DigestUtils.md5Hex(this.getSc().nextLine());
+		Client client = new Client();
+		client.setNom(nom);
+		client.setPrenom(prenom);
+		client.setEmail(email);
+		client.setPassword(mdp);
 		return true;
 	}
 

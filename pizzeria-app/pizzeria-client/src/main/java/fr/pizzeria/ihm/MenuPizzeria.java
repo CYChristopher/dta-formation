@@ -53,8 +53,6 @@ public class MenuPizzeria {
 			}
 		}
 		
-		ItemDao<Integer, Client> clientDao = new ClientDaoImpl();
-		
 		this.menu = new Menu("***** Pizzeria Client *****");
 		
 		this.lister = new ChoixListerPizza(1, "Lister les pizzas",pizzaDao);

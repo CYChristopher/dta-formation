@@ -25,7 +25,7 @@ public class Client extends AbstractPersonne implements CompteStat{
 	private List<Commande> commandes;
 	
 	/**
-	 * 
+	 * Crée un nouveau client
 	 */
 	public Client() {
 		super();

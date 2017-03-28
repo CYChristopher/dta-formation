@@ -10,7 +10,7 @@ package fr.pizzeria.exception;
 public class ValidationException extends RuntimeException {
 	
 	/**
-	 * 
+	 * Crée une nouvelle Exception de validation
 	 */
 	public ValidationException(String message) {
 		super(message);

@@ -92,7 +92,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#saveNewItem(java.lang.Object)
 	 */
 	@Override
-	public void saveNewItem(Pizza item) throws StockageException {
+	public void saveNewItem(Pizza item){
 
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
@@ -120,7 +120,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(String codePizza, Pizza item) throws StockageException {
+	public void updateItem(String codePizza, Pizza item){
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
 						"UPDATE pizza SET Code=?, Nom=?, Description=?, Prix=? " + "WHERE ID_Pizza=?");) {
@@ -154,7 +154,7 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(String codePizza) throws StockageException {
+	public void deleteItem(String codePizza){
 		
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement("DELETE FROM pizza WHERE ID_Pizza=?");) {

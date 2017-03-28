@@ -7,13 +7,12 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.pizzeria.exception.StockageException;
 import fr.pizzeria.model.Client;
 
 /**
  * @author Christopher CHARLERY
  *
- */
+ */	
 public class ClientDaoImpl implements ItemDao<Integer, Client> {
 
 	private List<Client> lesClients = new ArrayList<>();
@@ -54,7 +53,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * @see fr.pizzeria.dao.IItemDao#saveNewItem(java.lang.Object)
 	 */
 	@Override
-	public void saveNewItem(Client item) throws StockageException {
+	public void saveNewItem(Client item){
 		//Implémentation à effectuer ultérieurement
 	}
 
@@ -65,7 +64,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(Integer index, Client item) throws StockageException {
+	public void updateItem(Integer index, Client item){
 		//Implémentation à effectuer ultérieurement
 	}
 
@@ -75,7 +74,7 @@ public class ClientDaoImpl implements ItemDao<Integer, Client> {
 	 * @see fr.pizzeria.dao.IItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(Integer index) throws StockageException {
+	public void deleteItem(Integer index){
 		// Implémentation à effectuer ultérieurement
 	}
 

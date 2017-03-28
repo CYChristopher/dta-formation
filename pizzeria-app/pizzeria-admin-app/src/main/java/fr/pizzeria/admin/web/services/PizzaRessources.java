@@ -29,12 +29,20 @@ public class PizzaRessources {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Pizza> list(){
 		return pizzaService.findAllPizzas();
 	}
 	
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
+	/**
+	 * 
+	 * @param pizza
+	 */
 	public void add(Pizza pizza){
 		pizzaService.savePizza(pizza);
 	}
@@ -42,12 +50,21 @@ public class PizzaRessources {
 	@PUT
 	@Path("/{code}")
 	@Consumes(MediaType.APPLICATION_JSON)
+	/**
+	 * 
+	 * @param ancienCode
+	 * @param pizza
+	 */
 	public void update(@PathParam("code") String ancienCode, Pizza pizza){
 		pizzaService.updatePizza(ancienCode, pizza);
 	}
 
 	@DELETE
 	@Path("/{code}")
+	/**
+	 * 
+	 * @param code
+	 */
 	public void add(@PathParam("code") String code){
 		pizzaService.deletePizza(code);
 	}

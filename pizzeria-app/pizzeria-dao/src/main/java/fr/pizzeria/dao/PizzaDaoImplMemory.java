@@ -54,7 +54,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#saveNewItem(java.lang.Object)
 	 */
 	@Override
-	public void saveNewItem(Pizza pizza) throws StockageException {
+	public void saveNewItem(Pizza pizza){
 		this.validator.verifySaisie(pizza);
 		this.pizzas.add(pizza);
 	}
@@ -66,7 +66,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
+	public void updateItem(String codePizza, Pizza pizza){
 		executeUpdate(codePizza, pizza, true);
 	}
 
@@ -77,7 +77,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 *            true si c'est une modification, false si c'est une suppression
 	 * @throws StockageException
 	 */
-	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate) throws StockageException {
+	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate){
 		this.validator.verifyCode(codePizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
 				.findFirst();
@@ -99,7 +99,7 @@ public class PizzaDaoImplMemory implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(String codePizza) throws StockageException {
+	public void deleteItem(String codePizza){
 		executeUpdate(codePizza, null, false);
 	}
 

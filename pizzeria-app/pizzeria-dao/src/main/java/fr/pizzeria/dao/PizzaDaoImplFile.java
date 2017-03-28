@@ -83,7 +83,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.IItemDao#saveNewPizza(fr.pizzeria.dao)
 	 */
 	@Override
-	public void saveNewItem(Pizza pizza) throws StockageException {
+	public void saveNewItem(Pizza pizza){
 		this.validator.verifySaisie(pizza);
 		this.pizzas.add(pizza);
 		saveInFile(pizza, false, null);
@@ -96,7 +96,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * fr.pizzeria.dao)
 	 */
 	@Override
-	public void updateItem(String codePizza, Pizza pizza) throws StockageException {
+	public void updateItem(String codePizza, Pizza pizza){
 		executeUpdate(codePizza, pizza, true);
 	}
 
@@ -106,7 +106,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @param isUpdate
 	 * @throws StockageException
 	 */
-	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate) throws StockageException {
+	private void executeUpdate(String codePizza, Pizza pizza, boolean isUpdate){
 		this.validator.verifyCode(codePizza);
 		this.validator.verifySaisie(pizza);
 		Optional<Pizza> optPizza = this.pizzas.stream().filter(laPizza -> codePizza.equalsIgnoreCase(laPizza.getCode()))
@@ -130,11 +130,11 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.IItemDao#deletePizza(java.lang.String)
 	 */
 	@Override
-	public void deleteItem(String codePizza) throws StockageException {
+	public void deleteItem(String codePizza){
 		executeUpdate(codePizza, null, false);
 	}
 
-	private void saveInFile(Pizza pizza, boolean rename, String ancienCode) throws StockageException {
+	private void saveInFile(Pizza pizza, boolean rename, String ancienCode){
 		try {
 			String cheminFichier = this.daoTools.getDossierData().getCanonicalPath() + "\\" + pizza.getCode() + ".txt";
 			Path fichierPizza = Paths.get(cheminFichier);
@@ -152,7 +152,7 @@ public class PizzaDaoImplFile implements ItemDao<String, Pizza> {
 		}
 	}
 
-	private void deleteFile(String code) throws StockageException {
+	private void deleteFile(String code){
 		File fichier = new File(this.daoTools.getDossierData() + "\\" + code + ".txt");
 		if (!fichier.delete()) {
 			throw new StockageException(

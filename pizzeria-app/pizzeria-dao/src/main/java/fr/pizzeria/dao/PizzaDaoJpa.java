@@ -105,7 +105,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	 * java.lang.Object)
 	 */
 	@Override
-	public void updateItem(String codePizza, Pizza item) throws StockageException {
+	public void updateItem(String codePizza, Pizza item){
 		EntityManager em = emf.createEntityManager();
 		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
@@ -141,7 +141,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 	 * @see fr.pizzeria.dao.ItemDao#deleteItem(java.lang.Object)
 	 */
 	@Override
-	public void deleteItem(String codePizza) throws StockageException {
+	public void deleteItem(String codePizza){
 		EntityManager em = emf.createEntityManager();
 		Pizza pizza = em.createNamedQuery(GET_BY_CODE, Pizza.class).setParameter("code", codePizza).getSingleResult();
 		EntityTransaction et = em.getTransaction();
