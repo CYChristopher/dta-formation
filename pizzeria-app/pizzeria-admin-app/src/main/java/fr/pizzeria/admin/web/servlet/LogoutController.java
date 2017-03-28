@@ -33,7 +33,7 @@ public class LogoutController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
 			request.getSession().invalidate();
-			response.sendRedirect(request.getContextPath() + "/login");
+			response.sendRedirect(request.getContextPath() + "/accueil");
 		}catch (IOException e) {
 			Logger.getLogger(this.getClass().getName()).log(Level.WARNING, e.getMessage(), e);
 		}

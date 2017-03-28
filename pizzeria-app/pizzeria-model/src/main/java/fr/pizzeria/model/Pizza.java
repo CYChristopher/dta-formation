@@ -219,9 +219,18 @@ public class Pizza {
 	 *            the prix to set
 	 */
 	public void setPrix(BigDecimal prix) {
-		this.prix.setScale(2, RoundingMode.HALF_UP);
 		this.prix = prix;
+		this.prix.setScale(2, RoundingMode.HALF_UP);
 	}
+	
+	/**
+	 * @param prix
+	 *            the prix to set
+	 */
+	public void setPrix(String prix) {
+		setPrix(BigDecimal.valueOf(Double.parseDouble(prix)));
+	}
+
 
 	/**
 	 * @return the categorie

@@ -18,7 +18,7 @@
 		<!-- Barre de navigation pour ordinateurs -->
 		<div class="collapse navbar-collapse" id="maNavBar">
 			<ul id="liste" class="nav navbar-nav">
-				<li class="active"><a href="Accueil.html"><span
+				<li class="active"><a href="<c:url value='/accueil'></c:url>"><span
 						class="glyphicon glyphicon-home" aria-hidden="true"></span>
 						Accueil</a></li>
 				<li><a href="#"><span
@@ -30,10 +30,12 @@
 						Notre carte<span class="caret"></span></a>
 					<ul class="dropdown-menu" role="menu">
 						<li>
-							<!-- à compléter --> Télécharger la carte
+							<a href="<c:url value='/pizzas/list'></c:url>"><span
+						class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+						Voir la carte</a>
 						</li>
 						<li>
-							<!-- à compléter --> Voir la carte
+							<!-- à compléter --> Télécharger la carte
 						</li>
 						<li role="separator" class="divider"></li>
 						<li class="dropdown-header"><span
