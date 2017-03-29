@@ -40,6 +40,7 @@ public class SpringPizzaDaoJpa implements ItemDao<String, Pizza> {
 	 */
 	public SpringPizzaDaoJpa() {
 		this.pizzas = new ArrayList<>();
+		this.validator = new PizzaValidator();
 	}
 
 	/*

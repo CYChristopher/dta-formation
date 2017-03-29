@@ -25,7 +25,7 @@ import fr.pizzeria.model.Pizza;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=DaoConfig.class)
+@ContextConfiguration(classes=DaoJpaConfig.class)
 public class SpringDaoTest {
 
 	@Autowired
@@ -38,20 +38,6 @@ public class SpringDaoTest {
 	}
 
 	@Test
-	public void findAllTest() {
-		pizzaDao.findAllItems();
-		List<Pizza> pizzas = pizzaDao.getItems();
-		assertTrue(pizzas.size() > 0);
-	}
-
-	@Test
-	public void findTest() {
-		Pizza pizza = pizzaDao.find("rei");
-		assertNotNull(pizza);
-		assertTrue(pizza.getCode().equals("REI"));
-	}
-
-	@Test
 	public void saveItemTest() {
 		Pizza pizza = new Pizza("TEST", "Save test", "Ceci est un test unitaire", BigDecimal.valueOf(12.5),
 				CategoriePizza.VEGETARIENNE);
@@ -61,6 +47,23 @@ public class SpringDaoTest {
 		assertNotNull(pizzaDao.find("TEST"));
 		pizzaDao.findAllItems();
 		assertTrue(pizzaDao.getItems().size() == ++size);
+	}
+	
+	@Test
+	public void findAllTest() {
+		pizzaDao.findAllItems();
+		List<Pizza> pizzas = pizzaDao.getItems();
+		assertTrue(pizzas.size() > 0);
+	}
+	
+	@Test
+	public void findTest() {
+		Pizza p = new Pizza("P", "Update test", "Ceci est un test unitaire", BigDecimal.valueOf(12.5),
+				CategoriePizza.VEGETARIENNE);
+		pizzaDao.saveNewItem(p);
+		Pizza pizza = pizzaDao.find("P");
+		assertNotNull(pizza);
+		assertTrue(pizza.getCode().equals("P"));
 	}
 	
 	@Test
