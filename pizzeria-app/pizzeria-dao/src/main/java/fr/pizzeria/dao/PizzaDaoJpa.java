@@ -46,6 +46,7 @@ public class PizzaDaoJpa implements ItemDao<String, Pizza> {
 		ResourceBundle bundle = ResourceBundle.getBundle("application");
 		String unit = bundle.getString("unit");
 		emf = Persistence.createEntityManagerFactory(unit);
+		this.validator = new PizzaValidator();
 		findAllItems();
 	}
 

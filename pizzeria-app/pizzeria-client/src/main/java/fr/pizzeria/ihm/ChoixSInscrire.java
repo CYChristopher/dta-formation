@@ -6,6 +6,7 @@ package fr.pizzeria.ihm;
 import java.util.Scanner;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.stereotype.Controller;
 
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
@@ -17,6 +18,7 @@ import fr.pizzeria.model.Client;
  * @param <I>
  *
  */
+@Controller
 public class ChoixSInscrire<G, I> extends Choix<I, G> {
 
 	/**

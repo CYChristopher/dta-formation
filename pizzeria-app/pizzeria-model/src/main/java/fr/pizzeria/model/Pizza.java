@@ -26,7 +26,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 @Entity
 @NamedQueries({ @NamedQuery(name = "findAll", query = "FROM Pizza"),
 		@NamedQuery(name = "getByCode", query = "FROM Pizza WHERE Code=:code") })
-public class Pizza {
+public class Pizza{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -166,6 +166,13 @@ public class Pizza {
 	public Pizza(Integer id, String code, String nom, String description, BigDecimal prix, String categorie) {
 		this(id, code, nom, description, prix);
 		this.setCategorie(categorie);
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	/**

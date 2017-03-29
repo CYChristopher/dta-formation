@@ -96,16 +96,16 @@ public class PizzaDaoImplDB implements ItemDao<String, Pizza> {
 
 		try (Connection connection = DriverManager.getConnection(url, user, password);
 				PreparedStatement pStatement = connection.prepareStatement(
-						"" + "INSERT INTO pizza (ID_Pizza, Categorie, Code, Nom, Description, Prix, URL_image) "
+						"" + "INSERT INTO pizza (id, categorie, code, description, nom, prix, url_image) "
 								+ "VALUES(?, ?, ?, ?, ?, ?, ?)");) {
 			this.validator.verifySaisie(item);
 			pStatement.setString(1, null);
 			pStatement.setString(2, item.getCategorie().name());
 			pStatement.setString(3, item.getCode());
-			pStatement.setString(4, item.getNom());
-			pStatement.setString(5, item.getDescription());
+			pStatement.setString(4, item.getDescription());
+			pStatement.setString(5, item.getNom());
 			pStatement.setBigDecimal(6, item.getPrix());
-			pStatement.setString(7, null);
+			pStatement.setString(7, item.getUrlImage());
 			pStatement.execute();
 			this.pizzas.add(item);
 		} catch (SQLException e) {

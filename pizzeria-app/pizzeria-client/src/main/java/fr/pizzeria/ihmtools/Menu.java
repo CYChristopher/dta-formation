@@ -6,10 +6,14 @@ package fr.pizzeria.ihmtools;
 import java.util.Map;
 import java.util.TreeMap;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+
 /**
  * @author Christopher CHARLERY
  *
  */
+@Controller
 public class Menu {
 
 	private Map<Integer, Choix<?, ?>> items;
@@ -19,7 +23,7 @@ public class Menu {
 	 * 
 	 * @param titre
 	 */
-	public Menu(String titre) {
+	public Menu(@Value("${app.title}") String titre) {
 		this.titre = titre;
 		this.items = new TreeMap<>();
 	}
@@ -53,4 +57,31 @@ public class Menu {
 		this.items.forEach((id, choix) -> System.out.println(id + ". " + choix.getNomChoix()));
 	}
 
+	/**
+	 * @return the items
+	 */
+	public Map<Integer, Choix<?, ?>> getItems() {
+		return items;
+	}
+
+	/**
+	 * @param items the items to set
+	 */
+	public void setItems(Map<Integer, Choix<?, ?>> items) {
+		this.items = items;
+	}
+
+	/**
+	 * @return the titre
+	 */
+	public String getTitre() {
+		return titre;
+	}
+
+	/**
+	 * @param titre the titre to set
+	 */
+	public void setTitre(String titre) {
+		this.titre = titre;
+	}
 }

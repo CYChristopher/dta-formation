@@ -13,9 +13,9 @@
 			<util:constant id="scanner" static-field="java.lang.System.in" />
 		</constructor-arg>
 	</bean>
-	
+
 	<bean id="clientDao" class="fr.pizzeria.dao.ClientDaoImpl"></bean>
-	
+
 	<bean id="menu" class="fr.pizzeria.ihmtools.Menu">
 		<constructor-arg value="***** Pizzeria Administration *****" />
 		<property name="items">

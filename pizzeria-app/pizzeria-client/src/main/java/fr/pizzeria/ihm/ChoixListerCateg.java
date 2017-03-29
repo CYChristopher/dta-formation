@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+
 import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.ihmtools.Choix;
 import fr.pizzeria.ihmtools.Tools;
@@ -17,16 +20,15 @@ import fr.pizzeria.model.Pizza;
  * @author Christopher CHARLERY
  *
  */
+@Controller
 public class ChoixListerCateg extends Choix<String, Pizza> {
-
-	
 	
 	/**
 	 * @param numeroChoix
 	 * @param nomChoix
 	 * @param dao
 	 */
-	public ChoixListerCateg(Integer numeroChoix, String nomChoix, ItemDao<String, Pizza> dao) {
+	public ChoixListerCateg(@Value("${listerCateg.num}") Integer numeroChoix, @Value("${listerCateg.nom}") String nomChoix, ItemDao<String, Pizza> dao) {
 		super(numeroChoix, nomChoix, dao);
 	}
 

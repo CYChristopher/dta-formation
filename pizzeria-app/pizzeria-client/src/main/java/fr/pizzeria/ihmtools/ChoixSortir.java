@@ -5,10 +5,14 @@ package fr.pizzeria.ihmtools;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+
 /**
  * @author Christopher CHARLERY
  *
  */
+@Controller
 public final class ChoixSortir extends Choix {
 	
 	/**
@@ -16,7 +20,7 @@ public final class ChoixSortir extends Choix {
 	 * @param nomChoix
 	 * @param sc
 	 */
-	public ChoixSortir(Integer numeroChoix, String nomChoix, Scanner sc) {
+	public ChoixSortir(@Value("${sortir.num}") Integer numeroChoix, @Value("${sortir.nom}") String nomChoix, Scanner sc) {
 		super(numeroChoix, nomChoix, sc);
 	}
 

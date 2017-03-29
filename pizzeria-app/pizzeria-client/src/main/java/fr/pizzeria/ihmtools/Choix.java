@@ -5,6 +5,9 @@ package fr.pizzeria.ihmtools;
 
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
 import fr.pizzeria.dao.ItemDao;
 
 /**
@@ -13,11 +16,14 @@ import fr.pizzeria.dao.ItemDao;
  * @param <G>
  *
  */
+@Controller
 public abstract class Choix<I, G> {
 	
 	private Integer numeroChoix;
 	private String nomChoix;
+	@Autowired
 	private ItemDao<I, G> itemDao;
+	@Autowired
 	private Scanner sc;
 	
 	/**
