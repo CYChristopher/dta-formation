@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import java.math.BigDecimal;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import fr.pizzeria.dao.annotation.DaoSource;
+import fr.pizzeria.dao.config.DaoDataJpaConfig;
 import fr.pizzeria.model.CategoriePizza;
+import fr.pizzeria.model.Performance;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -25,16 +26,27 @@ import fr.pizzeria.model.Pizza;
  *
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes=DaoJpaConfig.class)
+@ContextConfiguration(classes=DaoDataJpaConfig.class)
 public class SpringDaoTest {
 
 	@Autowired
 	@DaoSource
 	private ItemDao<String, Pizza> pizzaDao;
+	@Autowired
+	private PerformanceRepository performanceRepository;
 
-	@Before
-	public void init() {
-		assertNotNull(pizzaDao);
+	/**
+	 * @return the pizzaDao
+	 */
+	public ItemDao<String, Pizza> getPizzaDao() {
+		return pizzaDao;
+	}
+
+	/**
+	 * @param pizzaDao the pizzaDao to set
+	 */
+	public void setPizzaDao(ItemDao<String, Pizza> pizzaDao) {
+		this.pizzaDao = pizzaDao;
 	}
 
 	@Test
@@ -90,6 +102,22 @@ public class SpringDaoTest {
 		pizzaDao.deleteItem("TEDT");
 		pizzaDao.findAllItems();
 		assertTrue(pizzaDao.getItems().size() == --size);
+	}
+	
+	@Test
+	public void aspectDaoCodeTest(){
+		Pizza pizza = new Pizza(null, "     Delete test", "Ceci est un test unitaire", BigDecimal.valueOf(12.5),
+				CategoriePizza.VEGETARIENNE);
+		pizzaDao.saveNewItem(pizza);
+		Pizza upPizza = pizzaDao.find("DEL");
+		assertNotNull(upPizza);
+	}
+	
+	@Test
+	public void aspectTechnicPerformanceTest(){
+		List<Performance> performances = performanceRepository.findAll();
+		assertNotNull(performances);
+		assertTrue(performances.size() > 0);
 	}
 
 }

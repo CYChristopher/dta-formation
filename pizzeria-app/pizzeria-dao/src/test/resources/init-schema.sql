@@ -10,3 +10,10 @@ CREATE TABLE `pizza` (
 
 INSERT INTO `pizza` (`id`, `categorie`, `code`, `description`, `nom`, `prix`, `url_image`) VALUES
 (NULL, 'Viande', 'TOT', NULL, 'toto', 45, NULL);
+
+CREATE TABLE `performance` (
+  `id` int(11) auto_increment NOT NULL,
+  `service` varchar(255) NOT NULL,
+  `date_time` timestamp NOT NULL,
+  `temps_execution` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

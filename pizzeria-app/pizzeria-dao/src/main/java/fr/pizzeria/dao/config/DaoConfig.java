@@ -1,7 +1,7 @@
 /**
  * 29 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao;
+package fr.pizzeria.dao.config;
 
 import java.util.ResourceBundle;
 
@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -19,7 +20,8 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
  *
  */
 @Configuration
-@ComponentScan("fr.pizzeria.dao")
+@ComponentScan({"fr.pizzeria.dao", "fr.pizzeria.aspects"})
+@EnableAspectJAutoProxy
 public class DaoConfig {
 
 	@Bean

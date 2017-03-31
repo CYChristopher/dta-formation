@@ -1,15 +1,19 @@
 /**
  * 29 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao;
+package fr.pizzeria.dao.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+import fr.pizzeria.dao.SpringPizzaDaoJpa;
 
 /**
  * @author Christopher CHARLERY
@@ -17,7 +21,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @Import(SpringPizzaDaoJpa.class)
+@ComponentScan("fr.pizzeria.aspects")
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 public class DaoJpaConfig {
 
 	@Bean
@@ -28,7 +34,7 @@ public class DaoJpaConfig {
 	}
 
 	@Bean
-	public PlatformTransactionManager txManager() {
+	public PlatformTransactionManager transactionManager() {
 		return new JpaTransactionManager();
 	}
 

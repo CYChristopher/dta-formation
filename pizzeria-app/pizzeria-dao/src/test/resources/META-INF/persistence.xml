@@ -9,6 +9,7 @@
 		<class>fr.pizzeria.model.Client</class>
 		<class>fr.pizzeria.model.CommandeLigne</class>
 		<class>fr.pizzeria.model.Livreur</class>
+		<class>fr.pizzeria.model.Performance</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test" />
 			<property name="javax.persistence.jdbc.user" value="sa" />
