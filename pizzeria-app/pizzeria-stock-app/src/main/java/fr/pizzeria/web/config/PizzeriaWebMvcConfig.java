@@ -1,10 +1,9 @@
 /**
- * 30 mars 2017 Christopher CHARLERY
+ * 31 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao.config;
+package fr.pizzeria.web.config;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.Import;
@@ -13,21 +12,24 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
-import fr.pizzeria.dao.SpringPizzaDaoDataJpa;
+import fr.pizzeria.controller.IngredientController;
 
 /**
  * @author Christopher CHARLERY
  *
  */
 @Configuration
-@Import(SpringPizzaDaoDataJpa.class)
-@ComponentScan("fr.pizzeria.aspects")
+@Import(IngredientController.class)
 @EnableTransactionManagement
 @EnableJpaRepositories("fr.pizzeria.dao")
 @EnableAspectJAutoProxy
-public class DaoDataJpaConfig {
-
+@EnableWebMvc
+public class PizzeriaWebMvcConfig {
+	
 	@Bean
 	public PlatformTransactionManager transactionManager() {
 		return new JpaTransactionManager();
@@ -36,6 +38,14 @@ public class DaoDataJpaConfig {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
 		return new LocalContainerEntityManagerFactoryBean();
+	}
+
+	@Bean
+	public ViewResolver internalResourceViewResolver(){
+		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+		resolver.setPrefix("/WEB-INF/views/");
+		resolver.setSuffix(".jsp");
+		return resolver;
 	}
 	
 }
