@@ -1,8 +1,9 @@
 /**
  * 30 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao.config;
+package config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -34,6 +35,7 @@ public class DaoDataJpaConfig {
 	}
 	
 	@Bean
+	@Qualifier("entityManagerFactory")
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(){
 		return new LocalContainerEntityManagerFactoryBean();
 	}

@@ -1,16 +1,18 @@
 /**
  * 29 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao.config;
+package config;
 
 import java.util.ResourceBundle;
 
 import javax.sql.DataSource;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
@@ -25,6 +27,7 @@ import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 public class DaoConfig {
 
 	@Bean
+	@Qualifier("datasource")
 	public DriverManagerDataSource dataSource(){
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -36,10 +39,12 @@ public class DaoConfig {
 	}
 	
 	@Bean
+	@Qualifier("datasourceH2")
+	@Primary
     public DataSource dataSourceH2() {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
-                .addScript("init-schema.sql")
+                //.addScript("init-schema.sql")
                 .build();
     }
 }

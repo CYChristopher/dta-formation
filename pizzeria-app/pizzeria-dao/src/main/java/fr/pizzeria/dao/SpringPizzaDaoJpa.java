@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +32,7 @@ public class SpringPizzaDaoJpa implements ItemDao<String, Pizza> {
 	private static final String GET_BY_CODE = "getByCode";
 
 	@PersistenceContext
+	@Qualifier("emf")
 	private EntityManager em;
 	private List<Pizza> pizzas;
 	private PizzaValidator validator;

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Administration ingredients</title>
+<script src="webjars/jquery/3.2.0/jquery.js"></script>
+<link rel="stylesheet"
+	href="webjars/bootstrap/4.0.0-alpha.6-1/css/bootstrap.css">
+</head>
+<body>
+	<div class="container-fluid">
+		<div id="contenu">
+			<div class="jumbotron">
+				<h1>Bienvenue Mr l'administrateur !</h1>
+				<p>Cette application vous permet d'administrer des ingrédients
+					et bien d'autres choses ;-)</p>
+				<p>
+					<a class="btn btn-primary" href="page/ingredients" role="button">Cliquez ici
+						pour administrer</a>
+						<a class="btn btn-primary" href="page/performances" role="button">Cliquez ici
+						pour voir les performances</a>
+						<a class="btn btn-primary pull-right" href="logout" role="button">Se deconnecter</a>
+				</p>
+			</div>
+			<div>
+				<table id="tab" class="table table-striped">
+				<thead>
+				<tr>
+				<td>#</td>
+				<td>Nom</td>
+				<td>Prix</td>
+				<td>Quantite</td>
+				</tr>	
+				</thead>
+				<tbody id="tabBody">			
+				</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$.ajax({
+				url : "http://localhost:8085/psasb/rest/ingredients",
+				type:"GET"
+			}).then(function(data) {
+				var items = data.map(function(item) {
+					return "<tr><td>" + item.id + "</td><td>" + item.nom + "</td><td>" 
+					+ item.prix + "</td><td>" + item.quantite 
+					+ "</td><td><a class=\"btn btn-primary\" href='#'>Modifier</a>" + "</td></tr>";
+				});
+				
+				$("#tabBody").html(items);
+			});
+		});
+	</script>
+</body>
+</html>

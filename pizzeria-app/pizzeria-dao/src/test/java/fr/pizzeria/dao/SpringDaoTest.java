@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import config.DaoDataJpaConfig;
 import fr.pizzeria.dao.annotation.DaoSource;
-import fr.pizzeria.dao.config.DaoDataJpaConfig;
 import fr.pizzeria.model.CategoriePizza;
 import fr.pizzeria.model.Performance;
 import fr.pizzeria.model.Pizza;

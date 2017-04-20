@@ -6,6 +6,7 @@ package fr.pizzeria.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,7 +31,7 @@ public class IngredientController {
 	/**
 	 * 
 	 */
-	private static final String PAGE_INGREDIENTS_JSP = "ingredients/ingredients";
+	private static final String PAGE_INGREDIENTS_JSP = "ingredients";
 	@Autowired
 	private IIngredientRepository ingredientRepository;
 	@Autowired
@@ -48,7 +49,8 @@ public class IngredientController {
 		ingredientRepository.save(ingredient);
 	}
 
-	@RequestMapping(value = "/ingredients", method = RequestMethod.GET)
+	@RequestMapping(value = "page/ingredients", method = RequestMethod.GET)
+	@Secured({"ROLE_USER","ROLE_ADMIN"})
 	public ModelAndView ingredientsVue() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName(PAGE_INGREDIENTS_JSP);
@@ -56,25 +58,36 @@ public class IngredientController {
 		return mav;
 	}
 
-	@RequestMapping(value = "/ingredients/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "page/ingredients/{id}", method = RequestMethod.GET)
 	public String setupForm(@PathVariable Integer id, Model model) {
 		Ingredient ingredient = ingredientRepository.findOne(id);
 		model.addAttribute("ingredient", ingredient);
-		return "ingredients/ingredientForm";
+		return "ingredientForm";
 	}
 
-	@RequestMapping(value = "/ingredients/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "page/ingredients/{id}", method = RequestMethod.POST)
 	public String setupForm(@ModelAttribute("ingredient") Ingredient ingredient) {
 		ingredientRepository.save(ingredient);
-		return "redirect:/mvc/ingredients";
+		return "redirect:/page/ingredients";
 	}
 
-	@RequestMapping(value = "/performances", method = RequestMethod.GET)
+	@RequestMapping(value = "page/performances", method = RequestMethod.GET)
+	@Secured("ROLE_ADMIN")
 	public ModelAndView performancesVue() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("ingredients/performances");
+		mav.setViewName("performances");
 		mav.addObject("list", performanceRepository.findAll());
 		return mav;
+	}
+	
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	public String getLogin(){
+		return "login";
+	}
+	
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(){
+		return "redirect:index.html";
 	}
 
 }

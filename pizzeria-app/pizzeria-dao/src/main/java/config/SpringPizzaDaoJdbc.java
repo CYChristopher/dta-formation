@@ -1,7 +1,7 @@
 /**
  * 29 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao;
+package config;
 
 import java.math.BigDecimal;
 import java.sql.ResultSet;
@@ -12,11 +12,13 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
+import fr.pizzeria.dao.ItemDao;
 import fr.pizzeria.model.Pizza;
 
 /**
@@ -33,7 +35,7 @@ public class SpringPizzaDaoJdbc implements ItemDao<String, Pizza> {
 	 * Utilisation de la base de données MySql
 	 */
 	@Autowired
-	public SpringPizzaDaoJdbc(DriverManagerDataSource dataSource) {
+	public SpringPizzaDaoJdbc(@Qualifier("datasource") DriverManagerDataSource dataSource) {
 		this.pizzas = new ArrayList<>();
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
@@ -42,7 +44,7 @@ public class SpringPizzaDaoJdbc implements ItemDao<String, Pizza> {
 	 * Utilisation de la base de données H2
 	 */
 	//@Autowired A utiliser selon la base de données que l'on veut utiliser
-	public SpringPizzaDaoJdbc(DataSource dataSourceH2) {
+	public SpringPizzaDaoJdbc(@Qualifier("datasourceH2") DataSource dataSourceH2) {
 		this.pizzas = new ArrayList<>();
 		this.jdbcTemplate = new JdbcTemplate(dataSourceH2);
 	}

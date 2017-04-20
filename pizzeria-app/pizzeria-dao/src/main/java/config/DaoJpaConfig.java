@@ -1,8 +1,9 @@
 /**
  * 29 mars 2017 Christopher CHARLERY
  */
-package fr.pizzeria.dao.config;
+package config;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ import fr.pizzeria.dao.SpringPizzaDaoJpa;
 public class DaoJpaConfig {
 
 	@Bean
+	@Qualifier("emf")
 	public LocalEntityManagerFactoryBean emf() {
 		LocalEntityManagerFactoryBean emf = new LocalEntityManagerFactoryBean();
 		emf.setPersistenceUnitName("pizzeria");
